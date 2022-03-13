@@ -34,15 +34,11 @@ Home = "https://github.com/xinetzone/pytorch_book"
 [project.optional-dependencies]
 doc = [
   "myst-parser",
-  "pandas",
   "pytest",
   "pytest-regressions",
   "sphinxext-rediraffe",
   "sphinx-sitemap", # For demo examples
   "jupyter_sphinx",
-  "plotly",
-  "numpy",
-  "xarray",
   "invoke",
 ]
 
