@@ -17,7 +17,7 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'xyzstyle'
+project = 'Pytorch Book'
 copyright = '2022, xinetzone'
 author = 'xinetzone'
 
@@ -54,7 +54,7 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'xyzstyle'
+html_theme = 'pytorch_book'
 html_theme_path = ['../src/themes']
 
 # Add any paths that contain custom static files (such as style sheets) here,

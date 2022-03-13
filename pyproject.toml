@@ -6,7 +6,7 @@ requires = ["flit_core >=3.4,<4"]
 authors = [{name = "xinetzone", email = "735613050@qq.com"}]
 dynamic = ["version", "description"]
 license = {file = "LICENSE"}
-name = "xyzstyle"
+name = "pytorch_book"
 readme = "README.md"
 requires-python = ">=3.8"
 
@@ -29,7 +29,7 @@ classifiers = [
 ]
 
 [project.urls]
-Home = "https://github.com/xinetzone/xyzstyle"
+Home = "https://github.com/xinetzone/pytorch_book"
 
 [project.optional-dependencies]
 doc = [
@@ -49,20 +49,20 @@ doc = [
 coverage = [
   "pytest-cov",
   "codecov",
-  "xyzstyle[test]",
+  "pytorch_book[test]",
 ]
 dev = [
   "pyyaml",
   "pre-commit",
-  "xyzstyle[coverage]",
+  "pytorch_book[coverage]",
 ]
 test = [
   "pytest",
-  "xyzstyle[doc]",
+  "pytorch_book[doc]",
 ]
 
 [project.entry-points]
-"sphinx.html_themes" = {xyzstyle = "xyzstyle"}
+"sphinx.html_themes" = {pytorch_book = "pytorch_book"}
 
 [tool.flit.sdist]
 # include = ["docs/"]
