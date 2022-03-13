@@ -66,10 +66,7 @@ def update(c, language='en'):
 
 def _site(name, help_part):
     self = sys.modules[__name__]
-    if name == 'docs':
-        out = ''
-    else:
-        out = name
+    out = '' if name == 'docs' else name
     coll = Collection.from_module(
         self,
         name=name,
