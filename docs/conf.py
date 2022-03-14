@@ -136,3 +136,4 @@ html_context = {
 }
 
 bibtex_bibfiles = ['refs.bib']
+bibtex_reference_style = "author_year"
