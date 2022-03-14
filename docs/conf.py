@@ -38,6 +38,7 @@ extensions = [
     'sphinx.ext.viewcode',
     # 'sphinx.ext.autosectionlabel',
     'sphinx.ext.napoleon',
+    'sphinxcontrib.bibtex',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -133,3 +134,5 @@ html_context = {
     "github_version": "main",
     "doc_path": "docs",
 }
+
+bibtex_bibfiles = ['refs.bib']

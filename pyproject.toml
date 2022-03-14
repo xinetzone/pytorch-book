@@ -38,6 +38,7 @@ doc = [
   "pytest-regressions",
   "sphinxext-rediraffe",
   "sphinx_copybutton",
+  "sphinxcontrib-bibtex",
   "invoke",
 ]
 
