@@ -12,7 +12,6 @@ requires-python = ">=3.8"
 
 dependencies = [
   "d2py",
-  "pydata_sphinx_theme"
 ]
 
 maintainers = [
@@ -31,15 +30,16 @@ classifiers = [
 [project.urls]
 Home = "https://github.com/xinetzone/pytorch_book"
 
+
 [project.optional-dependencies]
 doc = [
+  "pydata_sphinx_theme",
   "myst_nb",
-  "pytest",
-  "pytest-regressions",
+  "matplotlib",
   "sphinxext-rediraffe",
   "sphinx_copybutton",
   "sphinxcontrib-bibtex",
-  "invoke",
+  "sphinx-tabs",
 ]
 
 coverage = [
@@ -54,6 +54,7 @@ dev = [
 ]
 test = [
   "pytest",
+  "pytest-regressions",
   "pytorch_book[doc]",
 ]
 

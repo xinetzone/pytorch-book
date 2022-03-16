@@ -11,5 +11,5 @@
 需要安装 `pytorch_book` 包：
 
 ```shell
-pip install pytorch_book
+pip install pytorch-book
 ```

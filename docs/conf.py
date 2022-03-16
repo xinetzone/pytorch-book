@@ -36,6 +36,7 @@ extensions = [
     'sphinx_copybutton',
     'sphinx.ext.autosummary',
     'sphinx.ext.viewcode',
+    'sphinx_tabs.tabs',
     # 'sphinx.ext.autosectionlabel',
     'sphinx.ext.napoleon',
     'sphinxcontrib.bibtex',
@@ -137,3 +138,13 @@ html_context = {
 
 bibtex_bibfiles = ['refs.bib']
 bibtex_reference_style = "author_year"
+
+intersphinx_mapping = {
+    'python': ('https://daobook.github.io/cpython/', None),
+    'sphinx': ('https://daobook.github.io/sphinx/', None),
+    'peps': ('https://daobook.github.io/peps', None),
+    'pytorch': ('https://pytorch.org/docs/stable', None),
+    'torchvision': ('https://pytorch.org/vision/stable', None),
+    'torchtext': ('https://pytorch.org/text/stable/', None),
+    'torchaudio': ('https://pytorch.org/audio/stable/', None)
+}
