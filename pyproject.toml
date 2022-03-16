@@ -11,8 +11,8 @@ readme = "README.md"
 requires-python = ">=3.8"
 
 dependencies = [
-  "pydata_sphinx_theme",
-  "d2py"
+  "d2py",
+  "pydata_sphinx_theme"
 ]
 
 maintainers = [

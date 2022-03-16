@@ -83,7 +83,7 @@ html_last_updated_fmt = '%Y-%m-%d, %H:%M:%S'
 # 避免将 jupter 执行报错的信息输出到 cmd
 nb_merge_streams = True
 execution_allow_errors = True
-jupyter_execute_notebooks = "cache"
+jupyter_execute_notebooks = "off"
 
 nb_render_priority = {
     "html": (
