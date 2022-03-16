@@ -1,0 +1,368 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>自动微分机制 &#8212; Pytorch Book 0.0.1 文档</title>
+    
+  <link href="../../_static/css/theme.css" rel="stylesheet">
+  <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/tabs.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/default.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/translations.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.jpg"/>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="扩展 PyTorch" href="extending.html" />
+    <link rel="prev" title="笔记" href="index.html" />
+    <link rel="stylesheet" href="../../_static/css/default.css"/>
+    <link rel="stylesheet" href="../../_static/css/custom.css"/>
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+
+  <div id="navbar-start">
+    
+    
+
+<a class="navbar-brand" href="../../index.html">
+  <img src="../../_static/logo.jpg" class="logo" alt="logo">
+</a>
+
+
+    
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  
+  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+    <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../intro.html">
+  简介
+ </a>
+</li>
+
+<li class="toctree-l1 current active nav-item">
+ <a class="reference internal nav-link" href="../index.html">
+  教程
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../ecosystem/index.html">
+  生态系统
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../refs.html">
+  参考文献
+ </a>
+</li>
+
+    
+</ul>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/xinetzone/pytorch-book" rel="noopener" target="_blank" title="GitHub">
+            <span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label>
+          </a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    <ul class="current nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../basics/index.html">
+   基础
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/quickstart.html">
+     快速入门
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basics/autogradqs.html">
+     自动微分
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="index.html">
+   笔记
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     自动微分机制
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="extending.html">
+     扩展 PyTorch
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+  </div>
+</nav>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+            
+              
+              <div class="toc-item">
+                
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#autograd">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     autograd
+    </span>
+   </code>
+   如何编码历史
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id2">
+     已保存的张量
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+</nav>
+              </div>
+              
+              <div class="toc-item">
+                
+
+<div class="tocsection editthispage">
+    <a href="https://github.com/xinetzone/pytorch-book/edit/main/docs/tutorials/notes/autograd-mechanics.ipynb">
+        <i class="fas fa-pencil-alt"></i> Edit this page
+    </a>
+</div>
+
+              </div>
+              
+            
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="id1">
+<h1>自动微分机制<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<p><span class="guilabel">参考</span>：<a class="reference external" href="https://pytorch.org/docs/stable/notes/autograd.html">notes/autograd</a></p>
+<p>本文将概述 <code class="docutils literal notranslate"><span class="pre">autograd</span></code> 的工作方式并记录运算。完全没有必要理解所有这些，但我们建议您熟悉它，因为它将帮助您编写更有效、更干净的程序，并可以帮助您调试。</p>
+<div class="section" id="autograd">
+<h2><code class="docutils literal notranslate"><span class="pre">autograd</span></code> 如何编码历史<a class="headerlink" href="#autograd" title="永久链接至标题">¶</a></h2>
+<p>Autograd 是反向自动微分系统。从概念上讲，<code class="docutils literal notranslate"><span class="pre">autograd</span></code> 记录了图，该图记录了在执行运算时创建数据的所有运算，从而为您提供了一个有向无环图，其叶是输入张量，根是输出张量。通过从根到叶跟踪这个图，可以使用链式法则自动计算梯度。</p>
+<p>在内部，<code class="docutils literal notranslate"><span class="pre">autograd</span></code> 将这个图表示为 <a class="reference external" href="https://pytorch.org/docs/stable/autograd.html#torch.autograd.Function" title="(在 PyTorch v1.11.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Function</span></code></a> 对象（实际上是表达式）的图，可以借助 <code class="xref py py-func docutils literal notranslate"><span class="pre">apply()</span></code> 来计算对图求值的结果。在计算 forward 传递时，<code class="docutils literal notranslate"><span class="pre">autograd</span></code> 同时申请计算，并构建表示计算梯度（每个 <a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(在 PyTorch v1.11.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">torch.Tensor</span></code></a> 的 <code class="docutils literal notranslate"><span class="pre">.grad_fn</span></code> 属性是这个图的入口点)。当前向传递完成时，在向后传递中计算这个图的梯度。</p>
+<div class="admonition important">
+<p class="admonition-title">重要</p>
+<p>图在每次迭代时都是从头开始重新创建的，这正是允许使用任意 Python 控制流语句的原因，这些语句可以在每次迭代时改变图的总体形状和大小。在启动训练之前，您不必对所有可能的路径进行编码——您所运行的是您所区分的。</p>
+</div>
+<div class="section" id="id2">
+<h3>已保存的张量<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h3>
+<p>有些运算需要在向前传播期间保存中间结果，以便执行 backward 传播。例如，函数 <span class="math notranslate nohighlight">\(x\mapsto x^2\)</span> 保存输入的 <span class="math notranslate nohighlight">\(x\)</span> 来计算梯度。</p>
+<p>当定义自定义 Python 函数时，你可以使用 <code class="xref py py-func docutils literal notranslate"><span class="pre">save_for_backward()</span></code> 在正向传播时保存张量，在后向传播时使用 <code class="docutils literal notranslate"><span class="pre">saved_tensor</span></code> 来检索它们。有关更多信息，请参见 <a class="reference internal" href="extending.html"><span class="doc std std-doc">扩展 PyTorch</span></a>。</p>
+<p>对于 PyTorch 定义的运算（如 <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.pow.html#torch.pow" title="(在 PyTorch v1.11.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">torch.pow()</span></code></a>），张量会根据需要自动保存。通过查找以 <code class="docutils literal notranslate"><span class="pre">_saved</span></code> 前缀开头的属性，您可以研究（出于教育或调试目的）某个 <code class="docutils literal notranslate"><span class="pre">grad_fn</span></code> 保存了哪些张量。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">grad_fn</span><span class="o">.</span><span class="n">_saved_self</span><span class="p">))</span>  <span class="c1"># True</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span> <span class="ow">is</span> <span class="n">y</span><span class="o">.</span><span class="n">grad_fn</span><span class="o">.</span><span class="n">_saved_self</span><span class="p">)</span>  <span class="c1"># True</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+True
+</pre></div>
+</div>
+</div>
+</div>
+<p>在前面的代码中，<code class="docutils literal notranslate"><span class="pre">y.grad_fn._saved_self</span></code> 指的是与 <code class="docutils literal notranslate"><span class="pre">x</span></code> 相同的张量对象。但情况并非总是如此。例如</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">exp</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">grad_fn</span><span class="o">.</span><span class="n">_saved_result</span><span class="p">))</span>  <span class="c1"># True</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">y</span> <span class="ow">is</span> <span class="n">y</span><span class="o">.</span><span class="n">grad_fn</span><span class="o">.</span><span class="n">_saved_result</span><span class="p">)</span>  <span class="c1"># False</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+False
+</pre></div>
+</div>
+</div>
+</div>
+<p>在幕后，为了防止循环引用，PyTorch 在保存时将张量打包，并将其解压到不同的张量以供阅读。在这里，你通过访问 <code class="docutils literal notranslate"><span class="pre">y.grad_fn._saved_result</span></code> 得到的张量是不同于 <code class="docutils literal notranslate"><span class="pre">y</span></code> 的张量对象（但它们仍然共享相同的存储）。</p>
+<p>张量是否会被打包到不同的张量对象中取决于它是否是它自己的 <code class="docutils literal notranslate"><span class="pre">grad_fn</span></code> 的输出，这是可能会改变的实现细节，用户不应该依赖它。</p>
+<p>你可以控制 PyTorch 如何借助<a class="reference external" href="https://pytorch.org/docs/stable/notes/autograd.html#saved-tensors-hooks-doc">保存张量的挂钩</a> 打包/拆包。</p>
+</div>
+</div>
+</div>
+
+
+              </div>
+              
+              
+              <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="index.html" title="上一页 页">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">上一页</p>
+            <p class="prev-next-title">笔记</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="extending.html" title="下一页 页">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">扩展 PyTorch</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+  
+  <script src="../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+<footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    
+    <div class="footer-item">
+      <p class="copyright">
+    &copy; Copyright 2022, xinetzone.<br>
+</p>
+    </div>
+    
+    <div class="footer-item">
+      <p class="last-updated">
+最后更新于 2022-03-16, 09:41:12.<br>
+</p>
+    </div>
+    
+    <div class="footer-item">
+      <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.4.0.<br>
+</p>
+    </div>
+    
+  </div>
+</footer>
+  </body>
+</html>

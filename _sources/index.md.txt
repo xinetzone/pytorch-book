@@ -4,10 +4,10 @@
 阿里云平台：[PAI](https://www.aliyun.com/product/bigdata/learn)
 
 ```{toctree}
-:maxdepth: 2
+:maxdepth: 3
 
 intro
-basic/index
+tutorials/index
 ecosystem/index
 refs
 ```
@@ -17,3 +17,4 @@ refs
 * {ref}`genindex`
 * {ref}`modindex`
 * {ref}`search`
+

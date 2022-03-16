@@ -1,0 +1,120 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# 自动微分机制\n",
+    "\n",
+    "{guilabel}`参考`：[notes/autograd](https://pytorch.org/docs/stable/notes/autograd.html)\n",
+    "\n",
+    "本文将概述 `autograd` 的工作方式并记录运算。完全没有必要理解所有这些，但我们建议您熟悉它，因为它将帮助您编写更有效、更干净的程序，并可以帮助您调试。\n",
+    "\n",
+    "## `autograd` 如何编码历史\n",
+    "\n",
+    "Autograd 是反向自动微分系统。从概念上讲，`autograd` 记录了图，该图记录了在执行运算时创建数据的所有运算，从而为您提供了一个有向无环图，其叶是输入张量，根是输出张量。通过从根到叶跟踪这个图，可以使用链式法则自动计算梯度。\n",
+    "\n",
+    "在内部，`autograd` 将这个图表示为 {class}`~torch.autograd.Function` 对象（实际上是表达式）的图，可以借助 {func}`apply` 来计算对图求值的结果。在计算 forward 传递时，`autograd` 同时申请计算，并构建表示计算梯度（每个 {class}`torch.Tensor` 的 `.grad_fn` 属性是这个图的入口点)。当前向传递完成时，在向后传递中计算这个图的梯度。\n",
+    "\n",
+    "```{important}\n",
+    "图在每次迭代时都是从头开始重新创建的，这正是允许使用任意 Python 控制流语句的原因，这些语句可以在每次迭代时改变图的总体形状和大小。在启动训练之前，您不必对所有可能的路径进行编码——您所运行的是您所区分的。\n",
+    "```\n",
+    "\n",
+    "### 已保存的张量\n",
+    "\n",
+    "有些运算需要在向前传播期间保存中间结果，以便执行 backward 传播。例如，函数 $x\\mapsto x^2$ 保存输入的 $x$ 来计算梯度。\n",
+    "\n",
+    "当定义自定义 Python 函数时，你可以使用 {func}`save_for_backward` 在正向传播时保存张量，在后向传播时使用 `saved_tensor` 来检索它们。有关更多信息，请参见 [扩展 PyTorch](extending)。\n",
+    "\n",
+    "对于 PyTorch 定义的运算（如 {func}`torch.pow`），张量会根据需要自动保存。通过查找以 `_saved` 前缀开头的属性，您可以研究（出于教育或调试目的）某个 `grad_fn` 保存了哪些张量。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "True\n",
+      "True\n"
+     ]
+    }
+   ],
+   "source": [
+    "import torch\n",
+    "\n",
+    "x = torch.randn(5, requires_grad=True)\n",
+    "y = x.pow(2)\n",
+    "print(x.equal(y.grad_fn._saved_self))  # True\n",
+    "print(x is y.grad_fn._saved_self)  # True"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "在前面的代码中，`y.grad_fn._saved_self` 指的是与 `x` 相同的张量对象。但情况并非总是如此。例如"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "True\n",
+      "False\n"
+     ]
+    }
+   ],
+   "source": [
+    "x = torch.randn(5, requires_grad=True)\n",
+    "y = x.exp()\n",
+    "print(y.equal(y.grad_fn._saved_result))  # True\n",
+    "print(y is y.grad_fn._saved_result)  # False"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "在幕后，为了防止循环引用，PyTorch 在保存时将张量打包，并将其解压到不同的张量以供阅读。在这里，你通过访问 `y.grad_fn._saved_result` 得到的张量是不同于 `y` 的张量对象（但它们仍然共享相同的存储）。\n",
+    "\n",
+    "张量是否会被打包到不同的张量对象中取决于它是否是它自己的 `grad_fn` 的输出，这是可能会改变的实现细节，用户不应该依赖它。\n",
+    "\n",
+    "你可以控制 PyTorch 如何借助[保存张量的挂钩](https://pytorch.org/docs/stable/notes/autograd.html#saved-tensors-hooks-doc) 打包/拆包。"
+   ]
+  }
+ ],
+ "metadata": {
+  "interpreter": {
+   "hash": "78526419bf48930935ba7e23437b2460cb231485716b036ebb8701887a294fa8"
+  },
+  "kernelspec": {
+   "display_name": "Python 3.10.0 ('torchx')",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.10.0"
+  },
+  "orig_nbformat": 4
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}

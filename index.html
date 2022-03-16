@@ -27,6 +27,7 @@
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/tabs.css" />
     <link rel="stylesheet" type="text/css" href="_static/default.css" />
     
   <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
@@ -87,8 +88,8 @@
 </li>
 
 <li class="toctree-l1 nav-item">
- <a class="reference internal nav-link" href="basic/index.html">
-  基础
+ <a class="reference internal nav-link" href="tutorials/index.html">
+  教程
  </a>
 </li>
 
@@ -204,7 +205,7 @@
 <h2>支持 PyPI<a class="headerlink" href="#pypi" title="永久链接至标题">¶</a></h2>
 <p>本项目借助 <code class="xref py py-mod docutils literal notranslate"><span class="pre">sphinx</span></code> 管理文档和代码，利用 <code class="xref py py-mod docutils literal notranslate"><span class="pre">d2py</span></code> 实现任务自动化。</p>
 <p>需要安装 <code class="docutils literal notranslate"><span class="pre">pytorch_book</span></code> 包：</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pip install pytorch_book
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pip install pytorch-book
 </pre></div>
 </div>
 <p>阿里云平台：<a class="reference external" href="https://www.aliyun.com/product/bigdata/learn">PAI</a></p>
@@ -215,7 +216,19 @@
 <li class="toctree-l2"><a class="reference internal" href="intro.html#id3">贡献</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="basic/index.html">基础</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/index.html">教程</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/basics/index.html">基础</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/basics/quickstart.html">快速入门</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/basics/autogradqs.html">自动微分</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/notes/index.html">笔记</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/notes/autograd-mechanics.html">自动微分机制</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/notes/extending.html">扩展 PyTorch</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="ecosystem/index.html">生态系统</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="ecosystem/intro.html">简介</a></li>
 </ul>
@@ -267,7 +280,7 @@
     
     <div class="footer-item">
       <p class="last-updated">
-最后更新于 2022-03-16, 03:11:13.<br>
+最后更新于 2022-03-16, 09:41:12.<br>
 </p>
     </div>
     

@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>基础 &#8212; Pytorch Book 0.0.1 文档</title>
+    <title>教程 &#8212; Pytorch Book 0.0.1 文档</title>
     
   <link href="../_static/css/theme.css" rel="stylesheet">
   <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -27,6 +27,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/tabs.css" />
     <link rel="stylesheet" type="text/css" href="../_static/default.css" />
     
   <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
@@ -46,7 +47,7 @@
     <link rel="shortcut icon" href="../_static/favicon.jpg"/>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
-    <link rel="next" title="生态系统" href="../ecosystem/index.html" />
+    <link rel="next" title="基础" href="basics/index.html" />
     <link rel="prev" title="简介" href="../intro.html" />
     <link rel="stylesheet" href="../_static/css/default.css"/>
     <link rel="stylesheet" href="../_static/css/custom.css"/>
@@ -89,7 +90,7 @@
 
 <li class="toctree-l1 current active nav-item">
  <a class="current reference internal nav-link" href="#">
-  基础
+  教程
  </a>
 </li>
 
@@ -140,7 +141,53 @@
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
   <div class="bd-toc-item active">
-    
+    <ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="basics/index.html">
+   基础
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basics/quickstart.html">
+     快速入门
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basics/autogradqs.html">
+     自动微分
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="notes/index.html">
+   笔记
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="notes/autograd-mechanics.html">
+     自动微分机制
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="notes/extending.html">
+     扩展 PyTorch
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
   </div>
 </nav>
             </div>
@@ -163,7 +210,7 @@
                 
 
 <div class="tocsection editthispage">
-    <a href="https://github.com/xinetzone/pytorch-book/edit/main/docs/basic/index.md">
+    <a href="https://github.com/xinetzone/pytorch-book/edit/main/docs/tutorials/index.md">
         <i class="fas fa-pencil-alt"></i> Edit this page
     </a>
 </div>
@@ -183,7 +230,41 @@
               <div>
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="id1">
-<h1>基础<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<h1>教程<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="basics/index.html">基础</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="basics/quickstart.html">快速入门</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="basics/quickstart.html#id2">数据准备</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basics/quickstart.html#id3">构建模型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basics/quickstart.html#id4">模型参数优化</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basics/quickstart.html#id5">保存模型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basics/quickstart.html#id6">加载模型</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="basics/autogradqs.html">自动微分</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="basics/autogradqs.html#id2">张量、函数和计算图</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basics/autogradqs.html#id3">计算梯度</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basics/autogradqs.html#id4">禁用梯度追踪</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basics/autogradqs.html#id5">更多关于计算图的内容</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basics/autogradqs.html#id6">选读：张量梯度和雅可比积</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="notes/index.html">笔记</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="notes/autograd-mechanics.html">自动微分机制</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="notes/autograd-mechanics.html#autograd"><code class="docutils literal notranslate"><span class="pre">autograd</span></code> 如何编码历史</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="notes/autograd-mechanics.html#id2">已保存的张量</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="notes/extending.html">扩展 PyTorch</a></li>
+</ul>
+</li>
+</ul>
+</div>
 </div>
 
 
@@ -199,10 +280,10 @@
             <p class="prev-next-title">简介</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="../ecosystem/index.html" title="下一页 页">
+    <a class='right-next' id="next-link" href="basics/index.html" title="下一页 页">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">下一页</p>
-        <p class="prev-next-title">生态系统</p>
+        <p class="prev-next-title">基础</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
@@ -226,7 +307,7 @@
     
     <div class="footer-item">
       <p class="last-updated">
-最后更新于 2022-03-16, 03:11:13.<br>
+最后更新于 2022-03-16, 09:41:12.<br>
 </p>
     </div>
     

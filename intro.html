@@ -27,6 +27,7 @@
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/tabs.css" />
     <link rel="stylesheet" type="text/css" href="_static/default.css" />
     
   <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
@@ -41,12 +42,13 @@
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="_static/togglebutton.js"></script>
+    <script src="_static/tabs.js"></script>
     <script src="_static/translations.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <link rel="shortcut icon" href="_static/favicon.jpg"/>
     <link rel="index" title="索引" href="genindex.html" />
     <link rel="search" title="搜索" href="search.html" />
-    <link rel="next" title="基础" href="basic/index.html" />
+    <link rel="next" title="教程" href="tutorials/index.html" />
     <link rel="prev" title="PyTorch 书" href="index.html" />
     <link rel="stylesheet" href="_static/css/default.css"/>
     <link rel="stylesheet" href="_static/css/custom.css"/>
@@ -88,8 +90,8 @@
 </li>
 
 <li class="toctree-l1 nav-item">
- <a class="reference internal nav-link" href="basic/index.html">
-  基础
+ <a class="reference internal nav-link" href="tutorials/index.html">
+  教程
  </a>
 </li>
 
@@ -236,11 +238,31 @@
 </div>
 </div>
 </div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">d2py</span>
+</pre></div>
+</div>
+</div>
+</div>
 </div>
 <div class="section" id="id3">
 <h2>贡献<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
 <p>为项目贡献文档，需要</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pip install .<span class="o">[</span>doc<span class="o">]</span>
+</pre></div>
+</div>
+<p>还需要安装 PyTorch：</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-Q1BV" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-0-Q1BV" name="Q1BV" role="tab" tabindex="0">CPU</button><button aria-controls="panel-0-R1BV" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-0-R1BV" name="R1BV" role="tab" tabindex="-1">GPU</button></div><div aria-labelledby="tab-0-Q1BV" class="sphinx-tabs-panel group-tab" id="panel-0-Q1BV" name="Q1BV" role="tabpanel" tabindex="0"><div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>conda install pytorch torchvision torchaudio cpuonly -c pytorch
+</pre></div>
+</div>
+</div><div aria-labelledby="tab-0-R1BV" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-0-R1BV" name="R1BV" role="tabpanel" tabindex="0"><div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>conda install pytorch torchvision torchaudio <span class="nv">cudatoolkit</span><span class="o">=</span><span class="m">11</span>.3 -c pytorch
+</pre></div>
+</div>
+</div></div>
+<p>文档生成：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>invoke docs
 </pre></div>
 </div>
 <p>其他内容，不断补充…</p>
@@ -260,10 +282,10 @@
             <p class="prev-next-title">PyTorch 书</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="basic/index.html" title="下一页 页">
+    <a class='right-next' id="next-link" href="tutorials/index.html" title="下一页 页">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">下一页</p>
-        <p class="prev-next-title">基础</p>
+        <p class="prev-next-title">教程</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
@@ -287,7 +309,7 @@
     
     <div class="footer-item">
       <p class="last-updated">
-最后更新于 2022-03-16, 03:11:13.<br>
+最后更新于 2022-03-16, 09:41:12.<br>
 </p>
     </div>
     
