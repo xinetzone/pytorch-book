@@ -131,6 +131,8 @@ dmypy.json
 # sphinx
 output/
 data/
+generated/
 
 # PyTorch
 *.pth
+models/
