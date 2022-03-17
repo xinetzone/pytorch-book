@@ -107,6 +107,12 @@
 </li>
 
 <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../api/index.html">
+  API 参考
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
  <a class="reference internal nav-link" href="../../../refs.html">
   参考文献
  </a>
@@ -233,83 +239,14 @@
      静态量化（cifar10）
     </a>
    </li>
-   <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../api/index.html">
-     用户代码 API
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
-    <label for="toctree-checkbox-4">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3 has-children">
-      <a class="reference internal" href="../api/runner.html">
-       runner
-      </a>
-      <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
-      <label for="toctree-checkbox-5">
-       <i class="fas fa-chevron-down">
-       </i>
-      </label>
-      <ul>
-       <li class="toctree-l4">
-        <a class="reference internal" href="../api/generated/runner.Timer.html">
-         runner.Timer
-        </a>
-       </li>
-       <li class="toctree-l4">
-        <a class="reference internal" href="../api/generated/runner.Accumulator.html">
-         runner.Accumulator
-        </a>
-       </li>
-       <li class="toctree-l4">
-        <a class="reference internal" href="../api/generated/runner.Animator.html">
-         runner.Animator
-        </a>
-       </li>
-       <li class="toctree-l4">
-        <a class="reference internal" href="../api/generated/runner.show_images.html">
-         runner.show_images
-        </a>
-       </li>
-      </ul>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../api/xinet.html">
-       xinet
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../api/hymenoptera.html">
-       hymenoptera
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../api/net.html">
-       NN 模块
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../api/helper.html">
-       辅助工具
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../api/tools.html">
-       工具
-      </a>
-     </li>
-    </ul>
-   </li>
   </ul>
  </li>
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../../papers/index.html">
    论文
   </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
-  <label for="toctree-checkbox-6">
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
    <i class="fas fa-chevron-down">
    </i>
   </label>
@@ -317,6 +254,70 @@
    <li class="toctree-l2">
     <a class="reference internal" href="../../papers/gholami2021survey.html">
      A Survey of Quantization Methods for Efficient Neural Network Inference
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../api/index.html">
+   量化 API
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../api/runner.html">
+     runner
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+    <label for="toctree-checkbox-6">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/generated/runner.Timer.html">
+       runner.Timer
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/generated/runner.Accumulator.html">
+       runner.Accumulator
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/generated/runner.Animator.html">
+       runner.Animator
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/generated/runner.show_images.html">
+       runner.show_images
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../api/xinet.html">
+     xinet
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../api/net.html">
+     NN 模块
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../api/helper.html">
+     辅助工具
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../api/tools.html">
+     工具
     </a>
    </li>
   </ul>
@@ -409,7 +410,10 @@
 <span class="kn">from</span> <span class="nn">torchvision</span> <span class="kn">import</span> <span class="n">models</span>
 <span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
 
+<span class="c1"># 让程序在开始时花费一点额外时间，</span>
+<span class="c1"># 为整个网络的每个卷积层搜索最适合它的卷积实现算法，进而实现网络的加速。</span>
 <span class="n">cudnn</span><span class="o">.</span><span class="n">benchmark</span> <span class="o">=</span> <span class="kc">True</span>
+
 <span class="n">plt</span><span class="o">.</span><span class="n">ion</span><span class="p">()</span>   <span class="c1"># 交互模式</span>
 
 <span class="c1"># 载入自定义模块</span>
@@ -421,17 +425,16 @@
 </div>
 <div class="admonition- admonition">
 <p class="admonition-title">任务</p>
-<p>训练一个模型来对蚂蚁和蜜蜂进行分类。</p>
+<p>训练对蚂蚁和蜜蜂进行分类的模型。</p>
 </div>
 <p class="rubric">加载数据</p>
 <p>通常，如果从零开始训练，这是一个非常小的可泛化的数据集。由于使用迁移学习，应该能够相当好地推广。</p>
 <p>本文自定义数据加载器 <code class="xref py py-class docutils literal notranslate"><span class="pre">Hymenoptera</span></code>：</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">hymenoptera</span> <span class="kn">import</span> <span class="n">Hymenoptera</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pytorch_book.datasets.examples</span> <span class="kn">import</span> <span class="n">Hymenoptera</span>
 <span class="c1"># 加载数据</span>
-<span class="n">data_dir</span> <span class="o">=</span> <span class="s1">&#39;/media/pc/data/4tb/xinet/tests/hymenoptera_data&#39;</span>
-<span class="n">loader</span> <span class="o">=</span> <span class="n">Hymenoptera</span><span class="p">(</span><span class="n">data_dir</span><span class="p">)</span>
+<span class="n">loader</span> <span class="o">=</span> <span class="n">Hymenoptera</span><span class="p">(</span><span class="s1">&#39;data/hymenoptera_data&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -504,8 +507,110 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>loss 0.525, train acc 0.738, test acc 0.922
-94.7 examples/sec on [device(type=&#39;cuda&#39;, index=0), device(type=&#39;cuda&#39;, index=1), device(type=&#39;cuda&#39;, index=2)]
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">AttributeError</span><span class="g g-Whitespace">                            </span>Traceback (most recent call last)
+<span class="nn">/media/pc/data/4tb/xinet/web/pytorch-book/docs/quantization/study/transfer-learning/basic.ipynb Cell 15&#39;</span> in <span class="ni">&lt;cell line: 3&gt;</span><span class="nt">()</span>
+      <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;vscode-notebook-cell://ssh-remote%2B10.16.11.3/media/pc/data/4tb/xinet/web/pytorch-book/docs/quantization/study/transfer-learning/basic.ipynb#ch0000014vscode-remote?line=0&#39;</span><span class="o">&gt;</span><span class="mi">1</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span> <span class="n">train_iter</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">dataloaders</span><span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">]</span>
+      <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;vscode-notebook-cell://ssh-remote%2B10.16.11.3/media/pc/data/4tb/xinet/web/pytorch-book/docs/quantization/study/transfer-learning/basic.ipynb#ch0000014vscode-remote?line=1&#39;</span><span class="o">&gt;</span><span class="mi">2</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span> <span class="n">test_iter</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">dataloaders</span><span class="p">[</span><span class="s1">&#39;val&#39;</span><span class="p">]</span>
+<span class="o">----&gt;</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;vscode-notebook-cell://ssh-remote%2B10.16.11.3/media/pc/data/4tb/xinet/web/pytorch-book/docs/quantization/study/transfer-learning/basic.ipynb#ch0000014vscode-remote?line=2&#39;</span><span class="o">&gt;</span><span class="mi">3</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span> <span class="n">CV</span><span class="o">.</span><span class="n">train_fine_tuning</span><span class="p">(</span><span class="n">model_ft</span><span class="p">,</span> <span class="n">train_iter</span><span class="p">,</span> <span class="n">test_iter</span><span class="p">,</span>
+      <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;vscode-notebook-cell://ssh-remote%2B10.16.11.3/media/pc/data/4tb/xinet/web/pytorch-book/docs/quantization/study/transfer-learning/basic.ipynb#ch0000014vscode-remote?line=3&#39;</span><span class="o">&gt;</span><span class="mi">4</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>                      <span class="n">learning_rate</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span>
+      <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;vscode-notebook-cell://ssh-remote%2B10.16.11.3/media/pc/data/4tb/xinet/web/pytorch-book/docs/quantization/study/transfer-learning/basic.ipynb#ch0000014vscode-remote?line=4&#39;</span><span class="o">&gt;</span><span class="mi">5</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>                      <span class="n">num_epochs</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span>
+      <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;vscode-notebook-cell://ssh-remote%2B10.16.11.3/media/pc/data/4tb/xinet/web/pytorch-book/docs/quantization/study/transfer-learning/basic.ipynb#ch0000014vscode-remote?line=5&#39;</span><span class="o">&gt;</span><span class="mi">6</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>                      <span class="n">param_group</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="nn">File /media/pc/data/4tb/xinet/web/pytorch-book/docs/utils/xinet.py:256,</span> in <span class="ni">CV.train_fine_tuning</span><span class="nt">(net, train_iter, test_iter, learning_rate, num_epochs, param_group)</span>
+    <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///media/pc/data/4tb/xinet/web/pytorch-book/docs/utils/xinet.py?line=252&#39;</span><span class="o">&gt;</span><span class="mi">253</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span> <span class="k">else</span><span class="p">:</span>
+    <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///media/pc/data/4tb/xinet/web/pytorch-book/docs/utils/xinet.py?line=253&#39;</span><span class="o">&gt;</span><span class="mi">254</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>     <span class="n">trainer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">net</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="n">learning_rate</span><span class="p">,</span>
+    <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///media/pc/data/4tb/xinet/web/pytorch-book/docs/utils/xinet.py?line=254&#39;</span><span class="o">&gt;</span><span class="mi">255</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>                               <span class="n">weight_decay</span><span class="o">=</span><span class="mf">0.001</span><span class="p">)</span>
+<span class="o">--&gt;</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///media/pc/data/4tb/xinet/web/pytorch-book/docs/utils/xinet.py?line=255&#39;</span><span class="o">&gt;</span><span class="mi">256</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span> <span class="n">CV</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">train_iter</span><span class="p">,</span> <span class="n">test_iter</span><span class="p">,</span>
+    <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///media/pc/data/4tb/xinet/web/pytorch-book/docs/utils/xinet.py?line=256&#39;</span><span class="o">&gt;</span><span class="mi">257</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>          <span class="n">loss</span><span class="p">,</span> <span class="n">trainer</span><span class="p">,</span> <span class="n">num_epochs</span><span class="p">,</span>
+    <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///media/pc/data/4tb/xinet/web/pytorch-book/docs/utils/xinet.py?line=257&#39;</span><span class="o">&gt;</span><span class="mi">258</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>          <span class="n">devices</span><span class="p">)</span>
+
+<span class="nn">File /media/pc/data/4tb/xinet/web/pytorch-book/docs/utils/xinet.py:222,</span> in <span class="ni">CV.train</span><span class="nt">(net, train_iter, test_iter, loss, trainer, num_epochs, devices)</span>
+    <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///media/pc/data/4tb/xinet/web/pytorch-book/docs/utils/xinet.py?line=219&#39;</span><span class="o">&gt;</span><span class="mi">220</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">train_iter</span><span class="p">):</span>
+    <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///media/pc/data/4tb/xinet/web/pytorch-book/docs/utils/xinet.py?line=220&#39;</span><span class="o">&gt;</span><span class="mi">221</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>     <span class="n">timer</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<span class="o">--&gt;</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///media/pc/data/4tb/xinet/web/pytorch-book/docs/utils/xinet.py?line=221&#39;</span><span class="o">&gt;</span><span class="mi">222</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>     <span class="n">l</span><span class="p">,</span> <span class="n">acc</span> <span class="o">=</span> <span class="n">CV</span><span class="o">.</span><span class="n">train_batch</span><span class="p">(</span>
+    <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///media/pc/data/4tb/xinet/web/pytorch-book/docs/utils/xinet.py?line=222&#39;</span><span class="o">&gt;</span><span class="mi">223</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>         <span class="n">net</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">loss</span><span class="p">,</span> <span class="n">trainer</span><span class="p">,</span> <span class="n">devices</span><span class="p">)</span>
+    <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///media/pc/data/4tb/xinet/web/pytorch-book/docs/utils/xinet.py?line=223&#39;</span><span class="o">&gt;</span><span class="mi">224</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>     <span class="n">metric</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">acc</span><span class="p">,</span> <span class="n">labels</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">labels</span><span class="o">.</span><span class="n">numel</span><span class="p">())</span>
+    <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///media/pc/data/4tb/xinet/web/pytorch-book/docs/utils/xinet.py?line=224&#39;</span><span class="o">&gt;</span><span class="mi">225</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>     <span class="n">timer</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+<span class="nn">File /media/pc/data/4tb/xinet/web/pytorch-book/docs/utils/xinet.py:200,</span> in <span class="ni">CV.train_batch</span><span class="nt">(net, X, y, loss, trainer, devices)</span>
+    <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///media/pc/data/4tb/xinet/web/pytorch-book/docs/utils/xinet.py?line=197&#39;</span><span class="o">&gt;</span><span class="mi">198</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span> <span class="n">pred</span> <span class="o">=</span> <span class="n">net</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+    <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///media/pc/data/4tb/xinet/web/pytorch-book/docs/utils/xinet.py?line=198&#39;</span><span class="o">&gt;</span><span class="mi">199</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span> <span class="n">l</span> <span class="o">=</span> <span class="n">loss</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="o">--&gt;</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///media/pc/data/4tb/xinet/web/pytorch-book/docs/utils/xinet.py?line=199&#39;</span><span class="o">&gt;</span><span class="mi">200</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span> <span class="n">l</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+    <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///media/pc/data/4tb/xinet/web/pytorch-book/docs/utils/xinet.py?line=200&#39;</span><span class="o">&gt;</span><span class="mi">201</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span> <span class="n">trainer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+    <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///media/pc/data/4tb/xinet/web/pytorch-book/docs/utils/xinet.py?line=201&#39;</span><span class="o">&gt;</span><span class="mi">202</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span> <span class="n">train_loss_sum</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+<span class="nn">File ~/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/_tensor.py:363,</span> in <span class="ni">Tensor.backward</span><span class="nt">(self, gradient, retain_graph, create_graph, inputs)</span>
+    <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///home/pc/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/_tensor.py?line=353&#39;</span><span class="o">&gt;</span><span class="mi">354</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span> <span class="k">if</span> <span class="n">has_torch_function_unary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///home/pc/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/_tensor.py?line=354&#39;</span><span class="o">&gt;</span><span class="mi">355</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>     <span class="k">return</span> <span class="n">handle_torch_function</span><span class="p">(</span>
+    <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///home/pc/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/_tensor.py?line=355&#39;</span><span class="o">&gt;</span><span class="mi">356</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>         <span class="n">Tensor</span><span class="o">.</span><span class="n">backward</span><span class="p">,</span>
+    <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///home/pc/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/_tensor.py?line=356&#39;</span><span class="o">&gt;</span><span class="mi">357</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>         <span class="p">(</span><span class="bp">self</span><span class="p">,),</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+    <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///home/pc/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/_tensor.py?line=360&#39;</span><span class="o">&gt;</span><span class="mi">361</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>         <span class="n">create_graph</span><span class="o">=</span><span class="n">create_graph</span><span class="p">,</span>
+    <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///home/pc/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/_tensor.py?line=361&#39;</span><span class="o">&gt;</span><span class="mi">362</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>         <span class="n">inputs</span><span class="o">=</span><span class="n">inputs</span><span class="p">)</span>
+<span class="o">--&gt;</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///home/pc/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/_tensor.py?line=362&#39;</span><span class="o">&gt;</span><span class="mi">363</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">autograd</span><span class="o">.</span><span class="n">backward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gradient</span><span class="p">,</span> <span class="n">retain_graph</span><span class="p">,</span> <span class="n">create_graph</span><span class="p">,</span> <span class="n">inputs</span><span class="o">=</span><span class="n">inputs</span><span class="p">)</span>
+
+<span class="nn">File ~/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/autograd/__init__.py:173,</span> in <span class="ni">backward</span><span class="nt">(tensors, grad_tensors, retain_graph, create_graph, grad_variables, inputs)</span>
+    <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///home/pc/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/autograd/__init__.py?line=167&#39;</span><span class="o">&gt;</span><span class="mi">168</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>     <span class="n">retain_graph</span> <span class="o">=</span> <span class="n">create_graph</span>
+    <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///home/pc/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/autograd/__init__.py?line=169&#39;</span><span class="o">&gt;</span><span class="mi">170</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span> <span class="c1"># The reason we repeat same the comment below is that</span>
+    <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///home/pc/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/autograd/__init__.py?line=170&#39;</span><span class="o">&gt;</span><span class="mi">171</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span> <span class="c1"># some Python versions print out the first line of a multi-line function</span>
+    <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///home/pc/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/autograd/__init__.py?line=171&#39;</span><span class="o">&gt;</span><span class="mi">172</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span> <span class="c1"># calls in the traceback and some print out the last line</span>
+<span class="o">--&gt;</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///home/pc/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/autograd/__init__.py?line=172&#39;</span><span class="o">&gt;</span><span class="mi">173</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span> <span class="n">Variable</span><span class="o">.</span><span class="n">_execution_engine</span><span class="o">.</span><span class="n">run_backward</span><span class="p">(</span>  <span class="c1"># Calls into the C++ engine to run the backward pass</span>
+    <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///home/pc/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/autograd/__init__.py?line=173&#39;</span><span class="o">&gt;</span><span class="mi">174</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>     <span class="n">tensors</span><span class="p">,</span> <span class="n">grad_tensors_</span><span class="p">,</span> <span class="n">retain_graph</span><span class="p">,</span> <span class="n">create_graph</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span>
+    <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///home/pc/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/autograd/__init__.py?line=174&#39;</span><span class="o">&gt;</span><span class="mi">175</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>     <span class="n">allow_unreachable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">accumulate_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="nn">File ~/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/autograd/function.py:253,</span> in <span class="ni">BackwardCFunction.apply</span><span class="nt">(self, *args)</span>
+    <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///home/pc/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/autograd/function.py?line=248&#39;</span><span class="o">&gt;</span><span class="mi">249</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>     <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Implementing both &#39;backward&#39; and &#39;vjp&#39; for a custom &quot;</span>
+    <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///home/pc/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/autograd/function.py?line=249&#39;</span><span class="o">&gt;</span><span class="mi">250</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>                        <span class="s2">&quot;Function is not allowed. You should only implement one &quot;</span>
+    <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///home/pc/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/autograd/function.py?line=250&#39;</span><span class="o">&gt;</span><span class="mi">251</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>                        <span class="s2">&quot;of them.&quot;</span><span class="p">)</span>
+    <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///home/pc/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/autograd/function.py?line=251&#39;</span><span class="o">&gt;</span><span class="mi">252</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span> <span class="n">user_fn</span> <span class="o">=</span> <span class="n">vjp_fn</span> <span class="k">if</span> <span class="n">vjp_fn</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">Function</span><span class="o">.</span><span class="n">vjp</span> <span class="k">else</span> <span class="n">backward_fn</span>
+<span class="o">--&gt;</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///home/pc/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/autograd/function.py?line=252&#39;</span><span class="o">&gt;</span><span class="mi">253</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span> <span class="k">return</span> <span class="n">user_fn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+
+<span class="nn">File ~/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/nn/parallel/_functions.py:34,</span> in <span class="ni">Broadcast.backward</span><span class="nt">(ctx, *grad_outputs)</span>
+     <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///home/pc/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/nn/parallel/_functions.py?line=31&#39;</span><span class="o">&gt;</span><span class="mi">32</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span> <span class="nd">@staticmethod</span>
+     <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///home/pc/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/nn/parallel/_functions.py?line=32&#39;</span><span class="o">&gt;</span><span class="mi">33</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span> <span class="k">def</span> <span class="nf">backward</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="o">*</span><span class="n">grad_outputs</span><span class="p">):</span>
+<span class="o">---&gt;</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///home/pc/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/nn/parallel/_functions.py?line=33&#39;</span><span class="o">&gt;</span><span class="mi">34</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>     <span class="k">return</span> <span class="p">(</span><span class="kc">None</span><span class="p">,)</span> <span class="o">+</span> <span class="n">ReduceAddCoalesced</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">ctx</span><span class="o">.</span><span class="n">input_device</span><span class="p">,</span> <span class="n">ctx</span><span class="o">.</span><span class="n">num_inputs</span><span class="p">,</span> <span class="o">*</span><span class="n">grad_outputs</span><span class="p">)</span>
+
+<span class="nn">File ~/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/nn/parallel/_functions.py:45,</span> in <span class="ni">ReduceAddCoalesced.forward</span><span class="nt">(ctx, destination, num_inputs, *grads)</span>
+     <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///home/pc/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/nn/parallel/_functions.py?line=40&#39;</span><span class="o">&gt;</span><span class="mi">41</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span> <span class="n">ctx</span><span class="o">.</span><span class="n">target_gpus</span> <span class="o">=</span> <span class="p">[</span><span class="n">grads</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">get_device</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">grads</span><span class="p">),</span> <span class="n">num_inputs</span><span class="p">)]</span>
+     <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///home/pc/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/nn/parallel/_functions.py?line=42&#39;</span><span class="o">&gt;</span><span class="mi">43</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span> <span class="n">grads_</span> <span class="o">=</span> <span class="p">[</span><span class="n">grads</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span> <span class="o">+</span> <span class="n">num_inputs</span><span class="p">]</span>
+     <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///home/pc/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/nn/parallel/_functions.py?line=43&#39;</span><span class="o">&gt;</span><span class="mi">44</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>           <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">grads</span><span class="p">),</span> <span class="n">num_inputs</span><span class="p">)]</span>
+<span class="o">---&gt;</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///home/pc/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/nn/parallel/_functions.py?line=44&#39;</span><span class="o">&gt;</span><span class="mi">45</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span> <span class="k">return</span> <span class="n">comm</span><span class="o">.</span><span class="n">reduce_add_coalesced</span><span class="p">(</span><span class="n">grads_</span><span class="p">,</span> <span class="n">destination</span><span class="p">)</span>
+
+<span class="nn">File ~/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/nn/parallel/comm.py:143,</span> in <span class="ni">reduce_add_coalesced</span><span class="nt">(inputs, destination, buffer_size)</span>
+    <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///home/pc/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/nn/parallel/comm.py?line=140&#39;</span><span class="o">&gt;</span><span class="mi">141</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span> <span class="k">for</span> <span class="n">chunks</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">itrs</span><span class="p">):</span>
+<span class="nn">    &lt;a href=&#39;file:///home/pc/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/nn/parallel/comm.py?line=141&#39;&gt;142&lt;/a&gt;     flat_tensors = [_flatten_dense_tensors(chunk) for chunk</span> in <span class="ni">chunks]  # </span><span class="nt">(num_gpus,)</span>
+<span class="o">--&gt;</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///home/pc/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/nn/parallel/comm.py?line=142&#39;</span><span class="o">&gt;</span><span class="mi">143</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>     <span class="n">flat_result</span> <span class="o">=</span> <span class="n">reduce_add</span><span class="p">(</span><span class="n">flat_tensors</span><span class="p">,</span> <span class="n">destination</span><span class="p">)</span>
+    <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///home/pc/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/nn/parallel/comm.py?line=143&#39;</span><span class="o">&gt;</span><span class="mi">144</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>     <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">_unflatten_dense_tensors</span><span class="p">(</span><span class="n">flat_result</span><span class="p">,</span> <span class="n">chunks</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+    <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///home/pc/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/nn/parallel/comm.py?line=144&#39;</span><span class="o">&gt;</span><span class="mi">145</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>         <span class="c1"># The unflattened tensors do not share storage, and we don&#39;t expose</span>
+    <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///home/pc/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/nn/parallel/comm.py?line=145&#39;</span><span class="o">&gt;</span><span class="mi">146</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>         <span class="c1"># base flat tensor anyways, so give them different version counters.</span>
+    <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///home/pc/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/nn/parallel/comm.py?line=146&#39;</span><span class="o">&gt;</span><span class="mi">147</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>         <span class="c1"># See NOTE [ Version Counter in comm.*_coalesced ]</span>
+    <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///home/pc/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/nn/parallel/comm.py?line=147&#39;</span><span class="o">&gt;</span><span class="mi">148</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>         <span class="n">output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+
+<span class="nn">File ~/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/nn/parallel/comm.py:96,</span> in <span class="ni">reduce_add</span><span class="nt">(inputs, destination)</span>
+     <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///home/pc/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/nn/parallel/comm.py?line=93&#39;</span><span class="o">&gt;</span><span class="mi">94</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span> <span class="k">if</span> <span class="n">nccl</span><span class="o">.</span><span class="n">is_available</span><span class="p">(</span><span class="n">inputs</span><span class="p">):</span>
+     <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///home/pc/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/nn/parallel/comm.py?line=94&#39;</span><span class="o">&gt;</span><span class="mi">95</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>     <span class="n">result</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="n">inputs</span><span class="p">[</span><span class="n">root_index</span><span class="p">])</span>
+<span class="o">---&gt;</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///home/pc/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/nn/parallel/comm.py?line=95&#39;</span><span class="o">&gt;</span><span class="mi">96</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>     <span class="n">nccl</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="n">result</span><span class="p">,</span> <span class="n">root</span><span class="o">=</span><span class="n">root_index</span><span class="p">)</span>
+     <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///home/pc/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/nn/parallel/comm.py?line=96&#39;</span><span class="o">&gt;</span><span class="mi">97</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span> <span class="k">else</span><span class="p">:</span>
+     <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///home/pc/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/nn/parallel/comm.py?line=97&#39;</span><span class="o">&gt;</span><span class="mi">98</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>     <span class="n">destination_device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="n">inputs</span><span class="p">[</span><span class="n">root_index</span><span class="p">]</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">destination</span><span class="p">)</span>
+
+<span class="nn">File ~/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/cuda/nccl.py:72,</span> in <span class="ni">reduce</span><span class="nt">(inputs, output, root, op, streams, comms, outputs)</span>
+     <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///home/pc/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/cuda/nccl.py?line=64&#39;</span><span class="o">&gt;</span><span class="mi">65</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span> <span class="k">def</span> <span class="nf">reduce</span><span class="p">(</span><span class="n">inputs</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">],</span>
+     <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///home/pc/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/cuda/nccl.py?line=65&#39;</span><span class="o">&gt;</span><span class="mi">66</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>            <span class="n">output</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+     <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///home/pc/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/cuda/nccl.py?line=66&#39;</span><span class="o">&gt;</span><span class="mi">67</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>            <span class="n">root</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+     <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///home/pc/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/cuda/nccl.py?line=69&#39;</span><span class="o">&gt;</span><span class="mi">70</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>            <span class="n">comms</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span>
+     <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///home/pc/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/cuda/nccl.py?line=70&#39;</span><span class="o">&gt;</span><span class="mi">71</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>            <span class="n">outputs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="o">---&gt;</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///home/pc/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/cuda/nccl.py?line=71&#39;</span><span class="o">&gt;</span><span class="mi">72</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>     <span class="n">_check_sequence_type</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+     <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///home/pc/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/cuda/nccl.py?line=72&#39;</span><span class="o">&gt;</span><span class="mi">73</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>     <span class="n">_output</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span>
+     <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///home/pc/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/cuda/nccl.py?line=73&#39;</span><span class="o">&gt;</span><span class="mi">74</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>     <span class="k">if</span> <span class="n">outputs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+
+<span class="nn">File ~/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/cuda/nccl.py:51,</span> in <span class="ni">_check_sequence_type</span><span class="nt">(inputs)</span>
+     <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///home/pc/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/cuda/nccl.py?line=49&#39;</span><span class="o">&gt;</span><span class="mi">50</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span> <span class="k">def</span> <span class="nf">_check_sequence_type</span><span class="p">(</span><span class="n">inputs</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="o">---&gt;</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///home/pc/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/cuda/nccl.py?line=50&#39;</span><span class="o">&gt;</span><span class="mi">51</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">collections</span><span class="o">.</span><span class="n">Container</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">):</span>
+     <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;file:///home/pc/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/cuda/nccl.py?line=51&#39;</span><span class="o">&gt;</span><span class="mi">52</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>         <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Inputs should be a collection of tensors&quot;</span><span class="p">)</span>
+
+<span class="ne">AttributeError</span>: module &#39;collections&#39; has no attribute &#39;Container&#39;
 </pre></div>
 </div>
 <img alt="../../../_images/basic_14_1.svg" src="../../../_images/basic_14_1.svg" /></div>
@@ -522,137 +627,6 @@
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 0/24
-----------
-train Loss: 0.5611 Acc: 0.7254
-val Loss: 0.2176 Acc: 0.9216
-
-Epoch 1/24
-----------
-train Loss: 0.5694 Acc: 0.7418
-val Loss: 0.3503 Acc: 0.8431
-
-Epoch 2/24
-----------
-train Loss: 0.6544 Acc: 0.7459
-val Loss: 0.4695 Acc: 0.8758
-
-Epoch 3/24
-----------
-train Loss: 0.6046 Acc: 0.7705
-val Loss: 0.2749 Acc: 0.8824
-
-Epoch 4/24
-----------
-train Loss: 0.4632 Acc: 0.7951
-val Loss: 0.3509 Acc: 0.8562
-
-Epoch 5/24
-----------
-train Loss: 0.4025 Acc: 0.8361
-val Loss: 0.3468 Acc: 0.8758
-
-Epoch 6/24
-----------
-train Loss: 0.3527 Acc: 0.8607
-val Loss: 0.5126 Acc: 0.8366
-
-Epoch 7/24
-----------
-train Loss: 0.4358 Acc: 0.8197
-val Loss: 0.3389 Acc: 0.9020
-
-Epoch 8/24
-----------
-train Loss: 0.3238 Acc: 0.8607
-val Loss: 0.3127 Acc: 0.9085
-
-Epoch 9/24
-----------
-train Loss: 0.3460 Acc: 0.8566
-val Loss: 0.3567 Acc: 0.9020
-
-Epoch 10/24
-----------
-train Loss: 0.2422 Acc: 0.8934
-val Loss: 0.4046 Acc: 0.8758
-
-Epoch 11/24
-----------
-train Loss: 0.3590 Acc: 0.8607
-val Loss: 0.3903 Acc: 0.8562
-
-Epoch 12/24
-----------
-train Loss: 0.3062 Acc: 0.8811
-val Loss: 0.3172 Acc: 0.9085
-
-Epoch 13/24
-----------
-train Loss: 0.3534 Acc: 0.8443
-val Loss: 0.3185 Acc: 0.9085
-
-Epoch 14/24
-----------
-train Loss: 0.2952 Acc: 0.8975
-val Loss: 0.3303 Acc: 0.8954
-
-Epoch 15/24
-----------
-train Loss: 0.3178 Acc: 0.8443
-val Loss: 0.3352 Acc: 0.9020
-
-Epoch 16/24
-----------
-train Loss: 0.3271 Acc: 0.8566
-val Loss: 0.2946 Acc: 0.9216
-
-Epoch 17/24
-----------
-train Loss: 0.2666 Acc: 0.8934
-val Loss: 0.3217 Acc: 0.9085
-
-Epoch 18/24
-----------
-train Loss: 0.3182 Acc: 0.8566
-val Loss: 0.2877 Acc: 0.9150
-
-Epoch 19/24
-----------
-train Loss: 0.2589 Acc: 0.8893
-val Loss: 0.2842 Acc: 0.9150
-
-Epoch 20/24
-----------
-train Loss: 0.2644 Acc: 0.8689
-val Loss: 0.2981 Acc: 0.9020
-
-Epoch 21/24
-----------
-train Loss: 0.1924 Acc: 0.9221
-val Loss: 0.2702 Acc: 0.9150
-
-Epoch 22/24
-----------
-train Loss: 0.3577 Acc: 0.8361
-val Loss: 0.2952 Acc: 0.9085
-
-Epoch 23/24
-----------
-train Loss: 0.2599 Acc: 0.9016
-val Loss: 0.2708 Acc: 0.9281
-
-Epoch 24/24
-----------
-train Loss: 0.2780 Acc: 0.8811
-val Loss: 0.2779 Acc: 0.9085
-
-完成训练用时 1m 13s
-最佳 val Acc: 0.928105
-</pre></div>
-</div>
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -665,8 +639,6 @@ val Loss: 0.2779 Acc: 0.9085
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="../../../_images/basic_16_0.svg" src="../../../_images/basic_16_0.svg" /></div>
 </div>
 </div>
 <div class="section" id="id2">
@@ -707,155 +679,11 @@ val Loss: 0.2779 Acc: 0.9085
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>loss 0.512, train acc 0.734, test acc 0.915
-128.3 examples/sec on [device(type=&#39;cuda&#39;, index=0), device(type=&#39;cuda&#39;, index=1), device(type=&#39;cuda&#39;, index=2)]
-</pre></div>
-</div>
-<img alt="../../../_images/basic_20_1.svg" src="../../../_images/basic_20_1.svg" /></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># model_conv = train_model(model_conv, loader, criterion, optimizer_conv,</span>
 <span class="c1">#                          exp_lr_scheduler, num_epochs=25, device=device)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 0/24
-----------
-train Loss: 0.5298 Acc: 0.7049
-val Loss: 0.3384 Acc: 0.8497
-
-Epoch 1/24
-----------
-train Loss: 0.4472 Acc: 0.7869
-val Loss: 0.1853 Acc: 0.9412
-
-Epoch 2/24
-----------
-train Loss: 0.4882 Acc: 0.7910
-val Loss: 0.1864 Acc: 0.9412
-
-Epoch 3/24
-----------
-train Loss: 0.5350 Acc: 0.7500
-val Loss: 0.2736 Acc: 0.9281
-
-Epoch 4/24
-----------
-train Loss: 0.5804 Acc: 0.7213
-val Loss: 0.1757 Acc: 0.9346
-
-Epoch 5/24
-----------
-train Loss: 0.4132 Acc: 0.7951
-val Loss: 0.1906 Acc: 0.9477
-
-Epoch 6/24
-----------
-train Loss: 0.4870 Acc: 0.7869
-val Loss: 0.4047 Acc: 0.8497
-
-Epoch 7/24
-----------
-train Loss: 0.4120 Acc: 0.8156
-val Loss: 0.1780 Acc: 0.9346
-
-Epoch 8/24
-----------
-train Loss: 0.3053 Acc: 0.8566
-val Loss: 0.1799 Acc: 0.9477
-
-Epoch 9/24
-----------
-train Loss: 0.3253 Acc: 0.8361
-val Loss: 0.1769 Acc: 0.9477
-
-Epoch 10/24
-----------
-train Loss: 0.3138 Acc: 0.8730
-val Loss: 0.1810 Acc: 0.9477
-
-Epoch 11/24
-----------
-train Loss: 0.3249 Acc: 0.8566
-val Loss: 0.1750 Acc: 0.9412
-
-Epoch 12/24
-----------
-train Loss: 0.2680 Acc: 0.8689
-val Loss: 0.1821 Acc: 0.9477
-
-Epoch 13/24
-----------
-train Loss: 0.3606 Acc: 0.8279
-val Loss: 0.2020 Acc: 0.9412
-
-Epoch 14/24
-----------
-train Loss: 0.2878 Acc: 0.8484
-val Loss: 0.1763 Acc: 0.9477
-
-Epoch 15/24
-----------
-train Loss: 0.3050 Acc: 0.8689
-val Loss: 0.1757 Acc: 0.9412
-
-Epoch 16/24
-----------
-train Loss: 0.3034 Acc: 0.8648
-val Loss: 0.1753 Acc: 0.9477
-
-Epoch 17/24
-----------
-train Loss: 0.2897 Acc: 0.8770
-val Loss: 0.1783 Acc: 0.9477
-
-Epoch 18/24
-----------
-train Loss: 0.2333 Acc: 0.9098
-val Loss: 0.1800 Acc: 0.9477
-
-Epoch 19/24
-----------
-train Loss: 0.3614 Acc: 0.8648
-val Loss: 0.1736 Acc: 0.9477
-
-Epoch 20/24
-----------
-train Loss: 0.3104 Acc: 0.8934
-val Loss: 0.1713 Acc: 0.9412
-
-Epoch 21/24
-----------
-train Loss: 0.2830 Acc: 0.8648
-val Loss: 0.2225 Acc: 0.9346
-
-Epoch 22/24
-----------
-train Loss: 0.3170 Acc: 0.8730
-val Loss: 0.1792 Acc: 0.9477
-
-Epoch 23/24
-----------
-train Loss: 0.3406 Acc: 0.8279
-val Loss: 0.2325 Acc: 0.9216
-
-Epoch 24/24
-----------
-train Loss: 0.3963 Acc: 0.8443
-val Loss: 0.1822 Acc: 0.9412
-
-完成训练用时 0m 46s
-最佳 val Acc: 0.947712
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Exception ignored in: &lt;function _releaseLock at 0x7f2d2399bd30&gt;
-Traceback (most recent call last):
-  File &quot;/home/pc/xinet/anaconda3/envs/ai/lib/python3.9/logging/__init__.py&quot;, line 227, in _releaseLock
-    def _releaseLock():
-KeyboardInterrupt: 
 </pre></div>
 </div>
 </div>
@@ -873,9 +701,6 @@ KeyboardInterrupt:
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../../../_images/basic_23_0.png" src="../../../_images/basic_23_0.png" />
 </div>
 </div>
 </div>
@@ -921,7 +746,7 @@ KeyboardInterrupt:
     
     <div class="footer-item">
       <p class="last-updated">
-最后更新于 2022-03-17, 03:22:45.<br>
+最后更新于 2022-03-17, 08:50:24.<br>
 </p>
     </div>
     

@@ -7,5 +7,4 @@ intro
 transfer-learning/index
 qat-resnet18
 qat-mini
-api/index
 ```

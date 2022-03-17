@@ -106,6 +106,12 @@
 </li>
 
 <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../api/index.html">
+  API 参考
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
  <a class="reference internal nav-link" href="../refs.html">
   参考文献
  </a>
@@ -244,7 +250,7 @@
     <span class="n">set_axes</span><span class="p">(</span><span class="n">axes</span><span class="p">,</span> <span class="n">xlabel</span><span class="p">,</span> <span class="n">ylabel</span><span class="p">,</span> <span class="n">xlim</span><span class="p">,</span> <span class="n">ylim</span><span class="p">,</span> <span class="n">xscale</span><span class="p">,</span> <span class="n">yscale</span><span class="p">,</span> <span class="n">legend</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="Timer"><a class="viewcode-back" href="../quantization/study/api/generated/runner.Timer.html#runner.Timer">[文档]</a><span class="k">class</span> <span class="nc">Timer</span><span class="p">:</span>
+<div class="viewcode-block" id="Timer"><a class="viewcode-back" href="../quantization/api/generated/runner.Timer.html#runner.Timer">[文档]</a><span class="k">class</span> <span class="nc">Timer</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Record multiple running times.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -274,7 +280,7 @@
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">times</span><span class="p">)</span><span class="o">.</span><span class="n">cumsum</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span></div>
 
 
-<div class="viewcode-block" id="Accumulator"><a class="viewcode-back" href="../quantization/study/api/generated/runner.Accumulator.html#runner.Accumulator">[文档]</a><span class="k">class</span> <span class="nc">Accumulator</span><span class="p">:</span>
+<div class="viewcode-block" id="Accumulator"><a class="viewcode-back" href="../quantization/api/generated/runner.Accumulator.html#runner.Accumulator">[文档]</a><span class="k">class</span> <span class="nc">Accumulator</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;For accumulating sums over `n` variables.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
@@ -291,7 +297,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span></div>
 
 
-<div class="viewcode-block" id="Animator"><a class="viewcode-back" href="../quantization/study/api/generated/runner.Animator.html#runner.Animator">[文档]</a><span class="k">class</span> <span class="nc">Animator</span><span class="p">:</span>
+<div class="viewcode-block" id="Animator"><a class="viewcode-back" href="../quantization/api/generated/runner.Animator.html#runner.Animator">[文档]</a><span class="k">class</span> <span class="nc">Animator</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;For plotting data in animation.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">xlim</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -333,7 +339,7 @@
         <span class="n">display</span><span class="o">.</span><span class="n">display</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fig</span><span class="p">)</span>
         <span class="n">display</span><span class="o">.</span><span class="n">clear_output</span><span class="p">(</span><span class="n">wait</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="show_images"><a class="viewcode-back" href="../quantization/study/api/generated/runner.show_images.html#runner.show_images">[文档]</a><span class="k">def</span> <span class="nf">show_images</span><span class="p">(</span><span class="n">imgs</span><span class="p">,</span> <span class="n">num_rows</span><span class="p">,</span> <span class="n">num_cols</span><span class="p">,</span> <span class="n">titles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1.5</span><span class="p">):</span>
+<div class="viewcode-block" id="show_images"><a class="viewcode-back" href="../quantization/api/generated/runner.show_images.html#runner.show_images">[文档]</a><span class="k">def</span> <span class="nf">show_images</span><span class="p">(</span><span class="n">imgs</span><span class="p">,</span> <span class="n">num_rows</span><span class="p">,</span> <span class="n">num_cols</span><span class="p">,</span> <span class="n">titles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1.5</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Plot 多张图片</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="n">num_cols</span> <span class="o">*</span> <span class="n">scale</span><span class="p">,</span> <span class="n">num_rows</span> <span class="o">*</span> <span class="n">scale</span><span class="p">)</span>
@@ -373,7 +379,7 @@
     
     <div class="footer-item">
       <p class="last-updated">
-最后更新于 2022-03-17, 03:22:45.<br>
+最后更新于 2022-03-17, 08:50:24.<br>
 </p>
     </div>
     

@@ -107,6 +107,12 @@
 </li>
 
 <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../api/index.html">
+  API 参考
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
  <a class="reference internal nav-link" href="../refs.html">
   参考文献
  </a>
@@ -189,11 +195,6 @@
    安装 Nightly 构建
   </a>
  </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id1">
-   下载数据
-  </a>
- </li>
 </ul>
 
 </nav>
@@ -235,42 +236,6 @@ pip install --pre torch torchvision -f https://download.pytorch.org/whl/nightly/
 <p>或者：</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>!yes y <span class="p">|</span> pip uninstall torch torchvision
 !yes y <span class="p">|</span> pip install --pre torch torchvision -f https://download.pytorch.org/whl/nightly/cu101/torch_nightly.html
-</pre></div>
-</div>
-</div>
-<div class="section" id="id1">
-<h2>下载数据<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span>
-<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">import</span> <span class="nn">zipfile</span>
-
-
-<span class="k">def</span> <span class="nf">download</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="n">data_url</span><span class="p">):</span>
-    <span class="n">root</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">Path</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;下载数据...&quot;</span><span class="p">)</span>
-        <span class="n">root</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="k">with</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">data_url</span><span class="p">)</span> <span class="k">as</span> <span class="n">req</span><span class="p">:</span>
-            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
-        <span class="k">if</span> <span class="mi">200</span> <span class="o">&lt;=</span> <span class="n">req</span><span class="o">.</span><span class="n">status_code</span> <span class="o">&lt;</span> <span class="mi">300</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;下载完成！&quot;</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;下载失败！&quot;</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s2">&quot;已经存在，跳过下载...&quot;</span><span class="p">)</span>
-
-    <span class="k">with</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">zip_ref</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;解压...&quot;</span><span class="p">)</span>
-        <span class="n">zip_ref</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">)</span>
-
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="n">data_url</span> <span class="o">=</span> <span class="s1">&#39;https://download.pytorch.org/tutorial/hymenoptera_data.zip&#39;</span>
-    <span class="n">data_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">)</span>
-    <span class="n">file_name</span> <span class="o">=</span> <span class="n">data_path</span> <span class="o">/</span> <span class="s1">&#39;hymenoptera_data.zip&#39;</span>
-    <span class="n">data_path</span> <span class="o">=</span> <span class="n">data_path</span> <span class="o">/</span> <span class="s1">&#39;hymenoptera_data&#39;</span>
-    <span class="n">download</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="n">data_url</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -316,7 +281,7 @@ pip install --pre torch torchvision -f https://download.pytorch.org/whl/nightly/
     
     <div class="footer-item">
       <p class="last-updated">
-最后更新于 2022-03-17, 03:22:45.<br>
+最后更新于 2022-03-17, 08:50:24.<br>
 </p>
     </div>
     
