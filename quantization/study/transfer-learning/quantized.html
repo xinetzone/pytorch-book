@@ -407,7 +407,7 @@
 <span class="c1"># 载入自定义模块</span>
 <span class="n">load_mod</span><span class="p">()</span>
 
-<span class="kn">from</span> <span class="nn">hymenoptera</span> <span class="kn">import</span> <span class="n">Hymenoptera</span>
+<span class="kn">from</span> <span class="nn">pytorch_book.datasets.examples</span> <span class="kn">import</span> <span class="n">Hymenoptera</span>
 <span class="kn">from</span> <span class="nn">tools</span> <span class="kn">import</span> <span class="n">train_model</span>
 <span class="kn">from</span> <span class="nn">xinet</span> <span class="kn">import</span> <span class="n">ModuleTool</span><span class="p">,</span> <span class="n">CV</span>
 </pre></div>
@@ -416,8 +416,7 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_dir</span> <span class="o">=</span> <span class="s1">&#39;/media/pc/data/4tb/xinet/tests/hymenoptera_data&#39;</span>
-<span class="n">loader</span> <span class="o">=</span> <span class="n">Hymenoptera</span><span class="p">(</span><span class="n">data_dir</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">loader</span> <span class="o">=</span> <span class="n">Hymenoptera</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -436,6 +435,12 @@
 <span class="c1"># 或者，它可以推广到 nn.Linear(num_ftrs, len(class_names))。</span>
 <span class="n">model_fe</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">resnet18</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">quantize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">num_ftrs</span> <span class="o">=</span> <span class="n">model_fe</span><span class="o">.</span><span class="n">fc</span><span class="o">.</span><span class="n">in_features</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/pc/xinet/anaconda3/envs/ai/lib/python3.9/site-packages/torch/ao/quantization/observer.py:172: UserWarning: Please use quant_min and quant_max to specify the range for observers.                     reduce_range will be deprecated in a future release of PyTorch.
+  warnings.warn(
 </pre></div>
 </div>
 </div>
@@ -501,6 +506,9 @@
 
 <span class="c1"># Decay LR by a factor of 0.1 every 7 epochs</span>
 <span class="n">exp_lr_scheduler</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">lr_scheduler</span><span class="o">.</span><span class="n">StepLR</span><span class="p">(</span><span class="n">optimizer_ft</span><span class="p">,</span> <span class="n">step_size</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+
+<span class="n">train_iter</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">dataloaders</span><span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">]</span>
+<span class="n">test_iter</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">dataloaders</span><span class="p">[</span><span class="s1">&#39;val&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -509,147 +517,33 @@
 <p>该步骤在 CPU 上耗时约 15-25 分钟。由于量化模型只能在 CPU 上运行，所以不能在 GPU 上运行训练。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">new_model</span> <span class="o">=</span> <span class="n">train_model</span><span class="p">(</span><span class="n">new_model</span><span class="p">,</span> <span class="n">loader</span><span class="p">,</span>
-                        <span class="n">criterion</span><span class="p">,</span> <span class="n">optimizer_ft</span><span class="p">,</span> <span class="n">exp_lr_scheduler</span><span class="p">,</span>
-                        <span class="n">num_epochs</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">CV</span><span class="o">.</span><span class="n">train_fine_tuning</span><span class="p">(</span><span class="n">new_model</span><span class="p">,</span> <span class="n">train_iter</span><span class="p">,</span> <span class="n">test_iter</span><span class="p">,</span>
+                     <span class="n">learning_rate</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span>
+                     <span class="n">num_epochs</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span>
+                     <span class="n">param_group</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                     <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 0/24
-----------
-train Loss: 2.2540 Acc: 0.7828
-val Loss: 1.9116 Acc: 0.8693
-
-Epoch 1/24
-----------
-train Loss: 2.3396 Acc: 0.8402
-val Loss: 0.8777 Acc: 0.9346
-
-Epoch 2/24
-----------
-train Loss: 1.6714 Acc: 0.8811
-val Loss: 1.7855 Acc: 0.8954
-
-Epoch 3/24
-----------
-train Loss: 1.9060 Acc: 0.8975
-val Loss: 1.1517 Acc: 0.9477
-
-Epoch 4/24
-----------
-train Loss: 3.4491 Acc: 0.8607
-val Loss: 1.0636 Acc: 0.9608
-
-Epoch 5/24
-----------
-train Loss: 1.6051 Acc: 0.9139
-val Loss: 1.5671 Acc: 0.9542
-
-Epoch 6/24
-----------
-train Loss: 2.7531 Acc: 0.8566
-val Loss: 1.1721 Acc: 0.9542
-
-Epoch 7/24
-----------
-train Loss: 1.3810 Acc: 0.9057
-val Loss: 1.1915 Acc: 0.9542
-
-Epoch 8/24
-----------
-train Loss: 1.6451 Acc: 0.9016
-val Loss: 1.1173 Acc: 0.9542
-
-Epoch 9/24
-----------
-train Loss: 1.1918 Acc: 0.9139
-val Loss: 1.0723 Acc: 0.9608
-
-Epoch 10/24
-----------
-train Loss: 2.0486 Acc: 0.9057
-val Loss: 1.2041 Acc: 0.9542
-
-Epoch 11/24
-----------
-train Loss: 1.9141 Acc: 0.9016
-val Loss: 1.1547 Acc: 0.9608
-
-Epoch 12/24
-----------
-train Loss: 1.4094 Acc: 0.9098
-val Loss: 1.2224 Acc: 0.9542
-
-Epoch 13/24
-----------
-train Loss: 1.2274 Acc: 0.9467
-val Loss: 1.0874 Acc: 0.9673
-
-Epoch 14/24
-----------
-train Loss: 2.0147 Acc: 0.9057
-val Loss: 1.1048 Acc: 0.9608
-
-Epoch 15/24
-----------
-train Loss: 2.3489 Acc: 0.8852
-val Loss: 1.1486 Acc: 0.9608
-
-Epoch 16/24
-----------
-train Loss: 1.3795 Acc: 0.9098
-val Loss: 1.1481 Acc: 0.9608
-
-Epoch 17/24
-----------
-train Loss: 1.6300 Acc: 0.8893
-val Loss: 1.1296 Acc: 0.9608
-
-Epoch 18/24
-----------
-train Loss: 1.4728 Acc: 0.9057
-val Loss: 1.1336 Acc: 0.9608
-
-Epoch 19/24
-----------
-train Loss: 1.3459 Acc: 0.9180
-val Loss: 1.1395 Acc: 0.9608
-
-Epoch 20/24
-----------
-train Loss: 1.2264 Acc: 0.9221
-val Loss: 1.1586 Acc: 0.9608
-
-Epoch 21/24
-----------
-train Loss: 1.9510 Acc: 0.9098
-val Loss: 1.1570 Acc: 0.9608
-
-Epoch 22/24
-----------
-train Loss: 1.3153 Acc: 0.9180
-val Loss: 1.1580 Acc: 0.9608
-
-Epoch 23/24
-----------
-train Loss: 1.1082 Acc: 0.9221
-val Loss: 1.1578 Acc: 0.9608
-
-Epoch 24/24
-----------
-train Loss: 1.5145 Acc: 0.9221
-val Loss: 1.1591 Acc: 0.9608
-
-完成训练用时 1m 15s
-最佳 val Acc: 0.967320
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>loss 0.171, train acc 0.939, test acc 0.922
+167.2 examples/sec on cpu
+</pre></div>
+</div>
+<img alt="../../../_images/quantized_10_1.svg" src="../../../_images/quantized_10_1.svg" /></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># new_model = train_model(new_model, loader,</span>
+<span class="c1">#                         criterion, optimizer_ft, exp_lr_scheduler,</span>
+<span class="c1">#                         num_epochs=25, device=device)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">xs</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">loader</span><span class="o">.</span><span class="n">dataloaders</span><span class="p">[</span><span class="s1">&#39;val&#39;</span><span class="p">]:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">xs</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">test_iter</span><span class="p">:</span>
     <span class="k">break</span>
 
 <span class="n">MT</span> <span class="o">=</span> <span class="n">ModuleTool</span><span class="p">(</span><span class="n">xs</span><span class="p">)</span>
@@ -660,8 +554,7 @@ val Loss: 1.1591 Acc: 0.9608
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../../_images/quantized_11_0.png" src="../../../_images/quantized_11_0.png" />
-</div>
+<img alt="../../../_images/quantized_12_0.svg" src="../../../_images/quantized_12_0.svg" /></div>
 </div>
 </div>
 <div class="section" id="id4">
@@ -700,6 +593,12 @@ val Loss: 1.1591 Acc: 0.9608
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/pc/xinet/anaconda3/envs/ai/lib/python3.9/site-packages/torch/ao/quantization/observer.py:172: UserWarning: Please use quant_min and quant_max to specify the range for observers.                     reduce_range will be deprecated in a future release of PyTorch.
+  warnings.warn(
+</pre></div>
+</div>
+</div>
 </div>
 <p class="rubric">Step 4. 微调模型</p>
 <p>在本教程中，对整个模型进行了微调。一般来说，这将导致更高的准确性。但是，由于这里使用的训练集较小，我们最终会对训练集过拟合。</p>
@@ -709,161 +608,37 @@ val Loss: 1.1591 Acc: 0.9608
   <span class="n">param</span><span class="o">.</span><span class="n">requires_grad</span> <span class="o">=</span> <span class="kc">True</span>
 
 <span class="c1"># We can fine-tune on GPU if available</span>
-<span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda:1&quot;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
+<span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda:0&quot;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
 
-<span class="n">criterion</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">CrossEntropyLoss</span><span class="p">()</span>
-
-<span class="c1"># Note that we are training everything, so the learning rate is lower</span>
-<span class="c1"># Notice the smaller learning rate</span>
-<span class="n">optimizer_ft</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">model_ft</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span> <span class="n">momentum</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">weight_decay</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
-
-<span class="c1"># Decay LR by a factor of 0.3 every several epochs</span>
-<span class="n">exp_lr_scheduler</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">lr_scheduler</span><span class="o">.</span><span class="n">StepLR</span><span class="p">(</span><span class="n">optimizer_ft</span><span class="p">,</span> <span class="n">step_size</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
-
-<span class="n">model_ft_tuned</span> <span class="o">=</span> <span class="n">train_model</span><span class="p">(</span><span class="n">model_ft</span><span class="p">,</span> <span class="n">loader</span><span class="p">,</span> <span class="n">criterion</span><span class="p">,</span> <span class="n">optimizer_ft</span><span class="p">,</span> <span class="n">exp_lr_scheduler</span><span class="p">,</span>
-                              <span class="n">num_epochs</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+<span class="c1"># criterion = nn.CrossEntropyLoss()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">CV</span><span class="o">.</span><span class="n">train_fine_tuning</span><span class="p">(</span><span class="n">model_ft</span><span class="p">,</span> <span class="n">train_iter</span><span class="p">,</span> <span class="n">test_iter</span><span class="p">,</span>
+                     <span class="n">learning_rate</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span>
+                     <span class="n">num_epochs</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span>
+                     <span class="n">param_group</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                     <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 0/24
-----------
-train Loss: 0.7493 Acc: 0.6598
-val Loss: 0.3335 Acc: 0.8497
-
-Epoch 1/24
-----------
-train Loss: 0.8037 Acc: 0.6803
-val Loss: 0.2272 Acc: 0.9216
-
-Epoch 2/24
-----------
-train Loss: 0.5584 Acc: 0.7705
-val Loss: 0.4392 Acc: 0.8431
-
-Epoch 3/24
-----------
-train Loss: 0.5198 Acc: 0.7828
-val Loss: 1.1529 Acc: 0.7712
-
-Epoch 4/24
-----------
-train Loss: 0.6117 Acc: 0.7254
-val Loss: 0.3484 Acc: 0.8497
-
-Epoch 5/24
-----------
-train Loss: 0.6028 Acc: 0.7705
-val Loss: 0.2512 Acc: 0.9085
-
-Epoch 6/24
-----------
-train Loss: 0.4080 Acc: 0.8074
-val Loss: 0.2612 Acc: 0.9281
-
-Epoch 7/24
-----------
-train Loss: 0.3836 Acc: 0.8320
-val Loss: 0.2258 Acc: 0.9346
-
-Epoch 8/24
-----------
-train Loss: 0.3621 Acc: 0.8279
-val Loss: 0.2284 Acc: 0.9281
-
-Epoch 9/24
-----------
-train Loss: 0.3492 Acc: 0.8279
-val Loss: 0.2327 Acc: 0.9216
-
-Epoch 10/24
-----------
-train Loss: 0.3552 Acc: 0.8402
-val Loss: 0.2261 Acc: 0.9412
-
-Epoch 11/24
-----------
-train Loss: 0.3892 Acc: 0.8320
-val Loss: 0.2291 Acc: 0.9281
-
-Epoch 12/24
-----------
-train Loss: 0.3802 Acc: 0.8238
-val Loss: 0.2067 Acc: 0.9216
-
-Epoch 13/24
-----------
-train Loss: 0.3072 Acc: 0.8689
-val Loss: 0.2186 Acc: 0.9412
-
-Epoch 14/24
-----------
-train Loss: 0.2950 Acc: 0.8607
-val Loss: 0.2071 Acc: 0.9216
-
-Epoch 15/24
-----------
-train Loss: 0.4238 Acc: 0.8197
-val Loss: 0.2146 Acc: 0.9216
-
-Epoch 16/24
-----------
-train Loss: 0.3380 Acc: 0.8320
-val Loss: 0.2151 Acc: 0.9281
-
-Epoch 17/24
-----------
-train Loss: 0.3179 Acc: 0.8484
-val Loss: 0.2369 Acc: 0.9150
-
-Epoch 18/24
-----------
-train Loss: 0.2528 Acc: 0.8975
-val Loss: 0.2220 Acc: 0.9020
-
-Epoch 19/24
-----------
-train Loss: 0.3408 Acc: 0.8730
-val Loss: 0.2150 Acc: 0.9412
-
-Epoch 20/24
-----------
-train Loss: 0.2989 Acc: 0.8893
-val Loss: 0.2179 Acc: 0.9216
-
-Epoch 21/24
-----------
-train Loss: 0.3638 Acc: 0.8566
-val Loss: 0.2237 Acc: 0.9346
-
-Epoch 22/24
-----------
-train Loss: 0.3313 Acc: 0.8361
-val Loss: 0.2368 Acc: 0.9020
-
-Epoch 23/24
-----------
-train Loss: 0.2977 Acc: 0.8689
-val Loss: 0.2092 Acc: 0.9346
-
-Epoch 24/24
-----------
-train Loss: 0.2735 Acc: 0.8893
-val Loss: 0.2135 Acc: 0.9216
-
-完成训练用时 2m 58s
-最佳 val Acc: 0.941176
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>loss 0.338, train acc 0.857, test acc 0.928
+60.0 examples/sec on cuda:0
 </pre></div>
 </div>
-</div>
+<img alt="../../../_images/quantized_17_1.svg" src="../../../_images/quantized_17_1.svg" /></div>
 </div>
 <p class="rubric">Step 5. 转换已量化的模型</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">torch.quantization</span> <span class="kn">import</span> <span class="n">convert</span>
-<span class="n">model_ft_tuned</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span>
+<span class="n">model_ft</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span>
 
-<span class="n">model_quantized_and_trained</span> <span class="o">=</span> <span class="n">convert</span><span class="p">(</span><span class="n">model_ft_tuned</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">model_quantized_and_trained</span> <span class="o">=</span> <span class="n">convert</span><span class="p">(</span><span class="n">model_ft</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -871,7 +646,7 @@ val Loss: 0.2135 Acc: 0.9216
 <p>让我们看看量化模型在一些图像上的表现：</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">xs</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">loader</span><span class="o">.</span><span class="n">dataloaders</span><span class="p">[</span><span class="s1">&#39;val&#39;</span><span class="p">]:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">xs</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">test_iter</span><span class="p">:</span>
     <span class="k">break</span>
 
 <span class="n">MT</span> <span class="o">=</span> <span class="n">ModuleTool</span><span class="p">(</span><span class="n">xs</span><span class="p">)</span>
@@ -887,8 +662,7 @@ val Loss: 0.2135 Acc: 0.9216
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../../_images/quantized_19_0.png" src="../../../_images/quantized_19_0.png" />
-</div>
+<img alt="../../../_images/quantized_21_0.svg" src="../../../_images/quantized_21_0.svg" /></div>
 </div>
 </div>
 </div>
@@ -933,7 +707,7 @@ val Loss: 0.2135 Acc: 0.9216
     
     <div class="footer-item">
       <p class="last-updated">
-最后更新于 2022-03-17, 08:50:24.<br>
+最后更新于 2022-03-17, 10:48:58.<br>
 </p>
     </div>
     
