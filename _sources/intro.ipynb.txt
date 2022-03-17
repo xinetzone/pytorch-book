@@ -4,7 +4,7 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "# 简介\n",
+    "# 项目简介\n",
     "\n",
     "提供与 PyTorch 相关的优质资源。\n",
     "\n",

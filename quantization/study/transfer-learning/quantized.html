@@ -1,0 +1,948 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>量化计算机视觉分类 &#8212; Pytorch Book 0.0.1 文档</title>
+    
+  <link href="../../../_static/css/theme.css" rel="stylesheet">
+  <link href="../../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/tabs.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/default.css" />
+    
+  <link rel="preload" as="script" href="../../../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script src="../../../_static/translations.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <link rel="shortcut icon" href="../../../_static/favicon.jpg"/>
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="TVM" href="tvm.html" />
+    <link rel="prev" title="计算机视觉分类" href="basic.html" />
+    <link rel="stylesheet" href="../../../_static/css/default.css"/>
+    <link rel="stylesheet" href="../../../_static/css/custom.css"/>
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+
+  <div id="navbar-start">
+    
+    
+
+<a class="navbar-brand" href="../../../index.html">
+  <img src="../../../_static/logo.jpg" class="logo" alt="logo">
+</a>
+
+
+    
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  
+  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+    <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../intro.html">
+  项目简介
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../tutorials/index.html">
+  教程
+ </a>
+</li>
+
+<li class="toctree-l1 current active nav-item">
+ <a class="reference internal nav-link" href="../../index.html">
+  量化
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../ecosystem/index.html">
+  生态系统
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../refs.html">
+  参考文献
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../others/index.html">
+  其他
+ </a>
+</li>
+
+    
+</ul>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/xinetzone/pytorch-book" rel="noopener" target="_blank" title="GitHub">
+            <span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label>
+          </a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    <ul class="current nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../start/index.html">
+   快速上手
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../start/basic.html">
+     基础
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../start/ns.html">
+     Pytorch 数值套件教程
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="../index.html">
+   学习
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../intro.html">
+     概述
+    </a>
+   </li>
+   <li class="toctree-l2 current active has-children">
+    <a class="reference internal" href="index.html">
+     迁移学习
+    </a>
+    <input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+    <label for="toctree-checkbox-3">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul class="current">
+     <li class="toctree-l3">
+      <a class="reference internal" href="basic.html">
+       计算机视觉分类
+      </a>
+     </li>
+     <li class="toctree-l3 current active">
+      <a class="current reference internal" href="#">
+       量化计算机视觉分类
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="tvm.html">
+       TVM
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="test.html">
+       测试
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../qat-resnet18.html">
+     QAT（resnet18）
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../qat-mini.html">
+     静态量化（cifar10）
+    </a>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../api/index.html">
+     用户代码 API
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+    <label for="toctree-checkbox-4">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../api/runner.html">
+       runner
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+      <label for="toctree-checkbox-5">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../api/generated/runner.Timer.html">
+         runner.Timer
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../api/generated/runner.Accumulator.html">
+         runner.Accumulator
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../api/generated/runner.Animator.html">
+         runner.Animator
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../api/generated/runner.show_images.html">
+         runner.show_images
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../api/xinet.html">
+       xinet
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../api/hymenoptera.html">
+       hymenoptera
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../api/net.html">
+       NN 模块
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../api/helper.html">
+       辅助工具
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../api/tools.html">
+       工具
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../papers/index.html">
+   论文
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../papers/gholami2021survey.html">
+     A Survey of Quantization Methods for Efficient Neural Network Inference
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+  </div>
+</nav>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+            
+              
+              <div class="toc-item">
+                
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   准备
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id3">
+   1 基于量化特征提取器训练自定义分类器
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id4">
+   2 微调量化模型
+  </a>
+ </li>
+</ul>
+
+</nav>
+              </div>
+              
+              <div class="toc-item">
+                
+
+<div class="tocsection editthispage">
+    <a href="https://github.com/xinetzone/pytorch-book/edit/main/docs/quantization/study/transfer-learning/quantized.ipynb">
+        <i class="fas fa-pencil-alt"></i> Edit this page
+    </a>
+</div>
+
+              </div>
+              
+            
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="id1">
+<h1>量化计算机视觉分类<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<p><span class="guilabel">来源</span>：<a class="reference external" href="https://pytorch.org/tutorials/intermediate/quantized_transfer_learning_tutorial.html">quantized_transfer_learning</a></p>
+<div class="admonition- admonition">
+<p class="admonition-title">任务</p>
+<p>使用量化模型提取特征。</p>
+</div>
+<div class="section" id="id2">
+<h2>准备<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>在进入迁移学习之前，让我们回顾一下“先决条件”，例如安装和数据加载/可视化。</p>
+<p>详细内容见：<a class="reference internal" href="basic.html"><span class="doc">图像分类的迁移学习</span></a>。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+
+<span class="kn">from</span> <span class="nn">mod</span> <span class="kn">import</span> <span class="n">load_mod</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">ion</span><span class="p">()</span>
+<span class="c1"># 载入自定义模块</span>
+<span class="n">load_mod</span><span class="p">()</span>
+
+<span class="kn">from</span> <span class="nn">hymenoptera</span> <span class="kn">import</span> <span class="n">Hymenoptera</span>
+<span class="kn">from</span> <span class="nn">tools</span> <span class="kn">import</span> <span class="n">train_model</span>
+<span class="kn">from</span> <span class="nn">xinet</span> <span class="kn">import</span> <span class="n">ModuleTool</span><span class="p">,</span> <span class="n">CV</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_dir</span> <span class="o">=</span> <span class="s1">&#39;/media/pc/data/4tb/xinet/tests/hymenoptera_data&#39;</span>
+<span class="n">loader</span> <span class="o">=</span> <span class="n">Hymenoptera</span><span class="p">(</span><span class="n">data_dir</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id3">
+<h2>1 基于量化特征提取器训练自定义分类器<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>在本节中，将使用“冻结”的量化特征提取器，并在此基础上训练自定义分类器头部。与浮点模型不同，您不需要为量化模型设置 <code class="docutils literal notranslate"><span class="pre">requires_grad=False</span></code>，因为它没有可训练的参数。请参阅 <a class="reference external" href="https://pytorch.org/docs/stable/quantization.html">文档</a> 了解更多细节。</p>
+<p>加载预训练模型：在这个练习中，使用 <a class="reference external" href="https://pytorch.org/hub/pytorch_vision_resnet/">ResNet-18</a>。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torchvision.models.quantization</span> <span class="k">as</span> <span class="nn">models</span>
+
+<span class="c1"># 我们需要 `fc` 中过滤器的数量，以便将来使用。</span>
+<span class="c1"># 这里每个输出样本的大小设置为 2。</span>
+<span class="c1"># 或者，它可以推广到 nn.Linear(num_ftrs, len(class_names))。</span>
+<span class="n">model_fe</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">resnet18</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">quantize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">num_ftrs</span> <span class="o">=</span> <span class="n">model_fe</span><span class="o">.</span><span class="n">fc</span><span class="o">.</span><span class="n">in_features</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>此时，您需要修改预训练的模型。该模型在开始和结束都有量化/反量化块。但是，因为你只会使用特征提取器，所以反量化层必须在线性层（头部）之前移动。最简单的方法是将模型封装在 <code class="docutils literal notranslate"><span class="pre">nn.Sequential</span></code> 模块中。第一步是分离 ResNet 模型中的特征提取器。虽然在这个例子中，你的任务是使用除 <code class="docutils literal notranslate"><span class="pre">fc</span></code> 以外的所有层作为特征提取器，但实际上，你可以根据需要取尽可能多的部分。如果您也想替换一些卷积层，这将是有用的。</p>
+<div class="admonition note">
+<p class="admonition-title">备注</p>
+<p>当将特征提取器与量化模型的其余部分分离时，您必须手动将 quantizer/dequantized 放置在希望保持量化的部分的开头和结尾。</p>
+</div>
+<p>下面的函数创建一个带有自定义头部的模型。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">nn</span>
+
+
+<span class="k">def</span> <span class="nf">create_combined_model</span><span class="p">(</span><span class="n">model_fe</span><span class="p">):</span>
+    <span class="c1"># 步骤1：分离特征提取器</span>
+    <span class="n">model_fe_features</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+        <span class="n">model_fe</span><span class="o">.</span><span class="n">quant</span><span class="p">,</span>  <span class="c1"># 量化 input</span>
+        <span class="n">model_fe</span><span class="o">.</span><span class="n">conv1</span><span class="p">,</span>
+        <span class="n">model_fe</span><span class="o">.</span><span class="n">bn1</span><span class="p">,</span>
+        <span class="n">model_fe</span><span class="o">.</span><span class="n">relu</span><span class="p">,</span>
+        <span class="n">model_fe</span><span class="o">.</span><span class="n">maxpool</span><span class="p">,</span>
+        <span class="n">model_fe</span><span class="o">.</span><span class="n">layer1</span><span class="p">,</span>
+        <span class="n">model_fe</span><span class="o">.</span><span class="n">layer2</span><span class="p">,</span>
+        <span class="n">model_fe</span><span class="o">.</span><span class="n">layer3</span><span class="p">,</span>
+        <span class="n">model_fe</span><span class="o">.</span><span class="n">layer4</span><span class="p">,</span>
+        <span class="n">model_fe</span><span class="o">.</span><span class="n">avgpool</span><span class="p">,</span>
+        <span class="n">model_fe</span><span class="o">.</span><span class="n">dequant</span><span class="p">,</span>  <span class="c1"># 反量化 output</span>
+    <span class="p">)</span>
+
+    <span class="c1"># 步骤2：创建一个新的“头”</span>
+    <span class="n">new_head</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+        <span class="n">nn</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="n">p</span><span class="o">=</span><span class="mf">0.5</span><span class="p">),</span>
+        <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">num_ftrs</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+    <span class="p">)</span>
+
+    <span class="c1"># 步骤3：合并，不要忘记量化 stubs</span>
+    <span class="n">new_model</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+        <span class="n">model_fe_features</span><span class="p">,</span>
+        <span class="n">nn</span><span class="o">.</span><span class="n">Flatten</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+        <span class="n">new_head</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">new_model</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>目前，量化模型只能在 CPU 上运行。然而，可以将模型的反量化部分发送给 GPU。</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch.optim</span> <span class="k">as</span> <span class="nn">optim</span>
+<span class="n">new_model</span> <span class="o">=</span> <span class="n">create_combined_model</span><span class="p">(</span><span class="n">model_fe</span><span class="p">)</span>
+
+<span class="n">device</span> <span class="o">=</span> <span class="s1">&#39;cpu&#39;</span>
+<span class="n">criterion</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">CrossEntropyLoss</span><span class="p">()</span>
+
+<span class="c1"># 注意，我们只训练头部</span>
+<span class="n">optimizer_ft</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">new_model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">momentum</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
+
+<span class="c1"># Decay LR by a factor of 0.1 every 7 epochs</span>
+<span class="n">exp_lr_scheduler</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">lr_scheduler</span><span class="o">.</span><span class="n">StepLR</span><span class="p">(</span><span class="n">optimizer_ft</span><span class="p">,</span> <span class="n">step_size</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p class="rubric">训练和评估</p>
+<p>该步骤在 CPU 上耗时约 15-25 分钟。由于量化模型只能在 CPU 上运行，所以不能在 GPU 上运行训练。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">new_model</span> <span class="o">=</span> <span class="n">train_model</span><span class="p">(</span><span class="n">new_model</span><span class="p">,</span> <span class="n">loader</span><span class="p">,</span>
+                        <span class="n">criterion</span><span class="p">,</span> <span class="n">optimizer_ft</span><span class="p">,</span> <span class="n">exp_lr_scheduler</span><span class="p">,</span>
+                        <span class="n">num_epochs</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 0/24
+----------
+train Loss: 2.2540 Acc: 0.7828
+val Loss: 1.9116 Acc: 0.8693
+
+Epoch 1/24
+----------
+train Loss: 2.3396 Acc: 0.8402
+val Loss: 0.8777 Acc: 0.9346
+
+Epoch 2/24
+----------
+train Loss: 1.6714 Acc: 0.8811
+val Loss: 1.7855 Acc: 0.8954
+
+Epoch 3/24
+----------
+train Loss: 1.9060 Acc: 0.8975
+val Loss: 1.1517 Acc: 0.9477
+
+Epoch 4/24
+----------
+train Loss: 3.4491 Acc: 0.8607
+val Loss: 1.0636 Acc: 0.9608
+
+Epoch 5/24
+----------
+train Loss: 1.6051 Acc: 0.9139
+val Loss: 1.5671 Acc: 0.9542
+
+Epoch 6/24
+----------
+train Loss: 2.7531 Acc: 0.8566
+val Loss: 1.1721 Acc: 0.9542
+
+Epoch 7/24
+----------
+train Loss: 1.3810 Acc: 0.9057
+val Loss: 1.1915 Acc: 0.9542
+
+Epoch 8/24
+----------
+train Loss: 1.6451 Acc: 0.9016
+val Loss: 1.1173 Acc: 0.9542
+
+Epoch 9/24
+----------
+train Loss: 1.1918 Acc: 0.9139
+val Loss: 1.0723 Acc: 0.9608
+
+Epoch 10/24
+----------
+train Loss: 2.0486 Acc: 0.9057
+val Loss: 1.2041 Acc: 0.9542
+
+Epoch 11/24
+----------
+train Loss: 1.9141 Acc: 0.9016
+val Loss: 1.1547 Acc: 0.9608
+
+Epoch 12/24
+----------
+train Loss: 1.4094 Acc: 0.9098
+val Loss: 1.2224 Acc: 0.9542
+
+Epoch 13/24
+----------
+train Loss: 1.2274 Acc: 0.9467
+val Loss: 1.0874 Acc: 0.9673
+
+Epoch 14/24
+----------
+train Loss: 2.0147 Acc: 0.9057
+val Loss: 1.1048 Acc: 0.9608
+
+Epoch 15/24
+----------
+train Loss: 2.3489 Acc: 0.8852
+val Loss: 1.1486 Acc: 0.9608
+
+Epoch 16/24
+----------
+train Loss: 1.3795 Acc: 0.9098
+val Loss: 1.1481 Acc: 0.9608
+
+Epoch 17/24
+----------
+train Loss: 1.6300 Acc: 0.8893
+val Loss: 1.1296 Acc: 0.9608
+
+Epoch 18/24
+----------
+train Loss: 1.4728 Acc: 0.9057
+val Loss: 1.1336 Acc: 0.9608
+
+Epoch 19/24
+----------
+train Loss: 1.3459 Acc: 0.9180
+val Loss: 1.1395 Acc: 0.9608
+
+Epoch 20/24
+----------
+train Loss: 1.2264 Acc: 0.9221
+val Loss: 1.1586 Acc: 0.9608
+
+Epoch 21/24
+----------
+train Loss: 1.9510 Acc: 0.9098
+val Loss: 1.1570 Acc: 0.9608
+
+Epoch 22/24
+----------
+train Loss: 1.3153 Acc: 0.9180
+val Loss: 1.1580 Acc: 0.9608
+
+Epoch 23/24
+----------
+train Loss: 1.1082 Acc: 0.9221
+val Loss: 1.1578 Acc: 0.9608
+
+Epoch 24/24
+----------
+train Loss: 1.5145 Acc: 0.9221
+val Loss: 1.1591 Acc: 0.9608
+
+完成训练用时 1m 15s
+最佳 val Acc: 0.967320
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">xs</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">loader</span><span class="o">.</span><span class="n">dataloaders</span><span class="p">[</span><span class="s1">&#39;val&#39;</span><span class="p">]:</span>
+    <span class="k">break</span>
+
+<span class="n">MT</span> <span class="o">=</span> <span class="n">ModuleTool</span><span class="p">(</span><span class="n">xs</span><span class="p">)</span>
+<span class="n">MT</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">new_model</span><span class="p">,</span> <span class="n">loader</span><span class="o">.</span><span class="n">class_names</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span>
+          <span class="n">num_rows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_cols</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/quantized_11_0.png" src="../../../_images/quantized_11_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="id4">
+<h2>2 微调量化模型<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<p>在这一部分中，对用于迁移学习的特征提取器进行了微调，并对特征提取器进行量化。注意，在第 1 部分和第 2 部分中，特征提取器都是量化的。不同之处在于，在第 1 部分中，使用了预训练的量化模型。在这一部分中，我们在对感兴趣的数据集进行微调后，创建了量化的特征提取器，因此这是一种利用迁移学习获得更好准确性的方法，同时具有量化的好处。请注意，在我们的具体示例中，训练集非常小（120 张图片），因此对整个模型进行微调的好处并不明显。然而，这里显示的过程将提高迁移学习的准确性于更大的数据集。</p>
+<p>预训练的特征提取器必须是可量化的。要确保它是可量化的，请执行以下步骤：</p>
+<ol class="simple">
+<li><p>使用 <code class="xref py py-func docutils literal notranslate"><span class="pre">torch.quantization.fuse_modules()</span></code> 融合 <code class="docutils literal notranslate"><span class="pre">(Conv,</span> <span class="pre">BN,</span> <span class="pre">ReLU)</span></code>, <code class="docutils literal notranslate"><span class="pre">(Conv,</span> <span class="pre">BN)</span></code> 和 <code class="docutils literal notranslate"><span class="pre">(Conv,</span> <span class="pre">ReLU)</span></code>。</p></li>
+<li><p>连接特征提取器与自定义头。这需要反量化特征提取器的输出。</p></li>
+<li><p>在特征提取器中适当位置插入伪量化模块，训练时模拟量化。</p></li>
+</ol>
+<p>对于步骤（1），我们使用来自 <code class="xref py py-mod docutils literal notranslate"><span class="pre">torchvision.models.quantization</span></code> 的模型 <code class="docutils literal notranslate"><span class="pre">resnet18</span></code>，它们有成员方法 <code class="docutils literal notranslate"><span class="pre">fuse_model</span></code>。这个函数融合了 <code class="docutils literal notranslate"><span class="pre">conv</span></code>，<code class="docutils literal notranslate"><span class="pre">bn</span></code> 和 <code class="docutils literal notranslate"><span class="pre">relu</span></code> 模块。对于自定义模型，这将需要调用 <code class="xref py py-func docutils literal notranslate"><span class="pre">torch.quantization.fuse_modules()</span></code> API 中包含了需要手动融合的模块列表。</p>
+<p>步骤（2）由前一节中使用的 <code class="docutils literal notranslate"><span class="pre">create_combined_model</span></code> 函数执行。</p>
+<p>步骤（3）通过使用 <code class="xref py py-func docutils literal notranslate"><span class="pre">torch.quantization.prepare_qat()</span></code>，插入 fake-quantization 模块。</p>
+<p>作为步骤（4），您可以开始“微调”模型，然后将其转换为完全量化的版本（步骤5）。</p>
+<p>要将微调模型转换为量化模型，可以调用 <code class="xref py py-func docutils literal notranslate"><span class="pre">torch.quantization.convert()</span></code> 函数（在我们的例子中，只有特征提取器被量化）。</p>
+<div class="admonition note">
+<p class="admonition-title">备注</p>
+<p>由于随机初始化，您的结果可能与本教程中显示的结果不同。</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+<span class="c1"># 注意 `quantize=False`</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">resnet18</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">quantize</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">num_ftrs</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fc</span><span class="o">.</span><span class="n">in_features</span>
+
+<span class="c1"># Step 1</span>
+<span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fuse_model</span><span class="p">()</span>
+<span class="c1"># Step 2</span>
+<span class="n">model_ft</span> <span class="o">=</span> <span class="n">create_combined_model</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+<span class="n">model_ft</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">qconfig</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">quantization</span><span class="o">.</span><span class="n">default_qat_qconfig</span>  <span class="c1"># Use default QAT configuration</span>
+<span class="c1"># Step 3</span>
+<span class="n">model_ft</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">quantization</span><span class="o">.</span><span class="n">prepare_qat</span><span class="p">(</span><span class="n">model_ft</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p class="rubric">Step 4. 微调模型</p>
+<p>在本教程中，对整个模型进行了微调。一般来说，这将导致更高的准确性。但是，由于这里使用的训练集较小，我们最终会对训练集过拟合。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">model_ft</span><span class="o">.</span><span class="n">parameters</span><span class="p">():</span>
+  <span class="n">param</span><span class="o">.</span><span class="n">requires_grad</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="c1"># We can fine-tune on GPU if available</span>
+<span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda:1&quot;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
+
+<span class="n">criterion</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">CrossEntropyLoss</span><span class="p">()</span>
+
+<span class="c1"># Note that we are training everything, so the learning rate is lower</span>
+<span class="c1"># Notice the smaller learning rate</span>
+<span class="n">optimizer_ft</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">model_ft</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span> <span class="n">momentum</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">weight_decay</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+
+<span class="c1"># Decay LR by a factor of 0.3 every several epochs</span>
+<span class="n">exp_lr_scheduler</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">lr_scheduler</span><span class="o">.</span><span class="n">StepLR</span><span class="p">(</span><span class="n">optimizer_ft</span><span class="p">,</span> <span class="n">step_size</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="n">model_ft_tuned</span> <span class="o">=</span> <span class="n">train_model</span><span class="p">(</span><span class="n">model_ft</span><span class="p">,</span> <span class="n">loader</span><span class="p">,</span> <span class="n">criterion</span><span class="p">,</span> <span class="n">optimizer_ft</span><span class="p">,</span> <span class="n">exp_lr_scheduler</span><span class="p">,</span>
+                              <span class="n">num_epochs</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 0/24
+----------
+train Loss: 0.7493 Acc: 0.6598
+val Loss: 0.3335 Acc: 0.8497
+
+Epoch 1/24
+----------
+train Loss: 0.8037 Acc: 0.6803
+val Loss: 0.2272 Acc: 0.9216
+
+Epoch 2/24
+----------
+train Loss: 0.5584 Acc: 0.7705
+val Loss: 0.4392 Acc: 0.8431
+
+Epoch 3/24
+----------
+train Loss: 0.5198 Acc: 0.7828
+val Loss: 1.1529 Acc: 0.7712
+
+Epoch 4/24
+----------
+train Loss: 0.6117 Acc: 0.7254
+val Loss: 0.3484 Acc: 0.8497
+
+Epoch 5/24
+----------
+train Loss: 0.6028 Acc: 0.7705
+val Loss: 0.2512 Acc: 0.9085
+
+Epoch 6/24
+----------
+train Loss: 0.4080 Acc: 0.8074
+val Loss: 0.2612 Acc: 0.9281
+
+Epoch 7/24
+----------
+train Loss: 0.3836 Acc: 0.8320
+val Loss: 0.2258 Acc: 0.9346
+
+Epoch 8/24
+----------
+train Loss: 0.3621 Acc: 0.8279
+val Loss: 0.2284 Acc: 0.9281
+
+Epoch 9/24
+----------
+train Loss: 0.3492 Acc: 0.8279
+val Loss: 0.2327 Acc: 0.9216
+
+Epoch 10/24
+----------
+train Loss: 0.3552 Acc: 0.8402
+val Loss: 0.2261 Acc: 0.9412
+
+Epoch 11/24
+----------
+train Loss: 0.3892 Acc: 0.8320
+val Loss: 0.2291 Acc: 0.9281
+
+Epoch 12/24
+----------
+train Loss: 0.3802 Acc: 0.8238
+val Loss: 0.2067 Acc: 0.9216
+
+Epoch 13/24
+----------
+train Loss: 0.3072 Acc: 0.8689
+val Loss: 0.2186 Acc: 0.9412
+
+Epoch 14/24
+----------
+train Loss: 0.2950 Acc: 0.8607
+val Loss: 0.2071 Acc: 0.9216
+
+Epoch 15/24
+----------
+train Loss: 0.4238 Acc: 0.8197
+val Loss: 0.2146 Acc: 0.9216
+
+Epoch 16/24
+----------
+train Loss: 0.3380 Acc: 0.8320
+val Loss: 0.2151 Acc: 0.9281
+
+Epoch 17/24
+----------
+train Loss: 0.3179 Acc: 0.8484
+val Loss: 0.2369 Acc: 0.9150
+
+Epoch 18/24
+----------
+train Loss: 0.2528 Acc: 0.8975
+val Loss: 0.2220 Acc: 0.9020
+
+Epoch 19/24
+----------
+train Loss: 0.3408 Acc: 0.8730
+val Loss: 0.2150 Acc: 0.9412
+
+Epoch 20/24
+----------
+train Loss: 0.2989 Acc: 0.8893
+val Loss: 0.2179 Acc: 0.9216
+
+Epoch 21/24
+----------
+train Loss: 0.3638 Acc: 0.8566
+val Loss: 0.2237 Acc: 0.9346
+
+Epoch 22/24
+----------
+train Loss: 0.3313 Acc: 0.8361
+val Loss: 0.2368 Acc: 0.9020
+
+Epoch 23/24
+----------
+train Loss: 0.2977 Acc: 0.8689
+val Loss: 0.2092 Acc: 0.9346
+
+Epoch 24/24
+----------
+train Loss: 0.2735 Acc: 0.8893
+val Loss: 0.2135 Acc: 0.9216
+
+完成训练用时 2m 58s
+最佳 val Acc: 0.941176
+</pre></div>
+</div>
+</div>
+</div>
+<p class="rubric">Step 5. 转换已量化的模型</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">torch.quantization</span> <span class="kn">import</span> <span class="n">convert</span>
+<span class="n">model_ft_tuned</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span>
+
+<span class="n">model_quantized_and_trained</span> <span class="o">=</span> <span class="n">convert</span><span class="p">(</span><span class="n">model_ft_tuned</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>让我们看看量化模型在一些图像上的表现：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">xs</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">loader</span><span class="o">.</span><span class="n">dataloaders</span><span class="p">[</span><span class="s1">&#39;val&#39;</span><span class="p">]:</span>
+    <span class="k">break</span>
+
+<span class="n">MT</span> <span class="o">=</span> <span class="n">ModuleTool</span><span class="p">(</span><span class="n">xs</span><span class="p">)</span>
+<span class="n">MT</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">model_quantized_and_trained</span><span class="p">,</span>
+          <span class="n">loader</span><span class="o">.</span><span class="n">class_names</span><span class="p">,</span>
+          <span class="s1">&#39;cpu&#39;</span><span class="p">,</span>
+          <span class="n">num_rows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_cols</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ioff</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/quantized_19_0.png" src="../../../_images/quantized_19_0.png" />
+</div>
+</div>
+</div>
+</div>
+
+
+              </div>
+              
+              
+              <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="basic.html" title="上一页 页">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">上一页</p>
+            <p class="prev-next-title">计算机视觉分类</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="tvm.html" title="下一页 页">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">TVM</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+  
+  <script src="../../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+<footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    
+    <div class="footer-item">
+      <p class="copyright">
+    &copy; Copyright 2022, xinetzone.<br>
+</p>
+    </div>
+    
+    <div class="footer-item">
+      <p class="last-updated">
+最后更新于 2022-03-17, 03:22:45.<br>
+</p>
+    </div>
+    
+    <div class="footer-item">
+      <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.4.0.<br>
+</p>
+    </div>
+    
+  </div>
+</footer>
+  </body>
+</html>

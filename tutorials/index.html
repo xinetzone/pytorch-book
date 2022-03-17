@@ -47,8 +47,8 @@
     <link rel="shortcut icon" href="../_static/favicon.jpg"/>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
-    <link rel="next" title="基础" href="basics/index.html" />
-    <link rel="prev" title="简介" href="../intro.html" />
+    <link rel="next" title="PyTorch 基础" href="basics/index.html" />
+    <link rel="prev" title="项目简介" href="../intro.html" />
     <link rel="stylesheet" href="../_static/css/default.css"/>
     <link rel="stylesheet" href="../_static/css/custom.css"/>
 
@@ -84,13 +84,19 @@
         <ul id="navbar-main-elements" class="navbar-nav">
     <li class="toctree-l1 nav-item">
  <a class="reference internal nav-link" href="../intro.html">
-  简介
+  项目简介
  </a>
 </li>
 
 <li class="toctree-l1 current active nav-item">
  <a class="current reference internal nav-link" href="#">
   教程
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../quantization/index.html">
+  量化
  </a>
 </li>
 
@@ -103,6 +109,12 @@
 <li class="toctree-l1 nav-item">
  <a class="reference internal nav-link" href="../refs.html">
   参考文献
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../others/index.html">
+  其他
  </a>
 </li>
 
@@ -144,7 +156,7 @@
     <ul class="nav bd-sidenav">
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="basics/index.html">
-   基础
+   PyTorch 基础
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
   <label for="toctree-checkbox-1">
@@ -233,7 +245,7 @@
 <h1>教程<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="basics/index.html">基础</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="basics/index.html">PyTorch 基础</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="basics/quickstart.html">快速入门</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="basics/quickstart.html#id2">数据准备</a></li>
 <li class="toctree-l3"><a class="reference internal" href="basics/quickstart.html#id3">构建模型</a></li>
@@ -258,6 +270,22 @@
 <li class="toctree-l4"><a class="reference internal" href="notes/autograd-mechanics.html#id2">已保存的张量</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="notes/autograd-mechanics.html#id3">局部禁用梯度计算</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="notes/autograd-mechanics.html#requires-grad">设置 <code class="docutils literal notranslate"><span class="pre">requires_grad</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes/autograd-mechanics.html#id4">模式</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="notes/autograd-mechanics.html#id5">使用 autograd 进行就地操作</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="notes/autograd-mechanics.html#id6">就地正确性检查</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="notes/autograd-mechanics.html#id7">多线程 Autograd</a></li>
+<li class="toctree-l3"><a class="reference internal" href="notes/autograd-mechanics.html#id8">复数 Autograd</a></li>
+<li class="toctree-l3"><a class="reference internal" href="notes/autograd-mechanics.html#id9">保存张量的挂钩</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="notes/autograd-mechanics.html#id10">注册已保存张量的钩子</a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes/autograd-mechanics.html#id11">为保存的张量注册默认钩子</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="notes/extending.html">扩展 PyTorch</a></li>
@@ -277,13 +305,13 @@
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">上一页</p>
-            <p class="prev-next-title">简介</p>
+            <p class="prev-next-title">项目简介</p>
         </div>
     </a>
     <a class='right-next' id="next-link" href="basics/index.html" title="下一页 页">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">下一页</p>
-        <p class="prev-next-title">基础</p>
+        <p class="prev-next-title">PyTorch 基础</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
@@ -307,7 +335,7 @@
     
     <div class="footer-item">
       <p class="last-updated">
-最后更新于 2022-03-16, 09:41:12.<br>
+最后更新于 2022-03-17, 03:22:45.<br>
 </p>
     </div>
     

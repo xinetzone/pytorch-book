@@ -1,0 +1,782 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>静态量化（cifar10） &#8212; Pytorch Book 0.0.1 文档</title>
+    
+  <link href="../../_static/css/theme.css" rel="stylesheet">
+  <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/tabs.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/default.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/translations.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.jpg"/>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="用户代码 API" href="api/index.html" />
+    <link rel="prev" title="QAT（resnet18）" href="qat-resnet18.html" />
+    <link rel="stylesheet" href="../../_static/css/default.css"/>
+    <link rel="stylesheet" href="../../_static/css/custom.css"/>
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+
+  <div id="navbar-start">
+    
+    
+
+<a class="navbar-brand" href="../../index.html">
+  <img src="../../_static/logo.jpg" class="logo" alt="logo">
+</a>
+
+
+    
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  
+  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+    <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../intro.html">
+  项目简介
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../tutorials/index.html">
+  教程
+ </a>
+</li>
+
+<li class="toctree-l1 current active nav-item">
+ <a class="reference internal nav-link" href="../index.html">
+  量化
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../ecosystem/index.html">
+  生态系统
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../refs.html">
+  参考文献
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../others/index.html">
+  其他
+ </a>
+</li>
+
+    
+</ul>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/xinetzone/pytorch-book" rel="noopener" target="_blank" title="GitHub">
+            <span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label>
+          </a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    <ul class="current nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../start/index.html">
+   快速上手
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../start/basic.html">
+     基础
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../start/ns.html">
+     Pytorch 数值套件教程
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="index.html">
+   学习
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="intro.html">
+     概述
+    </a>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="transfer-learning/index.html">
+     迁移学习
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+    <label for="toctree-checkbox-3">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="transfer-learning/basic.html">
+       计算机视觉分类
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="transfer-learning/quantized.html">
+       量化计算机视觉分类
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="transfer-learning/tvm.html">
+       TVM
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="transfer-learning/test.html">
+       测试
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="qat-resnet18.html">
+     QAT（resnet18）
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     静态量化（cifar10）
+    </a>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="api/index.html">
+     用户代码 API
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+    <label for="toctree-checkbox-4">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="api/runner.html">
+       runner
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+      <label for="toctree-checkbox-5">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="api/generated/runner.Timer.html">
+         runner.Timer
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="api/generated/runner.Accumulator.html">
+         runner.Accumulator
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="api/generated/runner.Animator.html">
+         runner.Animator
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="api/generated/runner.show_images.html">
+         runner.show_images
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="api/xinet.html">
+       xinet
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="api/hymenoptera.html">
+       hymenoptera
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="api/net.html">
+       NN 模块
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="api/helper.html">
+       辅助工具
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="api/tools.html">
+       工具
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../papers/index.html">
+   论文
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../papers/gholami2021survey.html">
+     A Survey of Quantization Methods for Efficient Neural Network Inference
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+  </div>
+</nav>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+            
+              
+              <div class="toc-item">
+                
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id1">
+   模型架构
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   辅助函数
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id3">
+   定义数据集和数据加载器
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id4">
+   静态量化后训练
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id5">
+   量化感知训练
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id6">
+   从量化加速
+  </a>
+ </li>
+</ul>
+
+</nav>
+              </div>
+              
+              <div class="toc-item">
+                
+
+<div class="tocsection editthispage">
+    <a href="https://github.com/xinetzone/pytorch-book/edit/main/docs/quantization/study/qat-mini.ipynb">
+        <i class="fas fa-pencil-alt"></i> Edit this page
+    </a>
+</div>
+
+              </div>
+              
+            
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="cifar10">
+<h1>静态量化（cifar10）<a class="headerlink" href="#cifar10" title="永久链接至标题">¶</a></h1>
+<p>参考：<a class="reference external" href="https://pytorch.org/tutorials/advanced/static_quantization_tutorial.html">静态量化</a></p>
+<p>本教程展示了如何进行训练后的静态量化，并说明了两个更高级的技术——逐通道量化和感知量化的训练——以进一步提高模型的准确性。注意，量化目前只支持 CPU，所以在本教程中我们不会使用 GPU/CUDA。在本教程结束时，您将看到 PyTorch 中的量化如何在提高速度的同时显著降低模型大小。此外，您还将看到如何轻松地应用这里所展示的一些高级量化技术，从而使您的量化模型比其他方法获得更少的精度。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
+
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">torch.quantization</span>
+
+<span class="c1"># 设置 warnings</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span>
+    <span class="n">action</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="ne">DeprecationWarning</span><span class="p">,</span>
+    <span class="n">module</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;.*&#39;</span>
+<span class="p">)</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span>
+    <span class="n">action</span><span class="o">=</span><span class="s1">&#39;default&#39;</span><span class="p">,</span>
+    <span class="n">module</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;torch.quantization&#39;</span>
+<span class="p">)</span>
+
+<span class="c1"># 为可重复的结果指定随机种子</span>
+<span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">191009</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">mod</span> <span class="kn">import</span> <span class="n">load_mod</span>
+<span class="n">load_mod</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id1">
+<h2>模型架构<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<p>我们首先定义了 MobileNetV2 模型架构，通过几个显著的修改来实现量化：</p>
+<ul class="simple">
+<li><p>用 <code class="docutils literal notranslate"><span class="pre">nn.quantized.FloatFunctional</span></code> 替换加法</p></li>
+<li><p>在网络的开头和结尾分别插入 <code class="docutils literal notranslate"><span class="pre">QuantStub</span></code> 和 <code class="docutils literal notranslate"><span class="pre">DeQuantStub</span></code></p></li>
+<li><p>将 <code class="docutils literal notranslate"><span class="pre">ReLU6</span></code> 替换为 <code class="docutils literal notranslate"><span class="pre">ReLU</span></code></p></li>
+</ul>
+<p><span class="guilabel">source</span>：<code class="xref py py-class docutils literal notranslate"><span class="pre">MobileNetV2</span></code></p>
+</div>
+<div class="section" id="id2">
+<h2>辅助函数<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>接下来，我们定义几个<a class="reference external" href="https://github.com/pytorch/examples/blob/master/imagenet/main.py">帮助函数</a>来帮助评估模型。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">helper</span> <span class="kn">import</span> <span class="n">accuracy</span><span class="p">,</span> <span class="n">evaluate</span><span class="p">,</span> <span class="n">load_model</span><span class="p">,</span> <span class="n">print_size_of_model</span><span class="p">,</span> <span class="n">AverageMeter</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id3">
+<h2>定义数据集和数据加载器<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>作为最后一个主要的设置步骤，我们为训练和测试集定义了数据加载器。</p>
+<p>要使用整个 ImageNet 数据集运行本教程中的代码，请先按照 <a class="reference external" href="http://www.image-net.org/download">ImageNet Data</a> 中的说明下载 ImageNet。将下载的文件解压缩到 <code class="docutils literal notranslate"><span class="pre">data_path</span></code> 文件夹中。</p>
+<p>下载完数据后，我们将在下面展示一些函数，<a class="reference external" href="https://github.com/pytorch/vision/blob/master/references/detection/train.py">这些函数</a>定义了用于读取数据的数据加载器。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">imagenet</span> <span class="kn">import</span> <span class="n">prepare_data_loaders</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>接下来，我们将加载预先训练的 MobileNetV2 模型。我们在<a class="reference external" href="https://github.com/pytorch/vision/blob/master/torchvision/models/mobilenet.py#L9">这里</a>提供了 <code class="docutils literal notranslate"><span class="pre">torchvision</span></code> 中下载数据的 <code class="docutils literal notranslate"><span class="pre">URL</span></code>。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_path</span> <span class="o">=</span> <span class="s1">&#39;/media/pc/data/4tb/xinet/datasets/imagenet2&#39;</span>
+<span class="n">saved_model_dir</span> <span class="o">=</span> <span class="s1">&#39;data/&#39;</span>
+<span class="n">float_model_file</span> <span class="o">=</span> <span class="s1">&#39;mobilenet_pretrained_float.pth&#39;</span>
+<span class="n">scripted_float_model_file</span> <span class="o">=</span> <span class="s1">&#39;mobilenet_quantization_scripted.pth&#39;</span>
+<span class="n">scripted_quantized_model_file</span> <span class="o">=</span> <span class="s1">&#39;mobilenet_quantization_scripted_quantized.pth&#39;</span>
+
+<span class="n">train_batch_size</span> <span class="o">=</span> <span class="mi">30</span>
+<span class="n">eval_batch_size</span> <span class="o">=</span> <span class="mi">50</span>
+
+<span class="n">data_loader</span><span class="p">,</span> <span class="n">data_loader_test</span> <span class="o">=</span> <span class="n">prepare_data_loaders</span><span class="p">(</span><span class="n">data_path</span><span class="p">,</span>
+                                                     <span class="n">train_batch_size</span><span class="p">,</span>
+                                                     <span class="n">eval_batch_size</span><span class="p">)</span>
+<span class="n">criterion</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">CrossEntropyLoss</span><span class="p">()</span>
+<span class="n">float_model</span> <span class="o">=</span> <span class="n">load_model</span><span class="p">(</span><span class="n">saved_model_dir</span> <span class="o">+</span> <span class="n">float_model_file</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;cpu&#39;</span><span class="p">)</span>
+
+<span class="c1"># Next, we&#39;ll &quot;fuse modules&quot;; this can both make the model faster by saving on memory access</span>
+<span class="c1"># while also improving numerical accuracy. While this can be used with any model, this is</span>
+<span class="c1"># especially common with quantized models.</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1"> Inverted Residual Block: Before fusion </span><span class="se">\n\n</span><span class="s1">&#39;</span><span class="p">,</span>
+      <span class="n">float_model</span><span class="o">.</span><span class="n">features</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">conv</span><span class="p">)</span>
+<span class="n">float_model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+
+<span class="c1"># Fuses modules</span>
+<span class="n">float_model</span><span class="o">.</span><span class="n">fuse_model</span><span class="p">()</span>
+
+<span class="c1"># Note fusion of Conv+BN+Relu and Conv+Relu</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1"> Inverted Residual Block: After fusion</span><span class="se">\n\n</span><span class="s1">&#39;</span><span class="p">,</span>
+      <span class="n">float_model</span><span class="o">.</span><span class="n">features</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">conv</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>最后，为了得到“基线”精度，让我们看看融合模块的非量子化模型的精度：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">num_eval_batches</span> <span class="o">=</span> <span class="mi">1000</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Size of baseline model&quot;</span><span class="p">)</span>
+<span class="n">print_size_of_model</span><span class="p">(</span><span class="n">float_model</span><span class="p">)</span>
+
+<span class="n">top1</span><span class="p">,</span> <span class="n">top5</span> <span class="o">=</span> <span class="n">evaluate</span><span class="p">(</span><span class="n">float_model</span><span class="p">,</span> <span class="n">criterion</span><span class="p">,</span> <span class="n">data_loader_test</span><span class="p">,</span> <span class="n">neval_batches</span><span class="o">=</span><span class="n">num_eval_batches</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Evaluation accuracy on </span><span class="si">%d</span><span class="s1"> images, </span><span class="si">%2.2f</span><span class="s1">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">num_eval_batches</span> <span class="o">*</span> <span class="n">eval_batch_size</span><span class="p">,</span> <span class="n">top1</span><span class="o">.</span><span class="n">avg</span><span class="p">))</span>
+<span class="n">torch</span><span class="o">.</span><span class="n">jit</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">jit</span><span class="o">.</span><span class="n">script</span><span class="p">(</span><span class="n">float_model</span><span class="p">),</span> <span class="n">saved_model_dir</span> <span class="o">+</span> <span class="n">scripted_float_model_file</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>在整个模型上，在 5 万幅图像的 eval 数据集上，我们得到了 <span class="math notranslate nohighlight">\(71.9\%\)</span> 的准确率。这将是我们进行比较的基准。接下来，让我们尝试不同的量化方法。</p>
+</div>
+<div class="section" id="id4">
+<h2>静态量化后训练<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<p>训练后的静态量化不仅包括将权重从 float 转换为int，就像在动态量化中一样，还包括执行额外的步骤，即首先通过网络输入一批数据，并计算不同激活的结果分布（具体来说，这是通过在记录数据的不同点插入观测者模块来实现的）。然后使用这些分布来确定如何在推断时量化不同的激活（一种简单的技术是将整个激活范围划分为 256 个级别，但我们也支持更复杂的方法）。重要的是，这个额外的步骤允许我们在运算之间传递量化的值，而不是在每个运算之间将这些值转换为浮点数（然后再转换为整数），从而显著提高了速度。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">num_calibration_batches</span> <span class="o">=</span> <span class="mi">32</span>
+
+<span class="n">myModel</span> <span class="o">=</span> <span class="n">load_model</span><span class="p">(</span><span class="n">saved_model_dir</span> <span class="o">+</span> <span class="n">float_model_file</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;cpu&#39;</span><span class="p">)</span>
+<span class="n">myModel</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+
+<span class="c1"># Fuse Conv, bn and relu</span>
+<span class="n">myModel</span><span class="o">.</span><span class="n">fuse_model</span><span class="p">()</span>
+
+<span class="c1"># Specify quantization configuration</span>
+<span class="c1"># Start with simple min/max range estimation and per-tensor quantization of weights</span>
+<span class="n">myModel</span><span class="o">.</span><span class="n">qconfig</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">quantization</span><span class="o">.</span><span class="n">default_qconfig</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">myModel</span><span class="o">.</span><span class="n">qconfig</span><span class="p">)</span>
+<span class="n">torch</span><span class="o">.</span><span class="n">quantization</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="n">myModel</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Calibrate first</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Post Training Quantization Prepare: Inserting Observers&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1"> Inverted Residual Block:After observer insertion </span><span class="se">\n\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">myModel</span><span class="o">.</span><span class="n">features</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">conv</span><span class="p">)</span>
+
+<span class="c1"># Calibrate with the training set</span>
+<span class="n">evaluate</span><span class="p">(</span><span class="n">myModel</span><span class="p">,</span> <span class="n">criterion</span><span class="p">,</span> <span class="n">data_loader</span><span class="p">,</span> <span class="n">neval_batches</span><span class="o">=</span><span class="n">num_calibration_batches</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Post Training Quantization: Calibration done&#39;</span><span class="p">)</span>
+
+<span class="c1"># Convert to quantized model</span>
+<span class="n">torch</span><span class="o">.</span><span class="n">quantization</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">myModel</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Post Training Quantization: Convert done&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1"> Inverted Residual Block: After fusion and quantization, note fused modules: </span><span class="se">\n\n</span><span class="s1">&#39;</span><span class="p">,</span><span class="n">myModel</span><span class="o">.</span><span class="n">features</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">conv</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Size of model after quantization&quot;</span><span class="p">)</span>
+<span class="n">print_size_of_model</span><span class="p">(</span><span class="n">myModel</span><span class="p">)</span>
+
+<span class="n">top1</span><span class="p">,</span> <span class="n">top5</span> <span class="o">=</span> <span class="n">evaluate</span><span class="p">(</span><span class="n">myModel</span><span class="p">,</span> <span class="n">criterion</span><span class="p">,</span> <span class="n">data_loader_test</span><span class="p">,</span> <span class="n">neval_batches</span><span class="o">=</span><span class="n">num_eval_batches</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Evaluation accuracy on </span><span class="si">%d</span><span class="s1"> images, </span><span class="si">%2.2f</span><span class="s1">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">num_eval_batches</span> <span class="o">*</span> <span class="n">eval_batch_size</span><span class="p">,</span> <span class="n">top1</span><span class="o">.</span><span class="n">avg</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>对于这个量化模型，我们在 eval 数据集上看到了 <span class="math notranslate nohighlight">\(56.7\%\)</span> 的准确性。这是因为我们使用了一个简单的 min/max 观测器来确定量化参数。尽管如此，我们还是将模型的大小减少到了 3.6 MB 以下，几乎减少了 4 倍。</p>
+<p>此外，我们可以通过使用不同的量化配置来显著提高精度。我们对用于量化 x86 架构的推荐配置重复同样的练习。该配置的操作如下：</p>
+<ul class="simple">
+<li><p>Quantizes weights on a per-channel basis</p></li>
+<li><p>Uses a histogram observer that collects a histogram of activations and then picks quantization parameters in an optimal manner.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">per_channel_quantized_model</span> <span class="o">=</span> <span class="n">load_model</span><span class="p">(</span><span class="n">saved_model_dir</span> <span class="o">+</span> <span class="n">float_model_file</span><span class="p">)</span>
+<span class="n">per_channel_quantized_model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+<span class="n">per_channel_quantized_model</span><span class="o">.</span><span class="n">fuse_model</span><span class="p">()</span>
+<span class="n">per_channel_quantized_model</span><span class="o">.</span><span class="n">qconfig</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">quantization</span><span class="o">.</span><span class="n">get_default_qconfig</span><span class="p">(</span><span class="s1">&#39;fbgemm&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">per_channel_quantized_model</span><span class="o">.</span><span class="n">qconfig</span><span class="p">)</span>
+
+<span class="n">torch</span><span class="o">.</span><span class="n">quantization</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="n">per_channel_quantized_model</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">evaluate</span><span class="p">(</span><span class="n">per_channel_quantized_model</span><span class="p">,</span><span class="n">criterion</span><span class="p">,</span> <span class="n">data_loader</span><span class="p">,</span> <span class="n">num_calibration_batches</span><span class="p">)</span>
+<span class="n">torch</span><span class="o">.</span><span class="n">quantization</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">per_channel_quantized_model</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">top1</span><span class="p">,</span> <span class="n">top5</span> <span class="o">=</span> <span class="n">evaluate</span><span class="p">(</span><span class="n">per_channel_quantized_model</span><span class="p">,</span> <span class="n">criterion</span><span class="p">,</span> <span class="n">data_loader_test</span><span class="p">,</span> <span class="n">neval_batches</span><span class="o">=</span><span class="n">num_eval_batches</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Evaluation accuracy on </span><span class="si">%d</span><span class="s1"> images, </span><span class="si">%2.2f</span><span class="s1">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">num_eval_batches</span> <span class="o">*</span> <span class="n">eval_batch_size</span><span class="p">,</span> <span class="n">top1</span><span class="o">.</span><span class="n">avg</span><span class="p">))</span>
+<span class="n">torch</span><span class="o">.</span><span class="n">jit</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">jit</span><span class="o">.</span><span class="n">script</span><span class="p">(</span><span class="n">per_channel_quantized_model</span><span class="p">),</span> <span class="n">saved_model_dir</span> <span class="o">+</span> <span class="n">scripted_quantized_model_file</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>仅仅改变这种量化配置方法，就可以将准确度提高到 <span class="math notranslate nohighlight">\(67.3\%\)</span> 以上！尽管如此，这还是比 <span class="math notranslate nohighlight">\(71.9\%\)</span> 的基线水平低了 <span class="math notranslate nohighlight">\(4\%\)</span>。让我们尝试量化感知训练。</p>
+</div>
+<div class="section" id="id5">
+<h2>量化感知训练<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+<p>量化感知训练（Quantization-aware training，QAT）是一种量化方法，通常可以获得最高的精度。使用 QAT，所有的权值和激活都在前向和后向训练过程中被“伪量化”：也就是说，浮点值被舍入以模拟 int8 值，但所有的计算仍然使用浮点数完成。因此，训练过程中的所有权重调整都是在“感知到”模型最终将被量化的情况下进行的；因此，在量化之后，这种方法通常比动态量化或训练后的静态量化产生更高的精度。</p>
+<p>实际执行 QAT 的总体工作流程与之前非常相似：</p>
+<ul class="simple">
+<li><p>可以使用与以前相同的模型：不需要为量化感知训练做额外的准备。</p></li>
+<li><p>需要使用 <code class="docutils literal notranslate"><span class="pre">qconfig</span></code> 来指定在权重和激活之后插入何种类型的伪量化，而不是指定观测者。</p></li>
+</ul>
+<p>首先，定义训练函数：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">train_one_epoch</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">criterion</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">data_loader</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">ntrain_batches</span><span class="p">):</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+    <span class="n">top1</span> <span class="o">=</span> <span class="n">AverageMeter</span><span class="p">(</span><span class="s1">&#39;Acc@1&#39;</span><span class="p">,</span> <span class="s1">&#39;:6.2f&#39;</span><span class="p">)</span>
+    <span class="n">top5</span> <span class="o">=</span> <span class="n">AverageMeter</span><span class="p">(</span><span class="s1">&#39;Acc@5&#39;</span><span class="p">,</span> <span class="s1">&#39;:6.2f&#39;</span><span class="p">)</span>
+    <span class="n">avgloss</span> <span class="o">=</span> <span class="n">AverageMeter</span><span class="p">(</span><span class="s1">&#39;Loss&#39;</span><span class="p">,</span> <span class="s1">&#39;1.5f&#39;</span><span class="p">)</span>
+
+    <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">image</span><span class="p">,</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">data_loader</span><span class="p">:</span>
+        <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">image</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">),</span> <span class="n">target</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="n">criterion</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+        <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+        <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+        <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+        <span class="n">acc1</span><span class="p">,</span> <span class="n">acc5</span> <span class="o">=</span> <span class="n">accuracy</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">topk</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+        <span class="n">top1</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">acc1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">image</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+        <span class="n">top5</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">acc5</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">image</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+        <span class="n">avgloss</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="n">image</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">cnt</span> <span class="o">&gt;=</span> <span class="n">ntrain_batches</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Loss&#39;</span><span class="p">,</span> <span class="n">avgloss</span><span class="o">.</span><span class="n">avg</span><span class="p">)</span>
+
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Training: * Acc@1 </span><span class="si">{top1.avg:.3f}</span><span class="s1"> Acc@5 </span><span class="si">{top5.avg:.3f}</span><span class="s1">&#39;</span>
+                  <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">top1</span><span class="o">=</span><span class="n">top1</span><span class="p">,</span> <span class="n">top5</span><span class="o">=</span><span class="n">top5</span><span class="p">))</span>
+            <span class="k">return</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Full imagenet train set:  * Acc@1 </span><span class="si">{top1.global_avg:.3f}</span><span class="s1"> Acc@5 </span><span class="si">{top5.global_avg:.3f}</span><span class="s1">&#39;</span>
+          <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">top1</span><span class="o">=</span><span class="n">top1</span><span class="p">,</span> <span class="n">top5</span><span class="o">=</span><span class="n">top5</span><span class="p">))</span>
+    <span class="k">return</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>像以前一样融合模块：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qat_model</span> <span class="o">=</span> <span class="n">load_model</span><span class="p">(</span><span class="n">saved_model_dir</span> <span class="o">+</span> <span class="n">float_model_file</span><span class="p">)</span>
+<span class="n">qat_model</span><span class="o">.</span><span class="n">fuse_model</span><span class="p">()</span>
+
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">qat_model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span> <span class="o">=</span> <span class="mf">0.0001</span><span class="p">)</span>
+<span class="n">qat_model</span><span class="o">.</span><span class="n">qconfig</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">quantization</span><span class="o">.</span><span class="n">get_default_qat_qconfig</span><span class="p">(</span><span class="s1">&#39;fbgemm&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>最后，<code class="docutils literal notranslate"><span class="pre">prepare_qat</span></code> 执行“伪量化”，为量化感知训练准备模型：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">torch</span><span class="o">.</span><span class="n">quantization</span><span class="o">.</span><span class="n">prepare_qat</span><span class="p">(</span><span class="n">qat_model</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Inverted Residual Block: After preparation for QAT, note fake-quantization modules </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span><span class="n">qat_model</span><span class="o">.</span><span class="n">features</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">conv</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>训练具有高精确度的量化模型要求在推理时对数值进行精确的建模。因此，对于量化感知训练，我们对训练循环进行如下修改：</p>
+<ul class="simple">
+<li><p>将批处理范数转换为训练结束时的运行均值和方差，以更好地匹配推理数值。</p></li>
+<li><p>我们还冻结量化器参数（刻度和零点）并微调权重。</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">num_train_batches</span> <span class="o">=</span> <span class="mi">20</span>
+
+<span class="c1"># QAT takes time and one needs to train over a few epochs.</span>
+<span class="c1"># Train and check accuracy after each epoch</span>
+<span class="k">for</span> <span class="n">nepoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">8</span><span class="p">):</span>
+    <span class="n">train_one_epoch</span><span class="p">(</span><span class="n">qat_model</span><span class="p">,</span> <span class="n">criterion</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">data_loader</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s1">&#39;cpu&#39;</span><span class="p">),</span> <span class="n">num_train_batches</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">nepoch</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="c1"># Freeze quantizer parameters</span>
+        <span class="n">qat_model</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">quantization</span><span class="o">.</span><span class="n">disable_observer</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">nepoch</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="c1"># Freeze batch norm mean and variance estimates</span>
+        <span class="n">qat_model</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">intrinsic</span><span class="o">.</span><span class="n">qat</span><span class="o">.</span><span class="n">freeze_bn_stats</span><span class="p">)</span>
+
+    <span class="c1"># Check the accuracy after each epoch</span>
+    <span class="n">quantized_model</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">quantization</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">qat_model</span><span class="o">.</span><span class="n">eval</span><span class="p">(),</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">quantized_model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+    <span class="n">top1</span><span class="p">,</span> <span class="n">top5</span> <span class="o">=</span> <span class="n">evaluate</span><span class="p">(</span><span class="n">quantized_model</span><span class="p">,</span><span class="n">criterion</span><span class="p">,</span> <span class="n">data_loader_test</span><span class="p">,</span> <span class="n">neval_batches</span><span class="o">=</span><span class="n">num_eval_batches</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Epoch </span><span class="si">%d</span><span class="s1"> :Evaluation accuracy on </span><span class="si">%d</span><span class="s1"> images, </span><span class="si">%2.2f</span><span class="s1">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">nepoch</span><span class="p">,</span> <span class="n">num_eval_batches</span> <span class="o">*</span> <span class="n">eval_batch_size</span><span class="p">,</span> <span class="n">top1</span><span class="o">.</span><span class="n">avg</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>量化感知训练在整个 imagenet 数据集上的准确率超过 <span class="math notranslate nohighlight">\(71.5\%\)</span>，接近浮点精度 <span class="math notranslate nohighlight">\(71.9\%\)</span>。</p>
+<p>更多关于 QAT 的内容：</p>
+<ul class="simple">
+<li><p>QAT 是后训练量化技术的超集，允许更多的调试。例如，我们可以分析模型的准确性是否受到权重或激活量化的限制。</p></li>
+<li><p>也可以在浮点上模拟量化模型的准确性，因为使用伪量化来模拟实际量化算法的数值。</p></li>
+<li><p>也可以很容易地模拟训练后量化。</p></li>
+</ul>
+</div>
+<div class="section" id="id6">
+<h2>从量化加速<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h2>
+<p>最后，确认上面提到的一些事情：量化模型实际上执行推断更快吗？</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">run_benchmark</span><span class="p">(</span><span class="n">model_file</span><span class="p">,</span> <span class="n">img_loader</span><span class="p">):</span>
+    <span class="n">elapsed</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">jit</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">model_file</span><span class="p">)</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+    <span class="n">num_batches</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="c1"># Run the scripted model on a few batches of images</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">images</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">img_loader</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">num_batches</span><span class="p">:</span>
+            <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">images</span><span class="p">)</span>
+            <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">elapsed</span> <span class="o">=</span> <span class="n">elapsed</span> <span class="o">+</span> <span class="p">(</span><span class="n">end</span><span class="o">-</span><span class="n">start</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">break</span>
+    <span class="n">num_images</span> <span class="o">=</span> <span class="n">images</span><span class="o">.</span><span class="n">size</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">num_batches</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Elapsed time: </span><span class="si">%3.0f</span><span class="s1"> ms&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">elapsed</span><span class="o">/</span><span class="n">num_images</span><span class="o">*</span><span class="mi">1000</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">elapsed</span>
+
+<span class="n">run_benchmark</span><span class="p">(</span><span class="n">saved_model_dir</span> <span class="o">+</span> <span class="n">scripted_float_model_file</span><span class="p">,</span> <span class="n">data_loader_test</span><span class="p">)</span>
+
+<span class="n">run_benchmark</span><span class="p">(</span><span class="n">saved_model_dir</span> <span class="o">+</span> <span class="n">scripted_quantized_model_file</span><span class="p">,</span> <span class="n">data_loader_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>在本地 MacBook pro 上运行，常规模型的速度为 61 毫秒，量化模型的速度仅为 20 毫秒，这说明了量化模型与浮点模型相比，典型的 2-4 倍的加速。</p>
+</div>
+</div>
+
+
+              </div>
+              
+              
+              <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="qat-resnet18.html" title="上一页 页">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">上一页</p>
+            <p class="prev-next-title">QAT（resnet18）</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="api/index.html" title="下一页 页">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">用户代码 API</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+  
+  <script src="../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+<footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    
+    <div class="footer-item">
+      <p class="copyright">
+    &copy; Copyright 2022, xinetzone.<br>
+</p>
+    </div>
+    
+    <div class="footer-item">
+      <p class="last-updated">
+最后更新于 2022-03-17, 03:22:45.<br>
+</p>
+    </div>
+    
+    <div class="footer-item">
+      <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.4.0.<br>
+</p>
+    </div>
+    
+  </div>
+</footer>
+  </body>
+</html>

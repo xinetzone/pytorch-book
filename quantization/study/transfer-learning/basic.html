@@ -1,0 +1,937 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>计算机视觉分类 &#8212; Pytorch Book 0.0.1 文档</title>
+    
+  <link href="../../../_static/css/theme.css" rel="stylesheet">
+  <link href="../../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/tabs.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/default.css" />
+    
+  <link rel="preload" as="script" href="../../../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script src="../../../_static/translations.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <link rel="shortcut icon" href="../../../_static/favicon.jpg"/>
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="量化计算机视觉分类" href="quantized.html" />
+    <link rel="prev" title="迁移学习" href="index.html" />
+    <link rel="stylesheet" href="../../../_static/css/default.css"/>
+    <link rel="stylesheet" href="../../../_static/css/custom.css"/>
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+
+  <div id="navbar-start">
+    
+    
+
+<a class="navbar-brand" href="../../../index.html">
+  <img src="../../../_static/logo.jpg" class="logo" alt="logo">
+</a>
+
+
+    
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  
+  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+    <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../intro.html">
+  项目简介
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../tutorials/index.html">
+  教程
+ </a>
+</li>
+
+<li class="toctree-l1 current active nav-item">
+ <a class="reference internal nav-link" href="../../index.html">
+  量化
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../ecosystem/index.html">
+  生态系统
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../refs.html">
+  参考文献
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../others/index.html">
+  其他
+ </a>
+</li>
+
+    
+</ul>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/xinetzone/pytorch-book" rel="noopener" target="_blank" title="GitHub">
+            <span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label>
+          </a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    <ul class="current nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../start/index.html">
+   快速上手
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../start/basic.html">
+     基础
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../start/ns.html">
+     Pytorch 数值套件教程
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="../index.html">
+   学习
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../intro.html">
+     概述
+    </a>
+   </li>
+   <li class="toctree-l2 current active has-children">
+    <a class="reference internal" href="index.html">
+     迁移学习
+    </a>
+    <input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+    <label for="toctree-checkbox-3">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul class="current">
+     <li class="toctree-l3 current active">
+      <a class="current reference internal" href="#">
+       计算机视觉分类
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="quantized.html">
+       量化计算机视觉分类
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="tvm.html">
+       TVM
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="test.html">
+       测试
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../qat-resnet18.html">
+     QAT（resnet18）
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../qat-mini.html">
+     静态量化（cifar10）
+    </a>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../api/index.html">
+     用户代码 API
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+    <label for="toctree-checkbox-4">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../api/runner.html">
+       runner
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+      <label for="toctree-checkbox-5">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../api/generated/runner.Timer.html">
+         runner.Timer
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../api/generated/runner.Accumulator.html">
+         runner.Accumulator
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../api/generated/runner.Animator.html">
+         runner.Animator
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../api/generated/runner.show_images.html">
+         runner.show_images
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../api/xinet.html">
+       xinet
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../api/hymenoptera.html">
+       hymenoptera
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../api/net.html">
+       NN 模块
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../api/helper.html">
+       辅助工具
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../api/tools.html">
+       工具
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../papers/index.html">
+   论文
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../papers/gholami2021survey.html">
+     A Survey of Quantization Methods for Efficient Neural Network Inference
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+  </div>
+</nav>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+            
+              
+              <div class="toc-item">
+                
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#convnet">
+   微调 ConvNet
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   ConvNet 作为固定的特征提取器
+  </a>
+ </li>
+</ul>
+
+</nav>
+              </div>
+              
+              <div class="toc-item">
+                
+
+<div class="tocsection editthispage">
+    <a href="https://github.com/xinetzone/pytorch-book/edit/main/docs/quantization/study/transfer-learning/basic.ipynb">
+        <i class="fas fa-pencil-alt"></i> Edit this page
+    </a>
+</div>
+
+              </div>
+              
+            
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+</pre></div>
+</div>
+</div>
+</div>
+<div class="tex2jax_ignore mathjax_ignore section" id="id1">
+<h1>计算机视觉分类<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<p>在本教程中，您将学习如何使用迁移学习训练卷积神经网络进行图像分类。你可以在 <a class="reference external" href="https://cs231n.github.io/transfer-learning/">cs231n notes</a> 中阅读更多关于迁移学习的信息。</p>
+<div class="admonition note">
+<p class="admonition-title">备注</p>
+<p>在实践中，很少有人从零开始（使用随机初始化）训练整个卷积网络，因为拥有足够大的数据集是相对罕见的。相反，通常是在非常大的数据集（例如 ImageNet，包含 120 万张包含 1000 个类别的图像）上预训练卷积神经网络，然后使用卷积神经网络作为初始化或用于感兴趣的任务的固定特征提取器。</p>
+</div>
+<p>这两种主要的迁移学习场景如下：</p>
+<ol class="simple">
+<li><p><strong>微调 ConvNet</strong>：该模型不是随机初始化，而是使用预训练的网络初始化，之后的训练照常进行，但使用不同的数据集。如果有不同数量的输出，通常也替换网络中的头（或它的一部分）。在这种方法中，通常将学习速率设置为较小的数值。之所以这样做，是因为网络已经经过了训练，只需要稍作修改就可以将其“微调”到新的数据集。</p></li>
+<li><p><strong>ConvNet 作为固定的特征提取器</strong>：在这里，你 <a class="reference external" href="https://arxiv.org/abs/1706.04983">“冻结”</a> 除了最后几个层（又名“头部”，通常是全连接的层）之外，网络中所有参数的权重。这些最后的层将被替换为新层，并初始化为随机权重，只有这些层会被训练。</p></li>
+</ol>
+<p>你也可以将以上两种方法结合使用：首先，你可以冻结特征提取器，训练头部。在此之后，您可以解冻特征提取器（或部分特征提取器），将学习速率设置为较小的值，然后继续训练。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
+<span class="kn">import</span> <span class="nn">torch.optim</span> <span class="k">as</span> <span class="nn">optim</span>
+<span class="kn">from</span> <span class="nn">torch.optim</span> <span class="kn">import</span> <span class="n">lr_scheduler</span>
+<span class="kn">from</span> <span class="nn">torch.backends</span> <span class="kn">import</span> <span class="n">cudnn</span>
+<span class="kn">import</span> <span class="nn">torchvision</span>
+<span class="kn">from</span> <span class="nn">torchvision</span> <span class="kn">import</span> <span class="n">models</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+<span class="n">cudnn</span><span class="o">.</span><span class="n">benchmark</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ion</span><span class="p">()</span>   <span class="c1"># 交互模式</span>
+
+<span class="c1"># 载入自定义模块</span>
+<span class="kn">from</span> <span class="nn">mod</span> <span class="kn">import</span> <span class="n">load_mod</span>
+<span class="n">load_mod</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="admonition- admonition">
+<p class="admonition-title">任务</p>
+<p>训练一个模型来对蚂蚁和蜜蜂进行分类。</p>
+</div>
+<p class="rubric">加载数据</p>
+<p>通常，如果从零开始训练，这是一个非常小的可泛化的数据集。由于使用迁移学习，应该能够相当好地推广。</p>
+<p>本文自定义数据加载器 <code class="xref py py-class docutils literal notranslate"><span class="pre">Hymenoptera</span></code>：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">hymenoptera</span> <span class="kn">import</span> <span class="n">Hymenoptera</span>
+<span class="c1"># 加载数据</span>
+<span class="n">data_dir</span> <span class="o">=</span> <span class="s1">&#39;/media/pc/data/4tb/xinet/tests/hymenoptera_data&#39;</span>
+<span class="n">loader</span> <span class="o">=</span> <span class="n">Hymenoptera</span><span class="p">(</span><span class="n">data_dir</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p class="rubric">训练模型</p>
+<p>写一个通用函数 <code class="xref py py-func docutils literal notranslate"><span class="pre">train_model()</span></code> 来训练模型：</p>
+<ul class="simple">
+<li><p>调度学习率</p></li>
+<li><p>保存最佳模型</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">tools</span> <span class="kn">import</span> <span class="n">train_model</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p class="rubric">可视化模型预测</p>
+<p><code class="xref py py-meth docutils literal notranslate"><span class="pre">imshow()</span></code> 显示预测的一些图像的通用函数：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">xinet</span> <span class="kn">import</span> <span class="n">ModuleTool</span><span class="p">,</span> <span class="n">CV</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p class="rubric">设置设备</p>
+<p>设置模型训练的设备：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+
+<span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda:1&quot;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="convnet">
+<h2>微调 ConvNet<a class="headerlink" href="#convnet" title="永久链接至标题">¶</a></h2>
+<p>加载预训练模型，重置最终的全连接层。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_ft</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">resnet18</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">num_ftrs</span> <span class="o">=</span> <span class="n">model_ft</span><span class="o">.</span><span class="n">fc</span><span class="o">.</span><span class="n">in_features</span>
+<span class="c1"># 这里每个输出样本的大小设置为 2。</span>
+<span class="c1"># 或者，它可以推广到 ``nn.Linear(num_ftrs, len(class_names))``。</span>
+<span class="n">model_ft</span><span class="o">.</span><span class="n">fc</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">num_ftrs</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">criterion</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">CrossEntropyLoss</span><span class="p">()</span>
+
+<span class="c1"># 观测所有被优化的参数</span>
+<span class="n">optimizer_ft</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">model_ft</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span> <span class="n">momentum</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
+
+<span class="c1"># Decay LR by a factor of 0.1 every 7 epochs</span>
+<span class="n">exp_lr_scheduler</span> <span class="o">=</span> <span class="n">lr_scheduler</span><span class="o">.</span><span class="n">StepLR</span><span class="p">(</span><span class="n">optimizer_ft</span><span class="p">,</span> <span class="n">step_size</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p class="rubric">训练和评估</p>
+<p>在 CPU 上应该需要大约 15-25 分钟。而在 GPU 上，这只需要不到一分钟的时间。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train_iter</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">dataloaders</span><span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">]</span>
+<span class="n">test_iter</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">dataloaders</span><span class="p">[</span><span class="s1">&#39;val&#39;</span><span class="p">]</span>
+<span class="n">CV</span><span class="o">.</span><span class="n">train_fine_tuning</span><span class="p">(</span><span class="n">model_ft</span><span class="p">,</span> <span class="n">train_iter</span><span class="p">,</span> <span class="n">test_iter</span><span class="p">,</span>
+                     <span class="n">learning_rate</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span>
+                     <span class="n">num_epochs</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span>
+                     <span class="n">param_group</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>loss 0.525, train acc 0.738, test acc 0.922
+94.7 examples/sec on [device(type=&#39;cuda&#39;, index=0), device(type=&#39;cuda&#39;, index=1), device(type=&#39;cuda&#39;, index=2)]
+</pre></div>
+</div>
+<img alt="../../../_images/basic_14_1.svg" src="../../../_images/basic_14_1.svg" /></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_ft</span> <span class="o">=</span> <span class="n">train_model</span><span class="p">(</span><span class="n">model_ft</span><span class="p">,</span>
+                       <span class="n">loader</span><span class="p">,</span>
+                       <span class="n">criterion</span><span class="p">,</span>
+                       <span class="n">optimizer_ft</span><span class="p">,</span>
+                       <span class="n">exp_lr_scheduler</span><span class="p">,</span>
+                       <span class="n">num_epochs</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span>
+                       <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 0/24
+----------
+train Loss: 0.5611 Acc: 0.7254
+val Loss: 0.2176 Acc: 0.9216
+
+Epoch 1/24
+----------
+train Loss: 0.5694 Acc: 0.7418
+val Loss: 0.3503 Acc: 0.8431
+
+Epoch 2/24
+----------
+train Loss: 0.6544 Acc: 0.7459
+val Loss: 0.4695 Acc: 0.8758
+
+Epoch 3/24
+----------
+train Loss: 0.6046 Acc: 0.7705
+val Loss: 0.2749 Acc: 0.8824
+
+Epoch 4/24
+----------
+train Loss: 0.4632 Acc: 0.7951
+val Loss: 0.3509 Acc: 0.8562
+
+Epoch 5/24
+----------
+train Loss: 0.4025 Acc: 0.8361
+val Loss: 0.3468 Acc: 0.8758
+
+Epoch 6/24
+----------
+train Loss: 0.3527 Acc: 0.8607
+val Loss: 0.5126 Acc: 0.8366
+
+Epoch 7/24
+----------
+train Loss: 0.4358 Acc: 0.8197
+val Loss: 0.3389 Acc: 0.9020
+
+Epoch 8/24
+----------
+train Loss: 0.3238 Acc: 0.8607
+val Loss: 0.3127 Acc: 0.9085
+
+Epoch 9/24
+----------
+train Loss: 0.3460 Acc: 0.8566
+val Loss: 0.3567 Acc: 0.9020
+
+Epoch 10/24
+----------
+train Loss: 0.2422 Acc: 0.8934
+val Loss: 0.4046 Acc: 0.8758
+
+Epoch 11/24
+----------
+train Loss: 0.3590 Acc: 0.8607
+val Loss: 0.3903 Acc: 0.8562
+
+Epoch 12/24
+----------
+train Loss: 0.3062 Acc: 0.8811
+val Loss: 0.3172 Acc: 0.9085
+
+Epoch 13/24
+----------
+train Loss: 0.3534 Acc: 0.8443
+val Loss: 0.3185 Acc: 0.9085
+
+Epoch 14/24
+----------
+train Loss: 0.2952 Acc: 0.8975
+val Loss: 0.3303 Acc: 0.8954
+
+Epoch 15/24
+----------
+train Loss: 0.3178 Acc: 0.8443
+val Loss: 0.3352 Acc: 0.9020
+
+Epoch 16/24
+----------
+train Loss: 0.3271 Acc: 0.8566
+val Loss: 0.2946 Acc: 0.9216
+
+Epoch 17/24
+----------
+train Loss: 0.2666 Acc: 0.8934
+val Loss: 0.3217 Acc: 0.9085
+
+Epoch 18/24
+----------
+train Loss: 0.3182 Acc: 0.8566
+val Loss: 0.2877 Acc: 0.9150
+
+Epoch 19/24
+----------
+train Loss: 0.2589 Acc: 0.8893
+val Loss: 0.2842 Acc: 0.9150
+
+Epoch 20/24
+----------
+train Loss: 0.2644 Acc: 0.8689
+val Loss: 0.2981 Acc: 0.9020
+
+Epoch 21/24
+----------
+train Loss: 0.1924 Acc: 0.9221
+val Loss: 0.2702 Acc: 0.9150
+
+Epoch 22/24
+----------
+train Loss: 0.3577 Acc: 0.8361
+val Loss: 0.2952 Acc: 0.9085
+
+Epoch 23/24
+----------
+train Loss: 0.2599 Acc: 0.9016
+val Loss: 0.2708 Acc: 0.9281
+
+Epoch 24/24
+----------
+train Loss: 0.2780 Acc: 0.8811
+val Loss: 0.2779 Acc: 0.9085
+
+完成训练用时 1m 13s
+最佳 val Acc: 0.928105
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">xs</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">loader</span><span class="o">.</span><span class="n">dataloaders</span><span class="p">[</span><span class="s1">&#39;val&#39;</span><span class="p">]:</span>
+    <span class="k">break</span>
+
+<span class="n">MT</span> <span class="o">=</span> <span class="n">ModuleTool</span><span class="p">(</span><span class="n">xs</span><span class="p">)</span>
+<span class="n">MT</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">model_ft</span><span class="p">,</span> <span class="n">loader</span><span class="o">.</span><span class="n">class_names</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span>
+          <span class="n">num_rows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_cols</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">2</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/basic_16_0.svg" src="../../../_images/basic_16_0.svg" /></div>
+</div>
+</div>
+<div class="section" id="id2">
+<h2>ConvNet 作为固定的特征提取器<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>在这里，需要冻结除了最后一层之外的所有网络。需要设置 <code class="docutils literal notranslate"><span class="pre">requires_grad</span> <span class="pre">=</span> <span class="pre">False</span></code> 来冻结参数，这样梯度就不会在 <code class="docutils literal notranslate"><span class="pre">backward()</span></code> 中计算出来。</p>
+<p>也可以阅读 <a class="reference external" href="https://pytorch.org/docs/notes/autograd.html#excluding-subgraphs-from-backward">excluding-subgraphs-from-backward</a> 了解更多内容。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_conv</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">resnet18</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">model_conv</span><span class="o">.</span><span class="n">parameters</span><span class="p">():</span>
+    <span class="n">param</span><span class="o">.</span><span class="n">requires_grad</span> <span class="o">=</span> <span class="kc">False</span>
+
+<span class="c1"># 新构造模块的参数默认为 requires_grad=True</span>
+<span class="n">num_ftrs</span> <span class="o">=</span> <span class="n">model_conv</span><span class="o">.</span><span class="n">fc</span><span class="o">.</span><span class="n">in_features</span>
+<span class="n">model_conv</span><span class="o">.</span><span class="n">fc</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">num_ftrs</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="n">model_conv</span> <span class="o">=</span> <span class="n">model_conv</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+
+<span class="n">criterion</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">CrossEntropyLoss</span><span class="p">()</span>
+
+<span class="c1"># 观察到只有最后一层的参数被优化，而不是之前。</span>
+<span class="n">optimizer_conv</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">model_conv</span><span class="o">.</span><span class="n">fc</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span> <span class="n">momentum</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
+
+<span class="c1"># Decay LR by a factor of 0.1 every 7 epochs</span>
+<span class="n">exp_lr_scheduler</span> <span class="o">=</span> <span class="n">lr_scheduler</span><span class="o">.</span><span class="n">StepLR</span><span class="p">(</span><span class="n">optimizer_conv</span><span class="p">,</span> <span class="n">step_size</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p class="rubric">训练和评估</p>
+<p>在 CPU 上，与之前的场景相比，这将花费大约一半的时间。这是预期的，因为梯度不需要计算的大多数网络。但是，forward 确实需要计算。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">CV</span><span class="o">.</span><span class="n">train_fine_tuning</span><span class="p">(</span><span class="n">model_conv</span><span class="p">,</span> <span class="n">train_iter</span><span class="p">,</span> <span class="n">test_iter</span><span class="p">,</span>
+                     <span class="n">learning_rate</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span>
+                     <span class="n">num_epochs</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span>
+                     <span class="n">param_group</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>loss 0.512, train acc 0.734, test acc 0.915
+128.3 examples/sec on [device(type=&#39;cuda&#39;, index=0), device(type=&#39;cuda&#39;, index=1), device(type=&#39;cuda&#39;, index=2)]
+</pre></div>
+</div>
+<img alt="../../../_images/basic_20_1.svg" src="../../../_images/basic_20_1.svg" /></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># model_conv = train_model(model_conv, loader, criterion, optimizer_conv,</span>
+<span class="c1">#                          exp_lr_scheduler, num_epochs=25, device=device)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 0/24
+----------
+train Loss: 0.5298 Acc: 0.7049
+val Loss: 0.3384 Acc: 0.8497
+
+Epoch 1/24
+----------
+train Loss: 0.4472 Acc: 0.7869
+val Loss: 0.1853 Acc: 0.9412
+
+Epoch 2/24
+----------
+train Loss: 0.4882 Acc: 0.7910
+val Loss: 0.1864 Acc: 0.9412
+
+Epoch 3/24
+----------
+train Loss: 0.5350 Acc: 0.7500
+val Loss: 0.2736 Acc: 0.9281
+
+Epoch 4/24
+----------
+train Loss: 0.5804 Acc: 0.7213
+val Loss: 0.1757 Acc: 0.9346
+
+Epoch 5/24
+----------
+train Loss: 0.4132 Acc: 0.7951
+val Loss: 0.1906 Acc: 0.9477
+
+Epoch 6/24
+----------
+train Loss: 0.4870 Acc: 0.7869
+val Loss: 0.4047 Acc: 0.8497
+
+Epoch 7/24
+----------
+train Loss: 0.4120 Acc: 0.8156
+val Loss: 0.1780 Acc: 0.9346
+
+Epoch 8/24
+----------
+train Loss: 0.3053 Acc: 0.8566
+val Loss: 0.1799 Acc: 0.9477
+
+Epoch 9/24
+----------
+train Loss: 0.3253 Acc: 0.8361
+val Loss: 0.1769 Acc: 0.9477
+
+Epoch 10/24
+----------
+train Loss: 0.3138 Acc: 0.8730
+val Loss: 0.1810 Acc: 0.9477
+
+Epoch 11/24
+----------
+train Loss: 0.3249 Acc: 0.8566
+val Loss: 0.1750 Acc: 0.9412
+
+Epoch 12/24
+----------
+train Loss: 0.2680 Acc: 0.8689
+val Loss: 0.1821 Acc: 0.9477
+
+Epoch 13/24
+----------
+train Loss: 0.3606 Acc: 0.8279
+val Loss: 0.2020 Acc: 0.9412
+
+Epoch 14/24
+----------
+train Loss: 0.2878 Acc: 0.8484
+val Loss: 0.1763 Acc: 0.9477
+
+Epoch 15/24
+----------
+train Loss: 0.3050 Acc: 0.8689
+val Loss: 0.1757 Acc: 0.9412
+
+Epoch 16/24
+----------
+train Loss: 0.3034 Acc: 0.8648
+val Loss: 0.1753 Acc: 0.9477
+
+Epoch 17/24
+----------
+train Loss: 0.2897 Acc: 0.8770
+val Loss: 0.1783 Acc: 0.9477
+
+Epoch 18/24
+----------
+train Loss: 0.2333 Acc: 0.9098
+val Loss: 0.1800 Acc: 0.9477
+
+Epoch 19/24
+----------
+train Loss: 0.3614 Acc: 0.8648
+val Loss: 0.1736 Acc: 0.9477
+
+Epoch 20/24
+----------
+train Loss: 0.3104 Acc: 0.8934
+val Loss: 0.1713 Acc: 0.9412
+
+Epoch 21/24
+----------
+train Loss: 0.2830 Acc: 0.8648
+val Loss: 0.2225 Acc: 0.9346
+
+Epoch 22/24
+----------
+train Loss: 0.3170 Acc: 0.8730
+val Loss: 0.1792 Acc: 0.9477
+
+Epoch 23/24
+----------
+train Loss: 0.3406 Acc: 0.8279
+val Loss: 0.2325 Acc: 0.9216
+
+Epoch 24/24
+----------
+train Loss: 0.3963 Acc: 0.8443
+val Loss: 0.1822 Acc: 0.9412
+
+完成训练用时 0m 46s
+最佳 val Acc: 0.947712
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Exception ignored in: &lt;function _releaseLock at 0x7f2d2399bd30&gt;
+Traceback (most recent call last):
+  File &quot;/home/pc/xinet/anaconda3/envs/ai/lib/python3.9/logging/__init__.py&quot;, line 227, in _releaseLock
+    def _releaseLock():
+KeyboardInterrupt: 
+</pre></div>
+</div>
+</div>
+</div>
+<p class="rubric">可视化</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">xs</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">loader</span><span class="o">.</span><span class="n">dataloaders</span><span class="p">[</span><span class="s1">&#39;val&#39;</span><span class="p">]:</span>
+    <span class="k">break</span>
+
+<span class="n">MT</span> <span class="o">=</span> <span class="n">ModuleTool</span><span class="p">(</span><span class="n">xs</span><span class="p">)</span>
+<span class="n">MT</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">model_ft</span><span class="p">,</span> <span class="n">loader</span><span class="o">.</span><span class="n">class_names</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span>
+          <span class="n">num_rows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_cols</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ioff</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/basic_23_0.png" src="../../../_images/basic_23_0.png" />
+</div>
+</div>
+</div>
+</div>
+
+
+              </div>
+              
+              
+              <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="index.html" title="上一页 页">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">上一页</p>
+            <p class="prev-next-title">迁移学习</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="quantized.html" title="下一页 页">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">量化计算机视觉分类</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+  
+  <script src="../../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+<footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    
+    <div class="footer-item">
+      <p class="copyright">
+    &copy; Copyright 2022, xinetzone.<br>
+</p>
+    </div>
+    
+    <div class="footer-item">
+      <p class="last-updated">
+最后更新于 2022-03-17, 03:22:45.<br>
+</p>
+    </div>
+    
+    <div class="footer-item">
+      <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.4.0.<br>
+</p>
+    </div>
+    
+  </div>
+</footer>
+  </body>
+</html>

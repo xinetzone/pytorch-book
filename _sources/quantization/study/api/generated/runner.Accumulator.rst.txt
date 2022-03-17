@@ -1,0 +1,6 @@
+﻿runner.Accumulator
+==================
+
+.. currentmodule:: runner
+
+.. autoclass:: Accumulator

@@ -1,0 +1,1132 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>基础 &#8212; Pytorch Book 0.0.1 文档</title>
+    
+  <link href="../../_static/css/theme.css" rel="stylesheet">
+  <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/tabs.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/default.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/translations.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.jpg"/>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="Pytorch 数值套件教程" href="ns.html" />
+    <link rel="prev" title="快速上手" href="index.html" />
+    <link rel="stylesheet" href="../../_static/css/default.css"/>
+    <link rel="stylesheet" href="../../_static/css/custom.css"/>
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+
+  <div id="navbar-start">
+    
+    
+
+<a class="navbar-brand" href="../../index.html">
+  <img src="../../_static/logo.jpg" class="logo" alt="logo">
+</a>
+
+
+    
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  
+  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+    <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../intro.html">
+  项目简介
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../tutorials/index.html">
+  教程
+ </a>
+</li>
+
+<li class="toctree-l1 current active nav-item">
+ <a class="reference internal nav-link" href="../index.html">
+  量化
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../ecosystem/index.html">
+  生态系统
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../refs.html">
+  参考文献
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../others/index.html">
+  其他
+ </a>
+</li>
+
+    
+</ul>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/xinetzone/pytorch-book" rel="noopener" target="_blank" title="GitHub">
+            <span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label>
+          </a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    <ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="index.html">
+   快速上手
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     基础
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="ns.html">
+     Pytorch 数值套件教程
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../study/index.html">
+   学习
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../study/intro.html">
+     概述
+    </a>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../study/transfer-learning/index.html">
+     迁移学习
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+    <label for="toctree-checkbox-3">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../study/transfer-learning/basic.html">
+       计算机视觉分类
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../study/transfer-learning/quantized.html">
+       量化计算机视觉分类
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../study/transfer-learning/tvm.html">
+       TVM
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../study/transfer-learning/test.html">
+       测试
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../study/qat-resnet18.html">
+     QAT（resnet18）
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../study/qat-mini.html">
+     静态量化（cifar10）
+    </a>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../study/api/index.html">
+     用户代码 API
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+    <label for="toctree-checkbox-4">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../study/api/runner.html">
+       runner
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+      <label for="toctree-checkbox-5">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../study/api/generated/runner.Timer.html">
+         runner.Timer
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../study/api/generated/runner.Accumulator.html">
+         runner.Accumulator
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../study/api/generated/runner.Animator.html">
+         runner.Animator
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../study/api/generated/runner.show_images.html">
+         runner.show_images
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../study/api/xinet.html">
+       xinet
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../study/api/hymenoptera.html">
+       hymenoptera
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../study/api/net.html">
+       NN 模块
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../study/api/helper.html">
+       辅助工具
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../study/api/tools.html">
+       工具
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../papers/index.html">
+   论文
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../papers/gholami2021survey.html">
+     A Survey of Quantization Methods for Efficient Neural Network Inference
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+  </div>
+</nav>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+            
+              
+              <div class="toc-item">
+                
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id4">
+   映射函数
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id5">
+   量化参数
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id6">
+   校准
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id7">
+   仿射和对称量化方案
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id9">
+   逐张量和逐通道量化方案
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id11">
+   后端引擎
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#qconfig">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     QConfig
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#pytorch">
+   在 PyTorch 中
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#post-training-dynamic-weight-only-quantization">
+     Post-Training Dynamic/Weight-only Quantization
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#post-training-static-quantization-ptq">
+     Post-Training Static Quantization (PTQ)
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id12">
+       急切的模式
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#fx-graph">
+       FX GRAPH
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#quantization-aware-training-qat">
+     Quantization-aware Training (QAT)
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id14">
+   敏感性分析
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id16">
+   对您工作流程的建议
+  </a>
+ </li>
+</ul>
+
+</nav>
+              </div>
+              
+              <div class="toc-item">
+                
+
+<div class="tocsection editthispage">
+    <a href="https://github.com/xinetzone/pytorch-book/edit/main/docs/quantization/start/basic.ipynb">
+        <i class="fas fa-pencil-alt"></i> Edit this page
+    </a>
+</div>
+
+              </div>
+              
+            
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="id1">
+<h1>基础<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<p>参考：<a class="reference external" href="https://pytorch.org/blog/quantization-in-practice/">Practical Quantization in PyTorch</a></p>
+<p><span class="guilabel">NN 量化目标</span>：运行更快、内存需求更低。</p>
+<ul class="simple">
+<li><p>量化源于信息压缩；在深度神经网络中，它指的是降低其权重和/或激活的数值精度。</p></li>
+<li><p>过度参数化的 DNN 有更多的 <strong>自由度</strong>，这使它们成为信息压缩的良好候选对象 <span id="id2">[<a class="reference internal" href="../../refs.html#id3" title="Amir Gholami, Sehoon Kim, Zhen Dong, Zhewei Yao, Michael W. Mahoney, and Kurt Keutzer. A survey of quantization methods for efficient neural network inference. 2021. arXiv:2103.13630.">Gholami, Kim, Dong, Yao, Mahoney, and Keutzer, 2021</a>]</span>。</p></li>
+</ul>
+<p>当量化模型时，通常会发生两件事——模型变得更小，运行效率更高。硬件供应商明确地允许更快地处理 8 位数据（而不是 32 位数据），从而获得更高的 <strong>吞吐量</strong> （throughput）。更小的模型具有更低的内存占用和功耗 <span id="id3">[<a class="reference internal" href="../../refs.html#id4" title="Raghuraman Krishnamoorthi. Quantizing deep convolutional networks for efficient inference: a whitepaper. 2018. arXiv:1806.08342.">Krishnamoorthi, 2018</a>]</span>，这对于边缘部署至关重要。</p>
+<div class="section" id="id4">
+<h2>映射函数<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<p>映射函数：将值从浮点数映射到整数空间的函数。常用的映射函数是由 <span class="math notranslate nohighlight">\(Q(r) = round(r/S + Z)\)</span> 给出的线性变换，其中为 <span class="math notranslate nohighlight">\(r\)</span> 为输入，<span class="math notranslate nohighlight">\(S, Z\)</span> 为量化参数（quantization parameters）。为了重新转换为浮点空间，反函数由 <span class="math notranslate nohighlight">\(\overline{r} = (Q(r) - Z) \cdot S\)</span> 给出（被称为 <strong>反量化</strong>，即 dequantization）。</p>
+<div class="admonition note">
+<p class="admonition-title">备注</p>
+<p><span class="math notranslate nohighlight">\(\overline{r} \neq r\)</span>，它们之间的差异构成了量化误差。</p>
+</div>
+</div>
+<div class="section" id="id5">
+<h2>量化参数<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+<p>映射函数由缩放因子 <span class="math notranslate nohighlight">\(S\)</span> 和零点 <span class="math notranslate nohighlight">\(Z\)</span> 所参数化。<span class="math notranslate nohighlight">\(S\)</span> 仅仅是输入范围与输出范围的比值 <span class="math notranslate nohighlight">\(S = \frac {\beta - \alpha}{\beta_q - \alpha_q}\)</span>。这里 <span class="math notranslate nohighlight">\([\alpha, \beta]\)</span> 是输入的裁剪（clipping）范围，即允许输入的边界。<span class="math notranslate nohighlight">\([\alpha_q, \beta_q]\)</span> 是它被映射到的量化输出空间的范围。对于 8 位量化，输出范围 <span class="math notranslate nohighlight">\(\beta_q - \alpha_q \leq 2^8 -1\)</span>。<span class="math notranslate nohighlight">\(Z = -(\frac {\alpha}{S} - \alpha_q)\)</span> 作为偏置，以确保输入空间中的 <span class="math notranslate nohighlight">\(0\)</span> 完全映射到量化空间中的 <span class="math notranslate nohighlight">\(0\)</span>。</p>
+</div>
+<div class="section" id="id6">
+<h2>校准<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h2>
+<p>选择输入裁剪范围的过程称为 <strong>校准</strong> （calibration）。最简单的方法（也是 PyTorch 中的默认方法）是记录正在运行的最小值和最大值，并将它们赋值给 <span class="math notranslate nohighlight">\(\alpha\)</span> 和 <span class="math notranslate nohighlight">\(\beta\)</span>。<a class="reference external" href="https://docs.nvidia.com/deeplearning/tensorrt/pytorch-quantization-toolkit/docs/calib.html">TensorRT</a> 也使用熵最小化（KL 散度），均方误差最小化，或输入范围的百分位数。</p>
+<p>在 PyTorch 中，<code class="docutils literal notranslate"><span class="pre">Observer</span></code> 模块（<a class="reference external" href="https://pytorch.org/docs/stable/torch.quantization.html?highlight=observer#observers">docs</a>，<a class="reference external" href="https://github.com/PyTorch/PyTorch/blob/748d9d24940cd17938df963456c90fa1a13f3932/torch/ao/quantization/observer.py#L88">code</a>）收集关于输入值的统计信息并计算 qparams <span class="math notranslate nohighlight">\(S,Z\)</span>。不同的校准方案会产生不同的量化输出，最好通过经验验证哪种方案最适合您的应用程序和体系结构。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">torch.quantization.observer</span> <span class="kn">import</span> <span class="n">MinMaxObserver</span><span class="p">,</span> <span class="n">MovingAverageMinMaxObserver</span><span class="p">,</span> <span class="n">HistogramObserver</span>
+
+<span class="c1"># 设置输入</span>
+<span class="n">C</span><span class="p">,</span> <span class="n">L</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span>
+<span class="n">normal</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">distributions</span><span class="o">.</span><span class="n">normal</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">inputs</span> <span class="o">=</span> <span class="p">[</span><span class="n">normal</span><span class="o">.</span><span class="n">sample</span><span class="p">((</span><span class="n">C</span><span class="p">,</span> <span class="n">L</span><span class="p">)),</span> <span class="n">normal</span><span class="o">.</span><span class="n">sample</span><span class="p">((</span><span class="n">C</span><span class="p">,</span> <span class="n">L</span><span class="p">))]</span>
+<span class="n">inputs</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[tensor([[-0.3154, -0.3144],
+         [ 0.1521,  0.6264],
+         [ 0.7047, -1.8508]]),
+ tensor([[ 0.1989, -1.0663],
+         [ 0.8550, -1.8191],
+         [ 0.0984, -0.1991]])]
+</pre></div>
+</div>
+</div>
+</div>
+<p>设置观测者：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">observers</span> <span class="o">=</span> <span class="p">[</span><span class="n">MinMaxObserver</span><span class="p">(),</span> 
+             <span class="n">MovingAverageMinMaxObserver</span><span class="p">(),</span>
+             <span class="n">HistogramObserver</span><span class="p">()]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>查看量化参数：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">obs</span> <span class="ow">in</span> <span class="n">observers</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">inputs</span><span class="p">:</span> <span class="n">obs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> 
+    <span class="nb">print</span><span class="p">(</span><span class="n">obs</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">obs</span><span class="o">.</span><span class="n">calculate_qparams</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>MinMaxObserver (tensor([0.0149]), tensor([168.]))
+MovingAverageMinMaxObserver (tensor([0.0139]), tensor([162.]))
+HistogramObserver (tensor([0.0068]), tensor([156.]))
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id7">
+<h2>仿射和对称量化方案<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h2>
+<p>仿射（affine）或非对称量化（asymmetric quantization）方案分配输入范围的最小和最大观测值。仿射方案通常提供更小的剪切范围，并且对于量化非负激活非常有用（如果你的输入张量永远都不是负的，你就不需要输入范围包含负值）。计算范围为 <span class="math notranslate nohighlight">\(\alpha=\min(r), \beta = \max(r)\)</span>。当用于权值张量 <span id="id8">[<a class="reference internal" href="../../refs.html#id5" title="Hao Wu, Patrick Judd, Xiaojie Zhang, Mikhail Isaev, and Paulius Micikevicius. Integer quantization for deep learning inference: principles and empirical evaluation. 2020. arXiv:2004.09602.">Wu, Judd, Zhang, Isaev, and Micikevicius, 2020</a>]</span> 时，仿射量化会导致更昂贵的计算推理。</p>
+<p>对称量化（Symmetric quantization）方案将输入范围集中在 <span class="math notranslate nohighlight">\(0\)</span> 附近，消除了计算零点偏置的需要。计算范围为 <span class="math notranslate nohighlight">\(-\alpha=\beta=\max(|\max(r)|,|\min(r)|)\)</span>。</p>
+<p>对于倾斜的信号（如非负激活），这可能会导致糟糕的量化分辨率（quantization resolution），因为剪辑范围包括从未在输入中出现的值（参见下面的 pyplot）。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+
+<span class="k">def</span> <span class="nf">get_symmetric_range</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;获取对称范围&#39;&#39;&#39;</span>
+    <span class="n">beta</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">x</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">.</span><span class="n">abs</span><span class="p">())</span>
+    <span class="k">return</span> <span class="o">-</span><span class="n">beta</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span> <span class="n">beta</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">get_affine_range</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;获取仿射范围&#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="n">x</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span> <span class="n">x</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="n">plt</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">scheme</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;画出不同方案的分布&#39;&#39;&#39;</span>
+    <span class="n">boundaries</span> <span class="o">=</span> <span class="n">get_affine_range</span><span class="p">(</span>
+        <span class="n">data</span><span class="p">)</span> <span class="k">if</span> <span class="n">scheme</span> <span class="o">==</span> <span class="s1">&#39;affine&#39;</span> <span class="k">else</span> <span class="n">get_symmetric_range</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">a</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">a</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">vlines</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">boundaries</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="s1">&#39;purple&#39;</span><span class="p">,</span> <span class="n">ymin</span><span class="o">=</span><span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span><span class="o">=</span><span class="n">ymax</span><span class="p">)</span>
+
+<span class="c1"># 模拟激活和权重</span>
+<span class="n">act</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">distributions</span><span class="o">.</span><span class="n">pareto</span><span class="o">.</span><span class="n">Pareto</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">sample</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1024</span><span class="p">))</span>
+<span class="n">weights</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">distributions</span><span class="o">.</span><span class="n">normal</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.12</span><span class="p">)</span><span class="o">.</span><span class="n">sample</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">act</span><span class="p">,</span> <span class="s1">&#39;affine&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Activation, Affine-Quantized&quot;</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">act</span><span class="p">,</span> <span class="s1">&#39;symmetric&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Activation, Symmetric-Quantized&quot;</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">weights</span><span class="p">,</span> <span class="s1">&#39;affine&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Weights, Affine-Quantized&quot;</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">weights</span><span class="p">,</span> <span class="s1">&#39;symmetric&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Weights, Symmetric-Quantized&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/basic_7_0.png" src="../../_images/basic_7_0.png" />
+</div>
+</div>
+<p>在 PyTorch 中，你可以在初始化 <code class="docutils literal notranslate"><span class="pre">Observer</span></code> 时指定仿射或对称模式。注意，并非所有 <code class="docutils literal notranslate"><span class="pre">observer</span></code> 都支持这两种方案。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">qscheme</span> <span class="ow">in</span> <span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">per_tensor_affine</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">per_tensor_symmetric</span><span class="p">]:</span>
+    <span class="n">obs</span> <span class="o">=</span> <span class="n">MovingAverageMinMaxObserver</span><span class="p">(</span><span class="n">qscheme</span><span class="o">=</span><span class="n">qscheme</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">inputs</span><span class="p">:</span> <span class="n">obs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Qscheme: </span><span class="si">{</span><span class="n">qscheme</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">obs</span><span class="o">.</span><span class="n">calculate_qparams</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Qscheme: torch.per_tensor_affine | (tensor([0.0139]), tensor([162.]))
+Qscheme: torch.per_tensor_symmetric | (tensor([0.0176]), tensor([128]))
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id9">
+<h2>逐张量和逐通道量化方案<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h2>
+<p>量化参数可以作为整体计算层的整个权值张量，也可以单独计算每个通道的权值张量。在每张量中，对层中的所有通道应用相同的剪切范围：</p>
+<p><img alt="" src="../../_images/tensor-quantization.png" /></p>
+<p>对于权值量化，逐通道（Per-Channel）对称量化提供了更好的精度；逐张量（Per-Tensor）量化的性能很差，这可能是由于不同通道之间的转换权值与批量范数折叠（batchnorm folding） <span id="id10">[<a class="reference internal" href="../../refs.html#id5" title="Hao Wu, Patrick Judd, Xiaojie Zhang, Mikhail Isaev, and Paulius Micikevicius. Integer quantization for deep learning inference: principles and empirical evaluation. 2020. arXiv:2004.09602.">Wu, Judd, Zhang, Isaev, and Micikevicius, 2020</a>]</span> 差异很大。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">torch.quantization.observer</span> <span class="kn">import</span> <span class="n">MovingAveragePerChannelMinMaxObserver</span>
+<span class="c1"># 计算全部 `C` 通道的 qparams</span>
+<span class="n">obs</span> <span class="o">=</span> <span class="n">MovingAveragePerChannelMinMaxObserver</span><span class="p">(</span><span class="n">ch_axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">inputs</span><span class="p">:</span> <span class="n">obs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">obs</span><span class="o">.</span><span class="n">calculate_qparams</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(tensor([0.0013, 0.0025, 0.0099]), tensor([255.,   0., 185.]))
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id11">
+<h2>后端引擎<a class="headerlink" href="#id11" title="永久链接至标题">¶</a></h2>
+<p>目前，量化算子通过 <a class="reference external" href="https://github.com/pytorch/FBGEMM">FBGEMM 后端</a> 在 x86 机器上运行，或者在 ARM 机器上使用 <a class="reference external" href="https://github.com/pytorch/QNNPACK">QNNPACK</a> 原语。服务器 GPU 的后端支持（通过 TensorRT 和 cuDNN）即将推出。了解更多关于将量化扩展到自定义后端：<a class="reference external" href="https://github.com/pytorch/rfcs/blob/master/RFC-0019-Extending-PyTorch-Quantization-to-Custom-Backends.md">RFC-0019</a>。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">backend</span> <span class="o">=</span> <span class="s1">&#39;fbgemm&#39;</span> <span class="k">if</span> <span class="n">x86</span> <span class="k">else</span> <span class="s1">&#39;qnnpack&#39;</span>
+<span class="n">qconfig</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">quantization</span><span class="o">.</span><span class="n">get_default_qconfig</span><span class="p">(</span><span class="n">backend</span><span class="p">)</span>  
+<span class="n">torch</span><span class="o">.</span><span class="n">backends</span><span class="o">.</span><span class="n">quantized</span><span class="o">.</span><span class="n">engine</span> <span class="o">=</span> <span class="n">backend</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="qconfig">
+<h2><code class="docutils literal notranslate"><span class="pre">QConfig</span></code><a class="headerlink" href="#qconfig" title="永久链接至标题">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">QConfig</span></code> (<a class="reference external" href="https://github.com/PyTorch/PyTorch/blob/d6b15bfcbdaff8eb73fa750ee47cef4ccee1cd92/torch/ao/quantization/qconfig.py#L165">code</a>, <a class="reference external" href="https://pytorch.org/docs/stable/torch.quantization.html?highlight=qconfig#torch.quantization.QConfig">docs</a>) NamedTuple 存储用于量化激活和权重的 Observer 和量化方案。</p>
+<p>一定要传递 <code class="docutils literal notranslate"><span class="pre">Observer</span></code> 类（而不是实例），或者可以返回 <code class="docutils literal notranslate"><span class="pre">Observer</span></code> 实例的可调用对象。使用 <code class="xref py py-func docutils literal notranslate"><span class="pre">with_args()</span></code> 覆盖默认参数。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">my_qconfig</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">quantization</span><span class="o">.</span><span class="n">QConfig</span><span class="p">(</span>
+  <span class="n">activation</span><span class="o">=</span><span class="n">MovingAverageMinMaxObserver</span><span class="o">.</span><span class="n">with_args</span><span class="p">(</span><span class="n">qscheme</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">per_tensor_affine</span><span class="p">),</span>
+  <span class="n">weight</span><span class="o">=</span><span class="n">MovingAveragePerChannelMinMaxObserver</span><span class="o">.</span><span class="n">with_args</span><span class="p">(</span><span class="n">qscheme</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">qint8</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">my_qconfig</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>QConfig(activation=functools.partial(&lt;class &#39;torch.quantization.observer.MovingAverageMinMaxObserver&#39;&gt;, qscheme=torch.per_tensor_affine), weight=functools.partial(&lt;class &#39;torch.quantization.observer.MovingAveragePerChannelMinMaxObserver&#39;&gt;, qscheme=torch.qint8))
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="pytorch">
+<h2>在 PyTorch 中<a class="headerlink" href="#pytorch" title="永久链接至标题">¶</a></h2>
+<p>PyTorch 允许您使用几种不同的方式来量化您的模型：</p>
+<ul class="simple">
+<li><p>如果你更喜欢灵活但手动的，或受限的自动过程（Eager 模式v/s FX Graph 模式）</p></li>
+<li><p>如果量化激活（层输出）的 <code class="docutils literal notranslate"><span class="pre">qparams</span></code> 为所有输入预计算，或对每个输入重新计算（静态 v/s 动态），</p></li>
+<li><p>如果 <code class="docutils literal notranslate"><span class="pre">qparams</span></code> 是在有或没有重新训练的情况下计算的（量化感知训练（quantization-aware training） v/s 训练后量化（post-training quantization））</p></li>
+</ul>
+<p>FX Graph Mode 自动融合符合条件的模块，插入 Quant/DeQuant stub，校准模型并返回量化模块——所有这些都是在两个方法调用中进行的——但仅适用于 <a class="reference external" href="https://pytorch.org/docs/stable/fx.html#torch.fx.symbolic_trace">可符号跟踪</a> 的网络。</p>
+<p>在 DNN 中，量化的合适候选对象是 FP32 权值（层参数）和激活（层输出）。量化权值可以减少模型的大小。量化激活通常会导致更快的推理。</p>
+<p>例如，50 层 ResNet 网络有近 2600 万个权值参数，在正向传程中计算近 1600 万个激活。</p>
+<div class="section" id="post-training-dynamic-weight-only-quantization">
+<h3>Post-Training Dynamic/Weight-only Quantization<a class="headerlink" href="#post-training-dynamic-weight-only-quantization" title="永久链接至标题">¶</a></h3>
+<p>这里模型的权值是预量化的；在推理期间，激活是动态量化的。这是所有方法中最简单的一种，它在 <code class="docutils literal notranslate"><span class="pre">torch.quantization.quantize_dynamic</span></code> 中有一个一行 API 调用。目前只支持线性和循环（LSTM、GRU、RNN）层进行动态量化。</p>
+<ul class="simple">
+<li><p>可以导致更高的精度，因为每个输入的裁剪范围是精确校准的</p></li>
+<li><p>对于像 LSTM 和 Transformer 这样的模型，动态量化是首选的，因为从内存中写入/检索模型的权值会受制于带宽</p></li>
+<li><p>在运行时对每个层的激活进行校准和量化会增加计算开销。</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">nn</span>
+
+<span class="c1"># 小 model</span>
+<span class="n">m</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+  <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="p">(</span><span class="mi">8</span><span class="p">,)),</span>
+  <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
+  <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span>
+  <span class="n">nn</span><span class="o">.</span><span class="n">LSTM</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+
+<span class="n">m</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+
+<span class="c1">## EAGER MODE</span>
+<span class="kn">from</span> <span class="nn">torch.quantization</span> <span class="kn">import</span> <span class="n">quantize_dynamic</span>
+<span class="n">model_quantized</span> <span class="o">=</span> <span class="n">quantize_dynamic</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="n">m</span><span class="p">,</span> <span class="n">qconfig_spec</span><span class="o">=</span><span class="p">{</span><span class="n">nn</span><span class="o">.</span><span class="n">LSTM</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">},</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">qint8</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span>
+<span class="p">)</span>
+
+<span class="c1">## FX MODE</span>
+<span class="kn">from</span> <span class="nn">torch.quantization</span> <span class="kn">import</span> <span class="n">quantize_fx</span>
+<span class="c1"># 空键表示应用于所有模块的默认值</span>
+<span class="n">qconfig_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;&quot;</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">quantization</span><span class="o">.</span><span class="n">default_dynamic_qconfig</span><span class="p">}</span>
+<span class="n">model_prepared</span> <span class="o">=</span> <span class="n">quantize_fx</span><span class="o">.</span><span class="n">prepare_fx</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">qconfig_dict</span><span class="p">)</span>
+<span class="n">model_quantized</span> <span class="o">=</span> <span class="n">quantize_fx</span><span class="o">.</span><span class="n">convert_fx</span><span class="p">(</span><span class="n">model_prepared</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="post-training-static-quantization-ptq">
+<h3>Post-Training Static Quantization (PTQ)<a class="headerlink" href="#post-training-static-quantization-ptq" title="永久链接至标题">¶</a></h3>
+<p>PTQ 也预量化模型权重，但不是动态校准激活，而是使用验证数据对剪切范围进行预校准和固定（“静态”）。在推理过程中，激活在运算之间保持量化精度。大约 100 个小批次的代表性数据就足以校准观测者。为了方便起见，下面的例子在校准中使用了随机数据——在应用程序中使用随机数据将导致错误的 <code class="docutils literal notranslate"><span class="pre">qparams</span></code>。</p>
+<p><img alt="" src="../../_images/ptq-flowchart.svg" /></p>
+<p><a class="reference external" href="https://pytorch.org/tutorials/recipes/fuse.html">模块融合</a> 将多个顺序模块（如：<code class="docutils literal notranslate"><span class="pre">[Conv2d,</span> <span class="pre">BatchNorm,</span> <span class="pre">ReLU]</span></code>）组合成一个。融合模块意味着编译器只需要运行一个内核而不是多个；这可以通过减少量化误差来提高速度和准确性。</p>
+<ul class="simple">
+<li><p>静态量化比动态量化具有更快的推理速度，因为它消除了层之间的 float&lt;-&gt;int 转换成本。</p></li>
+<li><p>静态量化模型可能需要定期重新校准，以保持对分布漂移的鲁棒性。</p></li>
+</ul>
+<p>静态量化模型包括以下步骤：</p>
+<ul class="simple">
+<li><p>融合模块</p></li>
+<li><p>插入 Quant/DeQuant 存根</p></li>
+<li><p>准备融合模块（在层前和层后插入观察者）</p></li>
+<li><p>校准准备好的模块（传递代表数据）</p></li>
+<li><p>转换校准模块（替换为量化版本）</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">torch.quantization</span> <span class="kn">import</span> <span class="n">quantize_fx</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">nn</span>
+
+<span class="n">backend</span> <span class="o">=</span> <span class="s2">&quot;fbgemm&quot;</span>  <span class="c1"># 运行在x86 CPU 上。如果在ARM上运行，使用“qnnpack”。</span>
+
+<span class="n">m</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+    <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+    <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
+    <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+    <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id12">
+<h4>急切的模式<a class="headerlink" href="#id12" title="永久链接至标题">¶</a></h4>
+<p><strong>融合</strong>：就地融合用所述融合模块替换所述序列中的第一个模块，其余用相同模块替换。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># fuse first Conv-ReLU pair</span>
+<span class="n">torch</span><span class="o">.</span><span class="n">quantization</span><span class="o">.</span><span class="n">fuse_modules</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;0&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="c1"># fuse second Conv-ReLU pair</span>
+<span class="n">torch</span><span class="o">.</span><span class="n">quantization</span><span class="o">.</span><span class="n">fuse_modules</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;3&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sequential(
+  (0): ConvReLU2d(
+    (0): Conv2d(2, 64, kernel_size=(3, 3), stride=(1, 1))
+    (1): ReLU()
+  )
+  (1): Identity()
+  (2): ConvReLU2d(
+    (0): Conv2d(64, 128, kernel_size=(3, 3), stride=(1, 1))
+    (1): ReLU()
+  )
+  (3): Identity()
+)
+</pre></div>
+</div>
+</div>
+</div>
+<p>插入 stub：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">m</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">quantization</span><span class="o">.</span><span class="n">QuantStub</span><span class="p">(),</span>
+                  <span class="o">*</span><span class="n">m</span><span class="p">,</span>
+                  <span class="n">torch</span><span class="o">.</span><span class="n">quantization</span><span class="o">.</span><span class="n">DeQuantStub</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>准备：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">m</span><span class="o">.</span><span class="n">qconfig</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">quantization</span><span class="o">.</span><span class="n">get_default_qconfig</span><span class="p">(</span><span class="n">backend</span><span class="p">)</span>
+<span class="n">torch</span><span class="o">.</span><span class="n">quantization</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sequential(
+  (0): QuantStub(
+    (activation_post_process): HistogramObserver()
+  )
+  (1): ConvReLU2d(
+    (0): Conv2d(2, 64, kernel_size=(3, 3), stride=(1, 1))
+    (1): ReLU()
+    (activation_post_process): HistogramObserver()
+  )
+  (2): Identity()
+  (3): ConvReLU2d(
+    (0): Conv2d(64, 128, kernel_size=(3, 3), stride=(1, 1))
+    (1): ReLU()
+    (activation_post_process): HistogramObserver()
+  )
+  (4): Identity()
+  (5): DeQuantStub()
+)
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>校准</strong>：为了方便起见，这个例子使用了随机数据。使用代表性（验证）数据代替。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># with torch.inference_mode(): # PyTorch 1.9</span>
+<span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">)</span>
+        <span class="n">m</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>转换：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">torch</span><span class="o">.</span><span class="n">quantization</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sequential(
+  (0): Quantize(scale=tensor([0.0079]), zero_point=tensor([0]), dtype=torch.quint8)
+  (1): QuantizedConvReLU2d(2, 64, kernel_size=(3, 3), stride=(1, 1), scale=0.011565080843865871, zero_point=0)
+  (2): Identity()
+  (3): QuantizedConvReLU2d(64, 128, kernel_size=(3, 3), stride=(1, 1), scale=0.0044731260277330875, zero_point=0)
+  (4): Identity()
+  (5): DeQuantize()
+)
+</pre></div>
+</div>
+</div>
+</div>
+<p>检查：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1 字节，而不是 FP32 的 4 字节</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">weight</span><span class="p">()</span><span class="o">.</span><span class="n">element_size</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="fx-graph">
+<h4>FX GRAPH<a class="headerlink" href="#fx-graph" title="永久链接至标题">¶</a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">torch.quantization</span> <span class="kn">import</span> <span class="n">quantize_fx</span>
+<span class="n">m</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+<span class="n">qconfig_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;&quot;</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">quantization</span><span class="o">.</span><span class="n">get_default_qconfig</span><span class="p">(</span><span class="n">backend</span><span class="p">)}</span>
+<span class="c1"># 准备</span>
+<span class="n">model_prepared</span> <span class="o">=</span> <span class="n">quantize_fx</span><span class="o">.</span><span class="n">prepare_fx</span><span class="p">(</span><span class="n">model_to_quantize</span><span class="p">,</span> <span class="n">qconfig_dict</span><span class="p">)</span>
+<span class="c1"># Calibrate - Use representative (validation) data.</span>
+<span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">inference_mode</span><span class="p">():</span>
+  <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">)</span>
+    <span class="n">model_prepared</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="c1"># quantize</span>
+<span class="n">model_quantized</span> <span class="o">=</span> <span class="n">quantize_fx</span><span class="o">.</span><span class="n">convert_fx</span><span class="p">(</span><span class="n">model_prepared</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="quantization-aware-training-qat">
+<h3>Quantization-aware Training (QAT)<a class="headerlink" href="#quantization-aware-training-qat" title="永久链接至标题">¶</a></h3>
+<p><img alt="" src="../../_images/qat-flowchart.svg" /></p>
+<p>PTQ 方法对于大型模型非常好，但在较小的模型中准确性会受到影响。当然，这是由于将 FP32 的模型调整到 INT8 域时的数值精度损失。</p>
+<p>QAT 通过在训练损失中包含量化误差来解决这个问题，因此训练一个 INT8-first 模型。</p>
+<p><img alt="" src="../../_images/ptq-qat.png" /></p>
+<p>所有的权重和偏置都存储在 FP32 中，反向传播照常发生。然而在正向传递中，量化是通过 <code class="docutils literal notranslate"><span class="pre">FakeQuantize</span></code> 模块进行内部模拟的。它们之所以被称为假的，是因为它们对数据进行量化和立即反量化，并添加与量化推理过程中可能遇到的类似的量化噪声。因此，最终的损失可以解释任何预期的量化误差。在此基础上进行优化，可以使模型在损失函数中识别出更宽的区域，并识别出 FP32 参数，这样量化到 INT8 不会显著影响精度。</p>
+<p><a class="reference external" href="https://developer.nvidia.com/blog/achieving-fp32-accuracy-for-int8-inference-using-quantization-aware-training-with-tensorrt"><img alt="" src="../../_images/qat-fake-quantization.png" /></a></p>
+<ul class="simple">
+<li><p>QAT 比 PTQ 具有更高的精度。</p></li>
+<li><p>Qparams 可以在模型训练期间学习，以获得更细粒度的准确性（参见 <a class="reference external" href="https://github.com/pytorch/pytorch/blob/master/torch/ao/quantization/_learnable_fake_quantize.py">LearnableFakeQuantize</a>）。</p></li>
+<li><p>在 QAT 中，重新训练一个模型的计算成本可以达到几百个 epoch。<span id="id13">[<a class="reference internal" href="../../refs.html#id3" title="Amir Gholami, Sehoon Kim, Zhen Dong, Zhewei Yao, Michael W. Mahoney, and Kurt Keutzer. A survey of quantization methods for efficient neural network inference. 2021. arXiv:2103.13630.">Gholami, Kim, Dong, Yao, Mahoney, and Keutzer, 2021</a>]</span></p></li>
+</ul>
+<p>除了在将模型实际转换为量化版本之前的训练循环之外，QAT 遵循与 PTQ 相同的步骤：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">nn</span>
+
+<span class="c1"># 运行在 x86 CPU 上。如果在 ARM 上运行，使用 &quot;qnnpack&quot;。</span>
+<span class="n">backend</span> <span class="o">=</span> <span class="s2">&quot;fbgemm&quot;</span>  
+
+<span class="n">m</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+    <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span>
+    <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
+    <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span>
+    <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>融合：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">torch</span><span class="o">.</span><span class="n">quantization</span><span class="o">.</span><span class="n">fuse_modules</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;0&#39;</span><span class="p">,</span><span class="s1">&#39;1&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># 融合第一对 Conv-ReLU</span>
+<span class="n">torch</span><span class="o">.</span><span class="n">quantization</span><span class="o">.</span><span class="n">fuse_modules</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;2&#39;</span><span class="p">,</span><span class="s1">&#39;3&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># 融合第二对 Conv-ReLU</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sequential(
+  (0): ConvReLU2d(
+    (0): Conv2d(2, 64, kernel_size=(8, 8), stride=(1, 1))
+    (1): ReLU()
+  )
+  (1): Identity()
+  (2): ConvReLU2d(
+    (0): Conv2d(64, 128, kernel_size=(8, 8), stride=(1, 1))
+    (1): ReLU()
+  )
+  (3): Identity()
+)
+</pre></div>
+</div>
+</div>
+</div>
+<p>插入存根（打桩）：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">m</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">quantization</span><span class="o">.</span><span class="n">QuantStub</span><span class="p">(),</span>
+                  <span class="o">*</span><span class="n">m</span><span class="p">,</span>
+                  <span class="n">torch</span><span class="o">.</span><span class="n">quantization</span><span class="o">.</span><span class="n">DeQuantStub</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>准备：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">m</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+<span class="n">m</span><span class="o">.</span><span class="n">qconfig</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">quantization</span><span class="o">.</span><span class="n">get_default_qconfig</span><span class="p">(</span><span class="n">backend</span><span class="p">)</span>
+<span class="n">torch</span><span class="o">.</span><span class="n">quantization</span><span class="o">.</span><span class="n">prepare_qat</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sequential(
+  (0): QuantStub(
+    (activation_post_process): HistogramObserver()
+  )
+  (1): ConvReLU2d(
+    2, 64, kernel_size=(8, 8), stride=(1, 1)
+    (weight_fake_quant): PerChannelMinMaxObserver(min_val=tensor([]), max_val=tensor([]))
+    (activation_post_process): HistogramObserver()
+  )
+  (2): Identity()
+  (3): ConvReLU2d(
+    64, 128, kernel_size=(8, 8), stride=(1, 1)
+    (weight_fake_quant): PerChannelMinMaxObserver(min_val=tensor([]), max_val=tensor([]))
+    (activation_post_process): HistogramObserver()
+  )
+  (4): Identity()
+  (5): DeQuantStub()
+)
+</pre></div>
+</div>
+</div>
+</div>
+<p>循环训练：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_epochs</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">opt</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">loss_fn</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">tgt</span><span class="p">):</span> <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="n">tgt</span><span class="o">-</span><span class="n">out</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_epochs</span><span class="p">):</span>
+  <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">24</span><span class="p">)</span>
+  <span class="n">out</span> <span class="o">=</span> <span class="n">m</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+  <span class="n">loss</span> <span class="o">=</span> <span class="n">loss_fn</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand_like</span><span class="p">(</span><span class="n">out</span><span class="p">))</span>
+  <span class="n">opt</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+  <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+  <span class="n">opt</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>转换：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">m</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+<span class="n">torch</span><span class="o">.</span><span class="n">quantization</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sequential(
+  (0): Quantize(scale=tensor([0.0081]), zero_point=tensor([0]), dtype=torch.quint8)
+  (1): QuantizedConvReLU2d(2, 64, kernel_size=(8, 8), stride=(1, 1), scale=0.009916980750858784, zero_point=0)
+  (2): Identity()
+  (3): QuantizedConvReLU2d(64, 128, kernel_size=(8, 8), stride=(1, 1), scale=0.005839221179485321, zero_point=0)
+  (4): Identity()
+  (5): DeQuantize()
+)
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id14">
+<h2>敏感性分析<a class="headerlink" href="#id14" title="永久链接至标题">¶</a></h2>
+<p>并不是所有层对量化的响应都是一样的，有些层对精度下降比其他层更敏感。确定最优的层组合以最小化精度下降是非常耗时的，因此 <span id="id15">[<a class="reference internal" href="../../refs.html#id5" title="Hao Wu, Patrick Judd, Xiaojie Zhang, Mikhail Isaev, and Paulius Micikevicius. Integer quantization for deep learning inference: principles and empirical evaluation. 2020. arXiv:2004.09602.">Wu, Judd, Zhang, Isaev, and Micikevicius, 2020</a>]</span> 建议进行一次一次的灵敏度分析，以确定哪些层最敏感，并在这些层上保持 FP32 的精度。在他们的实验中，跳过 2 个 conv 层（在 MobileNet v1 的 28 个 conv 层中）使他们接近 FP32 的精度。使用 FX Graph 模式，可以创建自定义 <code class="docutils literal notranslate"><span class="pre">qconfigs</span></code> 来轻松做到这一点。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># ONE-AT-A-TIME SENSITIVITY ANALYSIS </span>
+
+<span class="k">for</span> <span class="n">quantized_layer</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">named_modules</span><span class="p">():</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Only quantizing layer: &quot;</span><span class="p">,</span> <span class="n">quantized_layer</span><span class="p">)</span>
+
+  <span class="c1"># The module_name key allows module-specific qconfigs. </span>
+  <span class="n">qconfig_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> 
+  <span class="s2">&quot;module_name&quot;</span><span class="p">:[(</span><span class="n">quantized_layer</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">quantization</span><span class="o">.</span><span class="n">get_default_qconfig</span><span class="p">(</span><span class="n">backend</span><span class="p">))]}</span>
+
+  <span class="n">model_prepared</span> <span class="o">=</span> <span class="n">quantize_fx</span><span class="o">.</span><span class="n">prepare_fx</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">qconfig_dict</span><span class="p">)</span>
+  <span class="c1"># calibrate</span>
+  <span class="n">model_quantized</span> <span class="o">=</span> <span class="n">quantize_fx</span><span class="o">.</span><span class="n">convert_fx</span><span class="p">(</span><span class="n">model_prepared</span><span class="p">)</span>
+  <span class="c1"># evaluate(model)</span>
+</pre></div>
+</div>
+<p>另一种方法是比较 FP32 和 INT8 层的统计数据；常用的度量有 SQNR（信号量化噪声比，即 Signal to Quantized Noise Ratio）和均方误差（Mean-Squre-Error）。这种比较分析也有助于指导进一步的优化。</p>
+<p><img alt="" src="../../_images/compare_output_ns.png" /></p>
+<p>PyTorch 在数值套件下提供了帮助进行此分析的工具。从完整的教程中了解更多关于使用 <a class="reference external" href="https://pytorch.org/tutorials/prototype/numeric_suite_tutorial.html">Numeric Suite</a> 的信息。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># extract from https://pytorch.org/tutorials/prototype/numeric_suite_tutorial.html</span>
+<span class="kn">import</span> <span class="nn">torch.quantization._numeric_suite</span> <span class="k">as</span> <span class="nn">ns</span>
+
+<span class="k">def</span> <span class="nf">SQNR</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="c1"># Higher is better</span>
+    <span class="n">Ps</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">Pn</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">y</span><span class="p">)</span>
+    <span class="k">return</span> <span class="mi">20</span><span class="o">*</span><span class="n">torch</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">Ps</span><span class="o">/</span><span class="n">Pn</span><span class="p">)</span>
+
+<span class="n">wt_compare_dict</span> <span class="o">=</span> <span class="n">ns</span><span class="o">.</span><span class="n">compare_weights</span><span class="p">(</span><span class="n">fp32_model</span><span class="o">.</span><span class="n">state_dict</span><span class="p">(),</span> <span class="n">int8_model</span><span class="o">.</span><span class="n">state_dict</span><span class="p">())</span>
+<span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">wt_compare_dict</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">compute_error</span><span class="p">(</span><span class="n">wt_compare_dict</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s1">&#39;float&#39;</span><span class="p">],</span> <span class="n">wt_compare_dict</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s1">&#39;quantized&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dequantize</span><span class="p">()))</span>
+
+<span class="n">act_compare_dict</span> <span class="o">=</span> <span class="n">ns</span><span class="o">.</span><span class="n">compare_model_outputs</span><span class="p">(</span><span class="n">fp32_model</span><span class="p">,</span> <span class="n">int8_model</span><span class="p">,</span> <span class="n">input_data</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">act_compare_dict</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">compute_error</span><span class="p">(</span><span class="n">act_compare_dict</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s1">&#39;float&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">act_compare_dict</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s1">&#39;quantized&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">dequantize</span><span class="p">()))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id16">
+<h2>对您工作流程的建议<a class="headerlink" href="#id16" title="永久链接至标题">¶</a></h2>
+<p><img alt="" src="../../_images/quantization-flowchart2.png" /></p>
+<p>要点：</p>
+<ul class="simple">
+<li><p>大（10M+ 参数）模型对量化误差更具鲁棒性。</p></li>
+<li><p>从 FP32 检查点量化模型比从零开始训练 INT8 模型提供了更好的 accuracy。</p></li>
+<li><p>分析模型运行时是可选的，但它可以帮助识别阻碍推理的层。</p></li>
+<li><p>动态量化是一个简单的第一步，特别是当您的模型有许多线性或递归层时。</p></li>
+<li><p>使用逐通道对称量化借由 <code class="docutils literal notranslate"><span class="pre">MinMax</span></code> 观测者量化权重。使用逐张量仿射量化借由 <code class="docutils literal notranslate"><span class="pre">MovingAverageMinMax</span></code> 观测者量化激活。</p></li>
+<li><p>使用诸如 SQNR 之类的度量来确定哪些层最容易受到量化误差的影响。关闭这些层上的量化。</p></li>
+<li><p>使用 QAT 对原始训练调度的大约 <span class="math notranslate nohighlight">\(10\%\)</span> 进行微调，退火学习率（annealing learning rate）调度从初始训练学习率的 <span class="math notranslate nohighlight">\(1\%\)</span> 开始。</p></li>
+<li><p>如果上面的工作流程不适合你，我们想知道更多。发布一个包含你的代码细节的帖子（模型架构，准确性指标，尝试过的技术）。请抄送 <a class="reference external" href="https://discuss.pytorch.org/u/suraj.pt/">&#64;suraj.pt</a>。</p></li>
+</ul>
+</div>
+</div>
+
+
+              </div>
+              
+              
+              <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="index.html" title="上一页 页">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">上一页</p>
+            <p class="prev-next-title">快速上手</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="ns.html" title="下一页 页">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">Pytorch 数值套件教程</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+  
+  <script src="../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+<footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    
+    <div class="footer-item">
+      <p class="copyright">
+    &copy; Copyright 2022, xinetzone.<br>
+</p>
+    </div>
+    
+    <div class="footer-item">
+      <p class="last-updated">
+最后更新于 2022-03-17, 03:22:45.<br>
+</p>
+    </div>
+    
+    <div class="footer-item">
+      <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.4.0.<br>
+</p>
+    </div>
+    
+  </div>
+</footer>
+  </body>
+</html>

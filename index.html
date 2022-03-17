@@ -47,7 +47,7 @@
     <link rel="shortcut icon" href="_static/favicon.jpg"/>
     <link rel="index" title="索引" href="genindex.html" />
     <link rel="search" title="搜索" href="search.html" />
-    <link rel="next" title="简介" href="intro.html" />
+    <link rel="next" title="项目简介" href="intro.html" />
     <link rel="stylesheet" href="_static/css/default.css"/>
     <link rel="stylesheet" href="_static/css/custom.css"/>
 
@@ -83,13 +83,19 @@
         <ul id="navbar-main-elements" class="navbar-nav">
     <li class="toctree-l1 nav-item">
  <a class="reference internal nav-link" href="intro.html">
-  简介
+  项目简介
  </a>
 </li>
 
 <li class="toctree-l1 nav-item">
  <a class="reference internal nav-link" href="tutorials/index.html">
   教程
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="quantization/index.html">
+  量化
  </a>
 </li>
 
@@ -102,6 +108,12 @@
 <li class="toctree-l1 nav-item">
  <a class="reference internal nav-link" href="refs.html">
   参考文献
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="others/index.html">
+  其他
  </a>
 </li>
 
@@ -209,15 +221,24 @@
 </pre></div>
 </div>
 <p>阿里云平台：<a class="reference external" href="https://www.aliyun.com/product/bigdata/learn">PAI</a></p>
+</div>
+<div class="section" id="id1">
+<h2>目录和索引<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">索引</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">模块索引</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">搜索页面</span></a></p></li>
+</ul>
 <div class="toctree-wrapper compound">
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">导航</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="intro.html">简介</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">项目简介</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="intro.html#id2">环境配置</a></li>
 <li class="toctree-l2"><a class="reference internal" href="intro.html#id3">贡献</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials/index.html">教程</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="tutorials/basics/index.html">基础</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/basics/index.html">PyTorch 基础</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="tutorials/basics/quickstart.html">快速入门</a></li>
 <li class="toctree-l3"><a class="reference internal" href="tutorials/basics/autogradqs.html">自动微分</a></li>
 </ul>
@@ -229,21 +250,42 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="quantization/index.html">量化</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="quantization/start/index.html">快速上手</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="quantization/start/basic.html">基础</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quantization/start/ns.html">Pytorch 数值套件教程</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="quantization/study/index.html">学习</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="quantization/study/intro.html">概述</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quantization/study/transfer-learning/index.html">迁移学习</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quantization/study/qat-resnet18.html">QAT（resnet18）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quantization/study/qat-mini.html">静态量化（cifar10）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quantization/study/api/index.html">用户代码 API</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="quantization/papers/index.html">论文</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="quantization/papers/gholami2021survey.html">A Survey of Quantization Methods for Efficient Neural Network Inference</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="ecosystem/index.html">生态系统</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="ecosystem/intro.html">简介</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="refs.html">参考文献</a></li>
+<li class="toctree-l1"><a class="reference internal" href="others/index.html">其他</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="others/colab.html">Colab 训练</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="others/colab.html#nightly">安装 Nightly 构建</a></li>
+<li class="toctree-l3"><a class="reference internal" href="others/colab.html#id1">下载数据</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="others/en-zh.html">中英互译</a></li>
+</ul>
+</li>
 </ul>
 </div>
-</div>
-<div class="section" id="id1">
-<h2>目录和索引<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
-<ul class="simple">
-<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">索引</span></a></p></li>
-<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">模块索引</span></a></p></li>
-<li><p><a class="reference internal" href="search.html"><span class="std std-ref">搜索页面</span></a></p></li>
-</ul>
 </div>
 </div>
 
@@ -256,7 +298,7 @@
     <a class='right-next' id="next-link" href="intro.html" title="下一页 页">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">下一页</p>
-        <p class="prev-next-title">简介</p>
+        <p class="prev-next-title">项目简介</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
@@ -280,7 +322,7 @@
     
     <div class="footer-item">
       <p class="last-updated">
-最后更新于 2022-03-16, 09:41:12.<br>
+最后更新于 2022-03-17, 03:22:45.<br>
 </p>
     </div>
     

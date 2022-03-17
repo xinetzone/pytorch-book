@@ -1,0 +1,927 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# 基础\n",
+    "\n",
+    "参考：[Practical Quantization in PyTorch](https://pytorch.org/blog/quantization-in-practice/)\n",
+    "\n",
+    "{guilabel}`NN 量化目标`：运行更快、内存需求更低。\n",
+    "\n",
+    "- 量化源于信息压缩；在深度神经网络中，它指的是降低其权重和/或激活的数值精度。\n",
+    "- 过度参数化的 DNN 有更多的 **自由度**，这使它们成为信息压缩的良好候选对象 {cite:ps}`gholami2021survey`。\n",
+    "\n",
+    "当量化模型时，通常会发生两件事——模型变得更小，运行效率更高。硬件供应商明确地允许更快地处理 8 位数据（而不是 32 位数据），从而获得更高的 **吞吐量** （throughput）。更小的模型具有更低的内存占用和功耗 {cite:ps}`krishnamoorthi2018quantizing`，这对于边缘部署至关重要。\n",
+    "\n",
+    "## 映射函数\n",
+    "\n",
+    "映射函数：将值从浮点数映射到整数空间的函数。常用的映射函数是由 $Q(r) = round(r/S + Z)$ 给出的线性变换，其中为 $r$ 为输入，$S, Z$ 为量化参数（quantization parameters）。为了重新转换为浮点空间，反函数由 $\\overline{r} = (Q(r) - Z) \\cdot S$ 给出（被称为 **反量化**，即 dequantization）。\n",
+    "\n",
+    "```{note}\n",
+    "$\\overline{r} \\neq r$，它们之间的差异构成了量化误差。\n",
+    "```\n",
+    "\n",
+    "## 量化参数\n",
+    "\n",
+    "映射函数由缩放因子 $S$ 和零点 $Z$ 所参数化。$S$ 仅仅是输入范围与输出范围的比值 $S = \\frac {\\beta - \\alpha}{\\beta_q - \\alpha_q}$。这里 $[\\alpha, \\beta]$ 是输入的裁剪（clipping）范围，即允许输入的边界。$[\\alpha_q, \\beta_q]$ 是它被映射到的量化输出空间的范围。对于 8 位量化，输出范围 $\\beta_q - \\alpha_q \\leq 2^8 -1$。$Z = -(\\frac {\\alpha}{S} - \\alpha_q)$ 作为偏置，以确保输入空间中的 $0$ 完全映射到量化空间中的 $0$。\n",
+    "\n",
+    "## 校准\n",
+    "\n",
+    "选择输入裁剪范围的过程称为 **校准** （calibration）。最简单的方法（也是 PyTorch 中的默认方法）是记录正在运行的最小值和最大值，并将它们赋值给 $\\alpha$ 和 $\\beta$。[TensorRT](https://docs.nvidia.com/deeplearning/tensorrt/pytorch-quantization-toolkit/docs/calib.html) 也使用熵最小化（KL 散度），均方误差最小化，或输入范围的百分位数。\n",
+    "\n",
+    "在 PyTorch 中，`Observer` 模块（[docs](https://pytorch.org/docs/stable/torch.quantization.html?highlight=observer#observers)，[code](https://github.com/PyTorch/PyTorch/blob/748d9d24940cd17938df963456c90fa1a13f3932/torch/ao/quantization/observer.py#L88)）收集关于输入值的统计信息并计算 qparams $S,Z$。不同的校准方案会产生不同的量化输出，最好通过经验验证哪种方案最适合您的应用程序和体系结构。\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "[tensor([[-0.3154, -0.3144],\n",
+       "         [ 0.1521,  0.6264],\n",
+       "         [ 0.7047, -1.8508]]),\n",
+       " tensor([[ 0.1989, -1.0663],\n",
+       "         [ 0.8550, -1.8191],\n",
+       "         [ 0.0984, -0.1991]])]"
+      ]
+     },
+     "execution_count": 4,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "import torch\n",
+    "from torch.quantization.observer import MinMaxObserver, MovingAverageMinMaxObserver, HistogramObserver\n",
+    "\n",
+    "# 设置输入\n",
+    "C, L = 3, 2\n",
+    "normal = torch.distributions.normal.Normal(0,1)\n",
+    "inputs = [normal.sample((C, L)), normal.sample((C, L))]\n",
+    "inputs"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "设置观测者："
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "observers = [MinMaxObserver(), \n",
+    "             MovingAverageMinMaxObserver(),\n",
+    "             HistogramObserver()]"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "查看量化参数："
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "MinMaxObserver (tensor([0.0149]), tensor([168.]))\n",
+      "MovingAverageMinMaxObserver (tensor([0.0139]), tensor([162.]))\n",
+      "HistogramObserver (tensor([0.0068]), tensor([156.]))\n"
+     ]
+    }
+   ],
+   "source": [
+    "for obs in observers:\n",
+    "    for x in inputs: obs(x) \n",
+    "    print(obs.__class__.__name__, obs.calculate_qparams())"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## 仿射和对称量化方案\n",
+    "\n",
+    "仿射（affine）或非对称量化（asymmetric quantization）方案分配输入范围的最小和最大观测值。仿射方案通常提供更小的剪切范围，并且对于量化非负激活非常有用（如果你的输入张量永远都不是负的，你就不需要输入范围包含负值）。计算范围为 $\\alpha=\\min(r), \\beta = \\max(r)$。当用于权值张量 {cite:ps}`wu2020integer` 时，仿射量化会导致更昂贵的计算推理。\n",
+    "\n",
+    "对称量化（Symmetric quantization）方案将输入范围集中在 $0$ 附近，消除了计算零点偏置的需要。计算范围为 $-\\alpha=\\beta=\\max(|\\max(r)|,|\\min(r)|)$。\n",
+    "\n",
+    "对于倾斜的信号（如非负激活），这可能会导致糟糕的量化分辨率（quantization resolution），因为剪辑范围包括从未在输入中出现的值（参见下面的 pyplot）。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 16,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "image/png": "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",
+      "text/plain": [
+       "<Figure size 432x288 with 4 Axes>"
+      ]
+     },
+     "metadata": {
+      "needs_background": "light"
+     },
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "from matplotlib import pyplot as plt\n",
+    "import numpy as np\n",
+    "\n",
+    "\n",
+    "def get_symmetric_range(x):\n",
+    "    '''获取对称范围'''\n",
+    "    beta = torch.max(x.max(), x.min().abs())\n",
+    "    return -beta.item(), beta.item()\n",
+    "\n",
+    "\n",
+    "def get_affine_range(x):\n",
+    "    '''获取仿射范围'''\n",
+    "    return x.min().item(), x.max().item()\n",
+    "\n",
+    "\n",
+    "def plot(plt, data, scheme):\n",
+    "    '''画出不同方案的分布'''\n",
+    "    boundaries = get_affine_range(\n",
+    "        data) if scheme == 'affine' else get_symmetric_range(data)\n",
+    "    a, _, _ = plt.hist(data, density=True, bins=100)\n",
+    "    ymin, ymax = np.quantile(a[a > 0], [0.25, 0.95])\n",
+    "    plt.vlines(x=boundaries, ls='--', colors='purple', ymin=ymin, ymax=ymax)\n",
+    "\n",
+    "# 模拟激活和权重\n",
+    "act = torch.distributions.pareto.Pareto(1, 10).sample((1, 1024))\n",
+    "weights = torch.distributions.normal.Normal(0, 0.12).sample((3, 64, 7, 7)).flatten()\n",
+    "\n",
+    "fig, axs = plt.subplots(2,2)\n",
+    "plot(axs[0, 0], act, 'affine')\n",
+    "axs[0, 0].set_title(\"Activation, Affine-Quantized\")\n",
+    "plot(axs[0, 1], act, 'symmetric')\n",
+    "axs[0, 1].set_title(\"Activation, Symmetric-Quantized\")\n",
+    "plot(axs[1, 0], weights, 'affine')\n",
+    "axs[1, 0].set_title(\"Weights, Affine-Quantized\")\n",
+    "plot(axs[1, 1], weights, 'symmetric')\n",
+    "axs[1, 1].set_title(\"Weights, Symmetric-Quantized\")\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "在 PyTorch 中，你可以在初始化 `Observer` 时指定仿射或对称模式。注意，并非所有 `observer` 都支持这两种方案。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Qscheme: torch.per_tensor_affine | (tensor([0.0139]), tensor([162.]))\n",
+      "Qscheme: torch.per_tensor_symmetric | (tensor([0.0176]), tensor([128]))\n"
+     ]
+    }
+   ],
+   "source": [
+    "for qscheme in [torch.per_tensor_affine, torch.per_tensor_symmetric]:\n",
+    "    obs = MovingAverageMinMaxObserver(qscheme=qscheme)\n",
+    "    for x in inputs: obs(x)\n",
+    "    print(f\"Qscheme: {qscheme} | {obs.calculate_qparams()}\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## 逐张量和逐通道量化方案\n",
+    "\n",
+    "量化参数可以作为整体计算层的整个权值张量，也可以单独计算每个通道的权值张量。在每张量中，对层中的所有通道应用相同的剪切范围：\n",
+    "\n",
+    "![](images/tensor-quantization.png)\n",
+    "\n",
+    "对于权值量化，逐通道（Per-Channel）对称量化提供了更好的精度；逐张量（Per-Tensor）量化的性能很差，这可能是由于不同通道之间的转换权值与批量范数折叠（batchnorm folding） {cite:ps}`wu2020integer` 差异很大。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "(tensor([0.0013, 0.0025, 0.0099]), tensor([255.,   0., 185.]))\n"
+     ]
+    }
+   ],
+   "source": [
+    "from torch.quantization.observer import MovingAveragePerChannelMinMaxObserver\n",
+    "# 计算全部 `C` 通道的 qparams\n",
+    "obs = MovingAveragePerChannelMinMaxObserver(ch_axis=0)\n",
+    "for x in inputs: obs(x)\n",
+    "print(obs.calculate_qparams())"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## 后端引擎\n",
+    "\n",
+    "目前，量化算子通过 [FBGEMM 后端](https://github.com/pytorch/FBGEMM) 在 x86 机器上运行，或者在 ARM 机器上使用 [QNNPACK](https://github.com/pytorch/QNNPACK) 原语。服务器 GPU 的后端支持（通过 TensorRT 和 cuDNN）即将推出。了解更多关于将量化扩展到自定义后端：[RFC-0019](https://github.com/pytorch/rfcs/blob/master/RFC-0019-Extending-PyTorch-Quantization-to-Custom-Backends.md)。\n",
+    "\n",
+    "```python\n",
+    "backend = 'fbgemm' if x86 else 'qnnpack'\n",
+    "qconfig = torch.quantization.get_default_qconfig(backend)  \n",
+    "torch.backends.quantized.engine = backend\n",
+    "```"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## `QConfig`\n",
+    "\n",
+    "`QConfig` ([code](https://github.com/PyTorch/PyTorch/blob/d6b15bfcbdaff8eb73fa750ee47cef4ccee1cd92/torch/ao/quantization/qconfig.py#L165), [docs](https://pytorch.org/docs/stable/torch.quantization.html?highlight=qconfig#torch.quantization.QConfig)) NamedTuple 存储用于量化激活和权重的 Observer 和量化方案。\n",
+    "\n",
+    "一定要传递 `Observer` 类（而不是实例），或者可以返回 `Observer` 实例的可调用对象。使用 {func}`with_args` 覆盖默认参数。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "my_qconfig = torch.quantization.QConfig(\n",
+    "  activation=MovingAverageMinMaxObserver.with_args(qscheme=torch.per_tensor_affine),\n",
+    "  weight=MovingAveragePerChannelMinMaxObserver.with_args(qscheme=torch.qint8)\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "QConfig(activation=functools.partial(<class 'torch.quantization.observer.MovingAverageMinMaxObserver'>, qscheme=torch.per_tensor_affine), weight=functools.partial(<class 'torch.quantization.observer.MovingAveragePerChannelMinMaxObserver'>, qscheme=torch.qint8))"
+      ]
+     },
+     "execution_count": 7,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "my_qconfig"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## 在 PyTorch 中\n",
+    "\n",
+    "PyTorch 允许您使用几种不同的方式来量化您的模型：\n",
+    "\n",
+    "- 如果你更喜欢灵活但手动的，或受限的自动过程（Eager 模式v/s FX Graph 模式）\n",
+    "- 如果量化激活（层输出）的 `qparams` 为所有输入预计算，或对每个输入重新计算（静态 v/s 动态），\n",
+    "- 如果 `qparams` 是在有或没有重新训练的情况下计算的（量化感知训练（quantization-aware training） v/s 训练后量化（post-training quantization））\n",
+    "\n",
+    "FX Graph Mode 自动融合符合条件的模块，插入 Quant/DeQuant stub，校准模型并返回量化模块——所有这些都是在两个方法调用中进行的——但仅适用于 [可符号跟踪](https://pytorch.org/docs/stable/fx.html#torch.fx.symbolic_trace) 的网络。 \n",
+    "\n",
+    "在 DNN 中，量化的合适候选对象是 FP32 权值（层参数）和激活（层输出）。量化权值可以减少模型的大小。量化激活通常会导致更快的推理。\n",
+    "\n",
+    "例如，50 层 ResNet 网络有近 2600 万个权值参数，在正向传程中计算近 1600 万个激活。\n",
+    "\n",
+    "### Post-Training Dynamic/Weight-only Quantization\n",
+    "\n",
+    "这里模型的权值是预量化的；在推理期间，激活是动态量化的。这是所有方法中最简单的一种，它在 `torch.quantization.quantize_dynamic` 中有一个一行 API 调用。目前只支持线性和循环（LSTM、GRU、RNN）层进行动态量化。\n",
+    "\n",
+    "- 可以导致更高的精度，因为每个输入的裁剪范围是精确校准的\n",
+    "- 对于像 LSTM 和 Transformer 这样的模型，动态量化是首选的，因为从内存中写入/检索模型的权值会受制于带宽\n",
+    "- 在运行时对每个层的激活进行校准和量化会增加计算开销。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import torch\n",
+    "from torch import nn\n",
+    "\n",
+    "# 小 model\n",
+    "m = nn.Sequential(\n",
+    "  nn.Conv2d(2, 64, (8,)),\n",
+    "  nn.ReLU(),\n",
+    "  nn.Linear(16,10),\n",
+    "  nn.LSTM(10, 10))\n",
+    "\n",
+    "m.eval()\n",
+    "\n",
+    "## EAGER MODE\n",
+    "from torch.quantization import quantize_dynamic\n",
+    "model_quantized = quantize_dynamic(\n",
+    "    model=m, qconfig_spec={nn.LSTM, nn.Linear}, dtype=torch.qint8, inplace=False\n",
+    ")\n",
+    "\n",
+    "## FX MODE\n",
+    "from torch.quantization import quantize_fx\n",
+    "# 空键表示应用于所有模块的默认值\n",
+    "qconfig_dict = {\"\": torch.quantization.default_dynamic_qconfig}\n",
+    "model_prepared = quantize_fx.prepare_fx(m, qconfig_dict)\n",
+    "model_quantized = quantize_fx.convert_fx(model_prepared)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Post-Training Static Quantization (PTQ)\n",
+    "\n",
+    "PTQ 也预量化模型权重，但不是动态校准激活，而是使用验证数据对剪切范围进行预校准和固定（“静态”）。在推理过程中，激活在运算之间保持量化精度。大约 100 个小批次的代表性数据就足以校准观测者。为了方便起见，下面的例子在校准中使用了随机数据——在应用程序中使用随机数据将导致错误的 `qparams`。\n",
+    "\n",
+    "![](images/ptq-flowchart.svg)\n",
+    "\n",
+    "[模块融合](https://pytorch.org/tutorials/recipes/fuse.html) 将多个顺序模块（如：`[Conv2d, BatchNorm, ReLU]`）组合成一个。融合模块意味着编译器只需要运行一个内核而不是多个；这可以通过减少量化误差来提高速度和准确性。\n",
+    "\n",
+    "- 静态量化比动态量化具有更快的推理速度，因为它消除了层之间的 float<->int 转换成本。\n",
+    "- 静态量化模型可能需要定期重新校准，以保持对分布漂移的鲁棒性。\n",
+    "\n",
+    "静态量化模型包括以下步骤：\n",
+    "\n",
+    "- 融合模块\n",
+    "- 插入 Quant/DeQuant 存根\n",
+    "- 准备融合模块（在层前和层后插入观察者）\n",
+    "- 校准准备好的模块（传递代表数据）\n",
+    "- 转换校准模块（替换为量化版本）"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from torch.quantization import quantize_fx\n",
+    "import torch\n",
+    "from torch import nn\n",
+    "\n",
+    "backend = \"fbgemm\"  # 运行在x86 CPU 上。如果在ARM上运行，使用“qnnpack”。\n",
+    "\n",
+    "m = nn.Sequential(\n",
+    "    nn.Conv2d(2, 64, 3),\n",
+    "    nn.ReLU(),\n",
+    "    nn.Conv2d(64, 128, 3),\n",
+    "    nn.ReLU()\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### 急切的模式\n",
+    "\n",
+    "**融合**：就地融合用所述融合模块替换所述序列中的第一个模块，其余用相同模块替换。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "Sequential(\n",
+       "  (0): ConvReLU2d(\n",
+       "    (0): Conv2d(2, 64, kernel_size=(3, 3), stride=(1, 1))\n",
+       "    (1): ReLU()\n",
+       "  )\n",
+       "  (1): Identity()\n",
+       "  (2): ConvReLU2d(\n",
+       "    (0): Conv2d(64, 128, kernel_size=(3, 3), stride=(1, 1))\n",
+       "    (1): ReLU()\n",
+       "  )\n",
+       "  (3): Identity()\n",
+       ")"
+      ]
+     },
+     "execution_count": 11,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# fuse first Conv-ReLU pair\n",
+    "torch.quantization.fuse_modules(m, ['0', '1'], inplace=True)\n",
+    "# fuse second Conv-ReLU pair\n",
+    "torch.quantization.fuse_modules(m, ['2', '3'], inplace=True)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "插入 stub："
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "m = nn.Sequential(torch.quantization.QuantStub(),\n",
+    "                  *m,\n",
+    "                  torch.quantization.DeQuantStub())"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "准备："
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "Sequential(\n",
+       "  (0): QuantStub(\n",
+       "    (activation_post_process): HistogramObserver()\n",
+       "  )\n",
+       "  (1): ConvReLU2d(\n",
+       "    (0): Conv2d(2, 64, kernel_size=(3, 3), stride=(1, 1))\n",
+       "    (1): ReLU()\n",
+       "    (activation_post_process): HistogramObserver()\n",
+       "  )\n",
+       "  (2): Identity()\n",
+       "  (3): ConvReLU2d(\n",
+       "    (0): Conv2d(64, 128, kernel_size=(3, 3), stride=(1, 1))\n",
+       "    (1): ReLU()\n",
+       "    (activation_post_process): HistogramObserver()\n",
+       "  )\n",
+       "  (4): Identity()\n",
+       "  (5): DeQuantStub()\n",
+       ")"
+      ]
+     },
+     "execution_count": 14,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "m.qconfig = torch.quantization.get_default_qconfig(backend)\n",
+    "torch.quantization.prepare(m, inplace=True)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**校准**：为了方便起见，这个例子使用了随机数据。使用代表性（验证）数据代替。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 16,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# with torch.inference_mode(): # PyTorch 1.9\n",
+    "with torch.no_grad():\n",
+    "    for _ in range(10):\n",
+    "        x = torch.rand(1, 2, 28, 28)\n",
+    "        m(x)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "转换："
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 17,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "Sequential(\n",
+       "  (0): Quantize(scale=tensor([0.0079]), zero_point=tensor([0]), dtype=torch.quint8)\n",
+       "  (1): QuantizedConvReLU2d(2, 64, kernel_size=(3, 3), stride=(1, 1), scale=0.011565080843865871, zero_point=0)\n",
+       "  (2): Identity()\n",
+       "  (3): QuantizedConvReLU2d(64, 128, kernel_size=(3, 3), stride=(1, 1), scale=0.0044731260277330875, zero_point=0)\n",
+       "  (4): Identity()\n",
+       "  (5): DeQuantize()\n",
+       ")"
+      ]
+     },
+     "execution_count": 17,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "torch.quantization.convert(m, inplace=True)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "检查："
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 22,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "1\n"
+     ]
+    }
+   ],
+   "source": [
+    "# 1 字节，而不是 FP32 的 4 字节\n",
+    "print(m[1].weight().element_size())"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### FX GRAPH\n",
+    "\n",
+    "```python\n",
+    "from torch.quantization import quantize_fx\n",
+    "m.eval()\n",
+    "qconfig_dict = {\"\": torch.quantization.get_default_qconfig(backend)}\n",
+    "# 准备\n",
+    "model_prepared = quantize_fx.prepare_fx(model_to_quantize, qconfig_dict)\n",
+    "# Calibrate - Use representative (validation) data.\n",
+    "with torch.inference_mode():\n",
+    "  for _ in range(10):\n",
+    "    x = torch.rand(1,2,28, 28)\n",
+    "    model_prepared(x)\n",
+    "# quantize\n",
+    "model_quantized = quantize_fx.convert_fx(model_prepared)\n",
+    "```"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Quantization-aware Training (QAT)\n",
+    "\n",
+    "![](images/qat-flowchart.svg)\n",
+    "\n",
+    "PTQ 方法对于大型模型非常好，但在较小的模型中准确性会受到影响。当然，这是由于将 FP32 的模型调整到 INT8 域时的数值精度损失。\n",
+    "\n",
+    "QAT 通过在训练损失中包含量化误差来解决这个问题，因此训练一个 INT8-first 模型。\n",
+    "\n",
+    "![](images/ptq-qat.png)\n",
+    "\n",
+    "所有的权重和偏置都存储在 FP32 中，反向传播照常发生。然而在正向传递中，量化是通过 `FakeQuantize` 模块进行内部模拟的。它们之所以被称为假的，是因为它们对数据进行量化和立即反量化，并添加与量化推理过程中可能遇到的类似的量化噪声。因此，最终的损失可以解释任何预期的量化误差。在此基础上进行优化，可以使模型在损失函数中识别出更宽的区域，并识别出 FP32 参数，这样量化到 INT8 不会显著影响精度。\n",
+    "\n",
+    "[![](images/qat-fake-quantization.png)](https://developer.nvidia.com/blog/achieving-fp32-accuracy-for-int8-inference-using-quantization-aware-training-with-tensorrt)\n",
+    "\n",
+    "- QAT 比 PTQ 具有更高的精度。\n",
+    "- Qparams 可以在模型训练期间学习，以获得更细粒度的准确性（参见 [LearnableFakeQuantize](https://github.com/pytorch/pytorch/blob/master/torch/ao/quantization/_learnable_fake_quantize.py)）。\n",
+    "- 在 QAT 中，重新训练一个模型的计算成本可以达到几百个 epoch。{cite:ps}`gholami2021survey`\n",
+    "\n",
+    "除了在将模型实际转换为量化版本之前的训练循环之外，QAT 遵循与 PTQ 相同的步骤："
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 24,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import torch\n",
+    "from torch import nn\n",
+    "\n",
+    "# 运行在 x86 CPU 上。如果在 ARM 上运行，使用 \"qnnpack\"。\n",
+    "backend = \"fbgemm\"  \n",
+    "\n",
+    "m = nn.Sequential(\n",
+    "    nn.Conv2d(2, 64, 8),\n",
+    "    nn.ReLU(),\n",
+    "    nn.Conv2d(64, 128, 8),\n",
+    "    nn.ReLU()\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "融合："
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 25,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "Sequential(\n",
+       "  (0): ConvReLU2d(\n",
+       "    (0): Conv2d(2, 64, kernel_size=(8, 8), stride=(1, 1))\n",
+       "    (1): ReLU()\n",
+       "  )\n",
+       "  (1): Identity()\n",
+       "  (2): ConvReLU2d(\n",
+       "    (0): Conv2d(64, 128, kernel_size=(8, 8), stride=(1, 1))\n",
+       "    (1): ReLU()\n",
+       "  )\n",
+       "  (3): Identity()\n",
+       ")"
+      ]
+     },
+     "execution_count": 25,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "torch.quantization.fuse_modules(m, ['0','1'], inplace=True) # 融合第一对 Conv-ReLU\n",
+    "torch.quantization.fuse_modules(m, ['2','3'], inplace=True) # 融合第二对 Conv-ReLU"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "插入存根（打桩）："
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 26,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "m = nn.Sequential(torch.quantization.QuantStub(),\n",
+    "                  *m,\n",
+    "                  torch.quantization.DeQuantStub())"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "准备："
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 28,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "Sequential(\n",
+       "  (0): QuantStub(\n",
+       "    (activation_post_process): HistogramObserver()\n",
+       "  )\n",
+       "  (1): ConvReLU2d(\n",
+       "    2, 64, kernel_size=(8, 8), stride=(1, 1)\n",
+       "    (weight_fake_quant): PerChannelMinMaxObserver(min_val=tensor([]), max_val=tensor([]))\n",
+       "    (activation_post_process): HistogramObserver()\n",
+       "  )\n",
+       "  (2): Identity()\n",
+       "  (3): ConvReLU2d(\n",
+       "    64, 128, kernel_size=(8, 8), stride=(1, 1)\n",
+       "    (weight_fake_quant): PerChannelMinMaxObserver(min_val=tensor([]), max_val=tensor([]))\n",
+       "    (activation_post_process): HistogramObserver()\n",
+       "  )\n",
+       "  (4): Identity()\n",
+       "  (5): DeQuantStub()\n",
+       ")"
+      ]
+     },
+     "execution_count": 28,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "m.train()\n",
+    "m.qconfig = torch.quantization.get_default_qconfig(backend)\n",
+    "torch.quantization.prepare_qat(m, inplace=True)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "循环训练："
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 29,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "n_epochs = 10\n",
+    "opt = torch.optim.SGD(m.parameters(), lr=0.1)\n",
+    "def loss_fn(out, tgt): return torch.pow(tgt-out, 2).mean()\n",
+    "\n",
+    "\n",
+    "for epoch in range(n_epochs):\n",
+    "  x = torch.rand(10, 2, 24, 24)\n",
+    "  out = m(x)\n",
+    "  loss = loss_fn(out, torch.rand_like(out))\n",
+    "  opt.zero_grad()\n",
+    "  loss.backward()\n",
+    "  opt.step()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "转换："
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 30,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "Sequential(\n",
+       "  (0): Quantize(scale=tensor([0.0081]), zero_point=tensor([0]), dtype=torch.quint8)\n",
+       "  (1): QuantizedConvReLU2d(2, 64, kernel_size=(8, 8), stride=(1, 1), scale=0.009916980750858784, zero_point=0)\n",
+       "  (2): Identity()\n",
+       "  (3): QuantizedConvReLU2d(64, 128, kernel_size=(8, 8), stride=(1, 1), scale=0.005839221179485321, zero_point=0)\n",
+       "  (4): Identity()\n",
+       "  (5): DeQuantize()\n",
+       ")"
+      ]
+     },
+     "execution_count": 30,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "m.eval()\n",
+    "torch.quantization.convert(m, inplace=True)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## 敏感性分析\n",
+    "\n",
+    "并不是所有层对量化的响应都是一样的，有些层对精度下降比其他层更敏感。确定最优的层组合以最小化精度下降是非常耗时的，因此 {cite:ps}`wu2020integer` 建议进行一次一次的灵敏度分析，以确定哪些层最敏感，并在这些层上保持 FP32 的精度。在他们的实验中，跳过 2 个 conv 层（在 MobileNet v1 的 28 个 conv 层中）使他们接近 FP32 的精度。使用 FX Graph 模式，可以创建自定义 `qconfigs` 来轻松做到这一点。\n",
+    "\n",
+    "```python\n",
+    "# ONE-AT-A-TIME SENSITIVITY ANALYSIS \n",
+    "\n",
+    "for quantized_layer, _ in model.named_modules():\n",
+    "  print(\"Only quantizing layer: \", quantized_layer)\n",
+    "\n",
+    "  # The module_name key allows module-specific qconfigs. \n",
+    "  qconfig_dict = {\"\": None, \n",
+    "  \"module_name\":[(quantized_layer, torch.quantization.get_default_qconfig(backend))]}\n",
+    "\n",
+    "  model_prepared = quantize_fx.prepare_fx(model, qconfig_dict)\n",
+    "  # calibrate\n",
+    "  model_quantized = quantize_fx.convert_fx(model_prepared)\n",
+    "  # evaluate(model)\n",
+    "```\n",
+    "\n",
+    "另一种方法是比较 FP32 和 INT8 层的统计数据；常用的度量有 SQNR（信号量化噪声比，即 Signal to Quantized Noise Ratio）和均方误差（Mean-Squre-Error）。这种比较分析也有助于指导进一步的优化。\n",
+    "\n",
+    "![](images/compare_output_ns.png)\n",
+    "\n",
+    "PyTorch 在数值套件下提供了帮助进行此分析的工具。从完整的教程中了解更多关于使用 [Numeric Suite](https://pytorch.org/tutorials/prototype/numeric_suite_tutorial.html) 的信息。\n",
+    "\n",
+    "```python\n",
+    "# extract from https://pytorch.org/tutorials/prototype/numeric_suite_tutorial.html\n",
+    "import torch.quantization._numeric_suite as ns\n",
+    "\n",
+    "def SQNR(x, y):\n",
+    "    # Higher is better\n",
+    "    Ps = torch.norm(x)\n",
+    "    Pn = torch.norm(x-y)\n",
+    "    return 20*torch.log10(Ps/Pn)\n",
+    "\n",
+    "wt_compare_dict = ns.compare_weights(fp32_model.state_dict(), int8_model.state_dict())\n",
+    "for key in wt_compare_dict:\n",
+    "    print(key, compute_error(wt_compare_dict[key]['float'], wt_compare_dict[key]['quantized'].dequantize()))\n",
+    "\n",
+    "act_compare_dict = ns.compare_model_outputs(fp32_model, int8_model, input_data)\n",
+    "for key in act_compare_dict:\n",
+    "    print(key, compute_error(act_compare_dict[key]['float'][0], act_compare_dict[key]['quantized'][0].dequantize()))\n",
+    "```"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## 对您工作流程的建议\n",
+    "\n",
+    "![](images/quantization-flowchart2.png)\n",
+    "\n",
+    "要点：\n",
+    "\n",
+    "- 大（10M+ 参数）模型对量化误差更具鲁棒性。\n",
+    "- 从 FP32 检查点量化模型比从零开始训练 INT8 模型提供了更好的 accuracy。\n",
+    "- 分析模型运行时是可选的，但它可以帮助识别阻碍推理的层。\n",
+    "- 动态量化是一个简单的第一步，特别是当您的模型有许多线性或递归层时。\n",
+    "- 使用逐通道对称量化借由 `MinMax` 观测者量化权重。使用逐张量仿射量化借由 `MovingAverageMinMax` 观测者量化激活。\n",
+    "- 使用诸如 SQNR 之类的度量来确定哪些层最容易受到量化误差的影响。关闭这些层上的量化。\n",
+    "- 使用 QAT 对原始训练调度的大约 $10\\%$ 进行微调，退火学习率（annealing learning rate）调度从初始训练学习率的 $1\\%$ 开始。\n",
+    "- 如果上面的工作流程不适合你，我们想知道更多。发布一个包含你的代码细节的帖子（模型架构，准确性指标，尝试过的技术）。请抄送 [@suraj.pt](https://discuss.pytorch.org/u/suraj.pt/)。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": []
+  }
+ ],
+ "metadata": {
+  "interpreter": {
+   "hash": "916dbcbb3f70747c44a77c7bcd40155683ae19c65e1c03b4aa3499c5328201f1"
+  },
+  "kernelspec": {
+   "display_name": "Python 3.8.10 64-bit",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.8.10"
+  },
+  "orig_nbformat": 4
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}
