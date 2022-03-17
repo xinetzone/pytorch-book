@@ -7,9 +7,6 @@ from ..imagenet import Transforms
 from ..file import ZipDataset, PathType
 
 
-
-
-
 class Hymenoptera:
     '''`Hymenoptera 数据集 <https://download.pytorch.org/tutorial/hymenoptera_data.zip>`__ 是 ImageNet 的一个非常小的子集。
 
@@ -24,12 +21,11 @@ class Hymenoptera:
         class_names: 类名列表
     '''
 
-    def __init__(self, data_dir: PathType,
+    def __init__(self, data_dir: PathType='data/hymenoptera_data',
                  download: bool = False) -> None:
-        if download:
-            data_dir = self.loader()
-        else:
-            data_dir = Path(data_dir)
+        data_dir = Path(data_dir)
+        if download or not data_dir.exists():
+            self.loader()
         data_types = ['train', 'val']
         image_datasets = {x: ImageFolder(data_dir/x, getattr(Transforms, x))
                           for x in data_types}
@@ -44,7 +40,7 @@ class Hymenoptera:
     def loader(self):
         root = 'data'
         url = 'https://download.pytorch.org/tutorial/hymenoptera_data.zip'
-        zip_name = 'hymenoptera_data.zip'
+        zip_name = url.split('/')[-1]
         zipset = ZipDataset(root)
-        zipset.download(url, zip_name)  # 下载数据
-        return zipset.extractall(zip_name)  # 解压数据
+        zip_name = zipset.download(url, zip_name)  # 下载数据
+        zipset.extractall(zip_name)  # 解压数据

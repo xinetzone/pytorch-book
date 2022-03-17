@@ -7,6 +7,7 @@ from zipfile import ZipFile
 
 PathType = TypeVar('PathType', str, Path)
 
+
 class ZipDataset:
     def __init__(self, root: PathType = 'data', ) -> None:
         self.root = Path(root)
@@ -33,15 +34,7 @@ class ZipDataset:
             print(file_name, "已经存在，跳过下载...")
         return file_name
 
-    def extractall(self, zip_name, out_dir=''):
-        with ZipFile(self.root/zip_name, 'r') as zip_ref:
-            out_path = self.root/out_dir
-            print(f"解压到 {out_path}")
-            zip_ref.extractall(out_path)
-        return out_path
-
-    # data_url = 'https://download.pytorch.org/tutorial/hymenoptera_data.zip'
-    # data_path = Path('data')
-    # file_name = data_path / 'hymenoptera_data.zip'
-    # data_path = data_path / 'hymenoptera_data'
-    # download(file_name, data_url)
+    def extractall(self, zip_name):
+        with ZipFile(zip_name, 'r') as zip_ref:
+            print(f"解压到 {self.root}")
+            zip_ref.extractall(self.root)

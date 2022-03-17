@@ -1,3 +1,4 @@
+from __future__ import annotations
 import time
 from IPython import display
 from matplotlib import pyplot as plt
