@@ -4,7 +4,7 @@ from pathlib import Path
 
 
 def load_mod():
-    DOC_ROOT = Path(__file__).parent.parent.parent.absolute()
+    DOC_ROOT = Path(__file__).parent.parent.parent.parent.absolute()
     sys.path.extend([str(DOC_ROOT/'utils'),
                     str(DOC_ROOT.parent/'src'),
                      ])

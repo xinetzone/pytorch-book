@@ -16,39 +16,3 @@ pip install --pre torch torchvision -f https://download.pytorch.org/whl/nightly/
 !yes y | pip uninstall torch torchvision
 !yes y | pip install --pre torch torchvision -f https://download.pytorch.org/whl/nightly/cu101/torch_nightly.html
 ```
-
-## 下载数据
-
-```python
-import requests
-from pathlib import Path
-import zipfile
-
-
-def download(file_name, data_url):
-    root = Path('data')
-    if not Path(file_name).is_file():
-        print("下载数据...")
-        root.mkdir(exist_ok=True)
-        with requests.get(data_url) as req:
-            with open(file_name, 'wb') as f:
-                f.write(req.content)
-        if 200 <= req.status_code < 300:
-            print("下载完成！")
-        else:
-            print("下载失败！")
-    else:
-        print(file_name, "已经存在，跳过下载...")
-
-    with zipfile.ZipFile(file_name, 'r') as zip_ref:
-        print("解压...")
-        zip_ref.extractall('data')
-
-
-if __name__ == '__main__':
-    data_url = 'https://download.pytorch.org/tutorial/hymenoptera_data.zip'
-    data_path = Path('data')
-    file_name = data_path / 'hymenoptera_data.zip'
-    data_path = data_path / 'hymenoptera_data'
-    download(file_name, data_url)
-```

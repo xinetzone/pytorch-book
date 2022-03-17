@@ -1,11 +1,10 @@
-用户代码 API
+量化 API
 =======================
 
 .. toctree::
 
     runner
     xinet
-    hymenoptera
     net
     helper
     tools

@@ -1,7 +1,7 @@
 hymenoptera
 ================
 
-.. currentmodule:: hymenoptera
+.. currentmodule:: pytorch_book.datasets.examples
 
 .. autosummary::
     :toctree: generated

@@ -3,7 +3,11 @@ from pathlib import Path
 from torch.utils.data import DataLoader
 from torchvision.datasets import ImageFolder
 
-from imagenet import Transforms
+from ..imagenet import Transforms
+from ..file import ZipDataset, PathType
+
+
+
 
 
 class Hymenoptera:
@@ -20,8 +24,12 @@ class Hymenoptera:
         class_names: 类名列表
     '''
 
-    def __init__(self, data_dir: str) -> None:
-        data_dir = Path(data_dir)
+    def __init__(self, data_dir: PathType,
+                 download: bool = False) -> None:
+        if download:
+            data_dir = self.loader()
+        else:
+            data_dir = Path(data_dir)
         data_types = ['train', 'val']
         image_datasets = {x: ImageFolder(data_dir/x, getattr(Transforms, x))
                           for x in data_types}
@@ -32,3 +40,11 @@ class Hymenoptera:
                             for x in data_types}
         self.dataset_sizes = {x: len(image_datasets[x]) for x in data_types}
         self.class_names = image_datasets['train'].classes
+
+    def loader(self):
+        root = 'data'
+        url = 'https://download.pytorch.org/tutorial/hymenoptera_data.zip'
+        zip_name = 'hymenoptera_data.zip'
+        zipset = ZipDataset(root)
+        zipset.download(url, zip_name)  # 下载数据
+        return zipset.extractall(zip_name)  # 解压数据
