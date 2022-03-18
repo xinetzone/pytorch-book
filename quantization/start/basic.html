@@ -402,11 +402,6 @@
        急切的模式
       </a>
      </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#fx-graph">
-       FX GRAPH
-      </a>
-     </li>
     </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
@@ -508,7 +503,7 @@
 <p>设置观测：</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">observers</span> <span class="o">=</span> <span class="p">[</span><span class="n">MinMaxObserver</span><span class="p">(),</span> 
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">observers</span> <span class="o">=</span> <span class="p">[</span><span class="n">MinMaxObserver</span><span class="p">(),</span>
              <span class="n">MovingAverageMinMaxObserver</span><span class="p">(),</span>
              <span class="n">HistogramObserver</span><span class="p">()]</span>
 </pre></div>
@@ -519,7 +514,8 @@
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">obs</span> <span class="ow">in</span> <span class="n">observers</span><span class="p">:</span>
-    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">inputs</span><span class="p">:</span> <span class="n">obs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">inputs</span><span class="p">:</span>
+        <span class="n">obs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">obs</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">obs</span><span class="o">.</span><span class="n">calculate_qparams</span><span class="p">())</span>
 </pre></div>
 </div>
@@ -566,7 +562,8 @@ HistogramObserver (tensor([0.0089]), tensor([79], dtype=torch.int32))
 
 <span class="c1"># 模拟激活和权重</span>
 <span class="n">act</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">distributions</span><span class="o">.</span><span class="n">pareto</span><span class="o">.</span><span class="n">Pareto</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">sample</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1024</span><span class="p">))</span>
-<span class="n">weights</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">distributions</span><span class="o">.</span><span class="n">normal</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.12</span><span class="p">)</span><span class="o">.</span><span class="n">sample</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+<span class="n">weights</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">distributions</span><span class="o">.</span><span class="n">normal</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span>
+    <span class="mi">0</span><span class="p">,</span> <span class="mf">0.12</span><span class="p">)</span><span class="o">.</span><span class="n">sample</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
 
 <span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 <span class="n">plot</span><span class="p">(</span><span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">act</span><span class="p">,</span> <span class="s1">&#39;affine&#39;</span><span class="p">)</span>
@@ -590,7 +587,8 @@ HistogramObserver (tensor([0.0089]), tensor([79], dtype=torch.int32))
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">qscheme</span> <span class="ow">in</span> <span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">per_tensor_affine</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">per_tensor_symmetric</span><span class="p">]:</span>
     <span class="n">obs</span> <span class="o">=</span> <span class="n">MovingAverageMinMaxObserver</span><span class="p">(</span><span class="n">qscheme</span><span class="o">=</span><span class="n">qscheme</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">inputs</span><span class="p">:</span> <span class="n">obs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">inputs</span><span class="p">:</span>
+        <span class="n">obs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Qscheme: </span><span class="si">{</span><span class="n">qscheme</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">obs</span><span class="o">.</span><span class="n">calculate_qparams</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -613,7 +611,8 @@ Qscheme: torch.per_tensor_symmetric | (tensor([0.0094]), tensor([128]))
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">torch.ao.quantization.observer</span> <span class="kn">import</span> <span class="n">MovingAveragePerChannelMinMaxObserver</span>
 <span class="c1"># 计算全部 `C` 通道的 qparams</span>
 <span class="n">obs</span> <span class="o">=</span> <span class="n">MovingAveragePerChannelMinMaxObserver</span><span class="p">(</span><span class="n">ch_axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">inputs</span><span class="p">:</span> <span class="n">obs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">inputs</span><span class="p">:</span>
+    <span class="n">obs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">obs</span><span class="o">.</span><span class="n">calculate_qparams</span><span class="p">())</span>
 </pre></div>
 </div>
@@ -631,8 +630,8 @@ Qscheme: torch.per_tensor_symmetric | (tensor([0.0094]), tensor([128]))
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">torch.ao.quantization.qconfig</span> <span class="kn">import</span> <span class="n">get_default_qconfig</span>
-<span class="n">backend</span> <span class="o">=</span> <span class="s1">&#39;fbgemm&#39;</span> <span class="c1"># if x86 else &#39;qnnpack&#39;</span>
-<span class="n">qconfig</span> <span class="o">=</span> <span class="n">get_default_qconfig</span><span class="p">(</span><span class="n">backend</span><span class="p">)</span>  
+<span class="n">backend</span> <span class="o">=</span> <span class="s1">&#39;fbgemm&#39;</span>  <span class="c1"># if x86 else &#39;qnnpack&#39;</span>
+<span class="n">qconfig</span> <span class="o">=</span> <span class="n">get_default_qconfig</span><span class="p">(</span><span class="n">backend</span><span class="p">)</span>
 <span class="n">torch</span><span class="o">.</span><span class="n">backends</span><span class="o">.</span><span class="n">quantized</span><span class="o">.</span><span class="n">engine</span> <span class="o">=</span> <span class="n">backend</span>
 </pre></div>
 </div>
@@ -648,8 +647,9 @@ Qscheme: torch.per_tensor_symmetric | (tensor([0.0094]), tensor([128]))
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">torch.ao.quantization.qconfig</span> <span class="kn">import</span> <span class="n">QConfig</span>
 
 <span class="n">my_qconfig</span> <span class="o">=</span> <span class="n">QConfig</span><span class="p">(</span>
-  <span class="n">activation</span><span class="o">=</span><span class="n">MovingAverageMinMaxObserver</span><span class="o">.</span><span class="n">with_args</span><span class="p">(</span><span class="n">qscheme</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">per_tensor_affine</span><span class="p">),</span>
-  <span class="n">weight</span><span class="o">=</span><span class="n">MovingAveragePerChannelMinMaxObserver</span><span class="o">.</span><span class="n">with_args</span><span class="p">(</span><span class="n">qscheme</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">qint8</span><span class="p">)</span>
+    <span class="n">activation</span><span class="o">=</span><span class="n">MovingAverageMinMaxObserver</span><span class="o">.</span><span class="n">with_args</span><span class="p">(</span>
+        <span class="n">qscheme</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">per_tensor_affine</span><span class="p">),</span>
+    <span class="n">weight</span><span class="o">=</span><span class="n">MovingAveragePerChannelMinMaxObserver</span><span class="o">.</span><span class="n">with_args</span><span class="p">(</span><span class="n">qscheme</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">qint8</span><span class="p">)</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -693,15 +693,17 @@ Qscheme: torch.per_tensor_symmetric | (tensor([0.0094]), tensor([128]))
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">nn</span>
 
 <span class="c1"># 小 model</span>
-<span class="k">def</span> <span class="nf">create_model</span><span class="p">():</span>
-  <span class="n">m</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
-  <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="p">(</span><span class="mi">8</span><span class="p">,)),</span>
-  <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
-  <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span>
-  <span class="n">nn</span><span class="o">.</span><span class="n">LSTM</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
 
-  <span class="n">m</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
-  <span class="k">return</span> <span class="n">m</span>
+
+<span class="k">def</span> <span class="nf">create_model</span><span class="p">():</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+        <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="p">(</span><span class="mi">8</span><span class="p">,)),</span>
+        <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
+        <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+        <span class="n">nn</span><span class="o">.</span><span class="n">LSTM</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+
+    <span class="n">m</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">m</span>
 </pre></div>
 </div>
 </div>
@@ -764,14 +766,17 @@ Qscheme: torch.per_tensor_symmetric | (tensor([0.0094]), tensor([128]))
 <span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">nn</span>
 
-<span class="n">backend</span> <span class="o">=</span> <span class="s2">&quot;fbgemm&quot;</span>  <span class="c1"># 运行在x86 CPU 上。如果在ARM上运行，使用“qnnpack”。</span>
+<span class="n">backend</span> <span class="o">=</span> <span class="s2">&quot;fbgemm&quot;</span>  <span class="c1"># 运行在x86 CPU 上。如果在ARM上运行，使用 `qnnpack`。</span>
 
-<span class="n">m</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
-    <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
-    <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
-    <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
-    <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">()</span>
-<span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">create_model</span><span class="p">():</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+        <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+        <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
+        <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+        <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">()</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">m</span>
 </pre></div>
 </div>
 </div>
@@ -781,10 +786,27 @@ Qscheme: torch.per_tensor_symmetric | (tensor([0.0094]), tensor([128]))
 <p><strong>融合</strong>：就地融合用所述融合模块替换所述序列中的第一个模块，其余用相同模块替换。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># fuse first Conv-ReLU pair</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">m</span> <span class="o">=</span> <span class="n">create_model</span><span class="p">()</span>
+<span class="c1"># fuse first Conv-ReLU pair</span>
 <span class="n">torch</span><span class="o">.</span><span class="n">quantization</span><span class="o">.</span><span class="n">fuse_modules</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;0&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="c1"># fuse second Conv-ReLU pair</span>
 <span class="n">torch</span><span class="o">.</span><span class="n">quantization</span><span class="o">.</span><span class="n">fuse_modules</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;3&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sequential(
+  (0): ConvReLU2d(
+    (0): Conv2d(2, 64, kernel_size=(3, 3), stride=(1, 1))
+    (1): ReLU()
+  )
+  (1): Identity()
+  (2): ConvReLU2d(
+    (0): Conv2d(64, 128, kernel_size=(3, 3), stride=(1, 1))
+    (1): ReLU()
+  )
+  (3): Identity()
+)
 </pre></div>
 </div>
 </div>
@@ -802,8 +824,37 @@ Qscheme: torch.per_tensor_symmetric | (tensor([0.0094]), tensor([128]))
 <p>准备：</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">m</span><span class="o">.</span><span class="n">qconfig</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">quantization</span><span class="o">.</span><span class="n">get_default_qconfig</span><span class="p">(</span><span class="n">backend</span><span class="p">)</span>
-<span class="n">torch</span><span class="o">.</span><span class="n">quantization</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">torch.ao.quantization.qconfig</span> <span class="kn">import</span> <span class="n">get_default_qconfig</span>
+<span class="kn">from</span> <span class="nn">torch.ao.quantization.quantize</span> <span class="kn">import</span> <span class="n">prepare</span>
+
+<span class="n">m</span><span class="o">.</span><span class="n">qconfig</span> <span class="o">=</span> <span class="n">get_default_qconfig</span><span class="p">(</span><span class="n">backend</span><span class="p">)</span>
+<span class="n">prepare</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/pc/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/ao/quantization/observer.py:177: UserWarning: Please use quant_min and quant_max to specify the range for observers.                     reduce_range will be deprecated in a future release of PyTorch.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sequential(
+  (0): QuantStub(
+    (activation_post_process): HistogramObserver()
+  )
+  (1): ConvReLU2d(
+    (0): Conv2d(2, 64, kernel_size=(3, 3), stride=(1, 1))
+    (1): ReLU()
+    (activation_post_process): HistogramObserver()
+  )
+  (2): Identity()
+  (3): ConvReLU2d(
+    (0): Conv2d(64, 128, kernel_size=(3, 3), stride=(1, 1))
+    (1): ReLU()
+    (activation_post_process): HistogramObserver()
+  )
+  (4): Identity()
+  (5): DeQuantStub()
+)
 </pre></div>
 </div>
 </div>
@@ -827,6 +878,18 @@ Qscheme: torch.per_tensor_symmetric | (tensor([0.0094]), tensor([128]))
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sequential(
+  (0): Quantize(scale=tensor([0.0079]), zero_point=tensor([0]), dtype=torch.quint8)
+  (1): QuantizedConvReLU2d(2, 64, kernel_size=(3, 3), stride=(1, 1), scale=0.011255446821451187, zero_point=0)
+  (2): Identity()
+  (3): QuantizedConvReLU2d(64, 128, kernel_size=(3, 3), stride=(1, 1), scale=0.004926858935505152, zero_point=0)
+  (4): Identity()
+  (5): DeQuantize()
+)
+</pre></div>
+</div>
+</div>
 </div>
 <p>检查：</p>
 <div class="cell docutils container">
@@ -836,23 +899,58 @@ Qscheme: torch.per_tensor_symmetric | (tensor([0.0094]), tensor([128]))
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1
+</pre></div>
 </div>
 </div>
-<div class="section" id="fx-graph">
-<h4>FX GRAPH<a class="headerlink" href="#fx-graph" title="永久链接至标题">¶</a></h4>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">torch.quantization</span> <span class="kn">import</span> <span class="n">quantize_fx</span>
+</div>
+<p class="rubric">FX GRAPH</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">torch.ao.quantization.qconfig</span> <span class="kn">import</span> <span class="n">get_default_qconfig</span>
+<span class="kn">from</span> <span class="nn">torch.ao.quantization</span> <span class="kn">import</span> <span class="n">quantize_fx</span>
+
+
+<span class="k">def</span> <span class="nf">calibrate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data_loader</span><span class="p">):</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+    <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">image</span><span class="p">,</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">data_loader</span><span class="p">:</span>
+            <span class="n">model</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">ptq</span><span class="p">(</span><span class="n">float_model</span><span class="p">,</span> <span class="n">sample_inference_data</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="s1">&#39;fbgemm&#39;</span><span class="p">):</span>
+    <span class="n">qconfig</span> <span class="o">=</span> <span class="n">get_default_qconfig</span><span class="p">(</span><span class="n">backend</span><span class="p">)</span>
+    <span class="n">qconfig_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;&quot;</span><span class="p">:</span> <span class="n">qconfig</span><span class="p">}</span>
+    <span class="n">float_model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+
+    <span class="n">prepared_model</span> <span class="o">=</span> <span class="n">quantize_fx</span><span class="o">.</span><span class="n">prepare_fx</span><span class="p">(</span><span class="n">float_model</span><span class="p">,</span> <span class="n">qconfig_dict</span><span class="p">)</span>
+    <span class="c1"># Run calibration</span>
+    <span class="n">calibrate</span><span class="p">(</span><span class="n">prepared_model</span><span class="p">,</span> <span class="n">sample_inference_data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">torch.ao.quantization.qconfig</span> <span class="kn">import</span> <span class="n">get_default_qconfig</span>
+<span class="kn">from</span> <span class="nn">torch.ao.quantization</span> <span class="kn">import</span> <span class="n">quantize_fx</span>
+
+<span class="n">m</span> <span class="o">=</span> <span class="n">create_model</span><span class="p">()</span>
 <span class="n">m</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
-<span class="n">qconfig_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;&quot;</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">quantization</span><span class="o">.</span><span class="n">get_default_qconfig</span><span class="p">(</span><span class="n">backend</span><span class="p">)}</span>
+<span class="n">qconfig_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;&quot;</span><span class="p">:</span> <span class="n">get_default_qconfig</span><span class="p">(</span><span class="n">backend</span><span class="p">)}</span>
 <span class="c1"># 准备</span>
-<span class="n">model_prepared</span> <span class="o">=</span> <span class="n">quantize_fx</span><span class="o">.</span><span class="n">prepare_fx</span><span class="p">(</span><span class="n">model_to_quantize</span><span class="p">,</span> <span class="n">qconfig_dict</span><span class="p">)</span>
+<span class="n">model_prepared</span> <span class="o">=</span> <span class="n">quantize_fx</span><span class="o">.</span><span class="n">prepare_fx</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">qconfig_dict</span><span class="p">)</span>
 <span class="c1"># Calibrate - Use representative (validation) data.</span>
 <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">inference_mode</span><span class="p">():</span>
-  <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">)</span>
-    <span class="n">model_prepared</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">)</span>
+        <span class="n">model_prepared</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="c1"># quantize</span>
 <span class="n">model_quantized</span> <span class="o">=</span> <span class="n">quantize_fx</span><span class="o">.</span><span class="n">convert_fx</span><span class="p">(</span><span class="n">model_prepared</span><span class="p">)</span>
 </pre></div>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -876,14 +974,9 @@ Qscheme: torch.per_tensor_symmetric | (tensor([0.0094]), tensor([128]))
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">nn</span>
 
 <span class="c1"># 运行在 x86 CPU 上。如果在 ARM 上运行，使用 &quot;qnnpack&quot;。</span>
-<span class="n">backend</span> <span class="o">=</span> <span class="s2">&quot;fbgemm&quot;</span>  
+<span class="n">backend</span> <span class="o">=</span> <span class="s2">&quot;fbgemm&quot;</span>
 
-<span class="n">m</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
-    <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span>
-    <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
-    <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span>
-    <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">()</span>
-<span class="p">)</span>
+<span class="n">m</span> <span class="o">=</span> <span class="n">create_model</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -891,8 +984,24 @@ Qscheme: torch.per_tensor_symmetric | (tensor([0.0094]), tensor([128]))
 <p>融合：</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">torch</span><span class="o">.</span><span class="n">quantization</span><span class="o">.</span><span class="n">fuse_modules</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;0&#39;</span><span class="p">,</span><span class="s1">&#39;1&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># 融合第一对 Conv-ReLU</span>
-<span class="n">torch</span><span class="o">.</span><span class="n">quantization</span><span class="o">.</span><span class="n">fuse_modules</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;2&#39;</span><span class="p">,</span><span class="s1">&#39;3&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># 融合第二对 Conv-ReLU</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">torch</span><span class="o">.</span><span class="n">quantization</span><span class="o">.</span><span class="n">fuse_modules</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;0&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># 融合第一对 Conv-ReLU</span>
+<span class="n">torch</span><span class="o">.</span><span class="n">quantization</span><span class="o">.</span><span class="n">fuse_modules</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;3&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># 融合第二对 Conv-ReLU</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sequential(
+  (0): ConvReLU2d(
+    (0): Conv2d(2, 64, kernel_size=(3, 3), stride=(1, 1))
+    (1): ReLU()
+  )
+  (1): Identity()
+  (2): ConvReLU2d(
+    (0): Conv2d(64, 128, kernel_size=(3, 3), stride=(1, 1))
+    (1): ReLU()
+  )
+  (3): Identity()
+)
 </pre></div>
 </div>
 </div>
@@ -916,6 +1025,32 @@ Qscheme: torch.per_tensor_symmetric | (tensor([0.0094]), tensor([128]))
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/pc/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/ao/quantization/observer.py:177: UserWarning: Please use quant_min and quant_max to specify the range for observers.                     reduce_range will be deprecated in a future release of PyTorch.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sequential(
+  (0): QuantStub(
+    (activation_post_process): HistogramObserver()
+  )
+  (1): ConvReLU2d(
+    2, 64, kernel_size=(3, 3), stride=(1, 1)
+    (weight_fake_quant): PerChannelMinMaxObserver(min_val=tensor([]), max_val=tensor([]))
+    (activation_post_process): HistogramObserver()
+  )
+  (2): Identity()
+  (3): ConvReLU2d(
+    64, 128, kernel_size=(3, 3), stride=(1, 1)
+    (weight_fake_quant): PerChannelMinMaxObserver(min_val=tensor([]), max_val=tensor([]))
+    (activation_post_process): HistogramObserver()
+  )
+  (4): Identity()
+  (5): DeQuantStub()
+)
+</pre></div>
+</div>
+</div>
 </div>
 <p>循环训练：</p>
 <div class="cell docutils container">
@@ -926,12 +1061,12 @@ Qscheme: torch.per_tensor_symmetric | (tensor([0.0094]), tensor([128]))
 
 
 <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_epochs</span><span class="p">):</span>
-  <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">24</span><span class="p">)</span>
-  <span class="n">out</span> <span class="o">=</span> <span class="n">m</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-  <span class="n">loss</span> <span class="o">=</span> <span class="n">loss_fn</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand_like</span><span class="p">(</span><span class="n">out</span><span class="p">))</span>
-  <span class="n">opt</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
-  <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
-  <span class="n">opt</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">24</span><span class="p">)</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">m</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="n">loss_fn</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand_like</span><span class="p">(</span><span class="n">out</span><span class="p">))</span>
+    <span class="n">opt</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+    <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+    <span class="n">opt</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -941,6 +1076,18 @@ Qscheme: torch.per_tensor_symmetric | (tensor([0.0094]), tensor([128]))
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">m</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
 <span class="n">torch</span><span class="o">.</span><span class="n">quantization</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sequential(
+  (0): Quantize(scale=tensor([0.0080]), zero_point=tensor([0]), dtype=torch.quint8)
+  (1): QuantizedConvReLU2d(2, 64, kernel_size=(3, 3), stride=(1, 1), scale=0.01134413294494152, zero_point=0)
+  (2): Identity()
+  (3): QuantizedConvReLU2d(64, 128, kernel_size=(3, 3), stride=(1, 1), scale=0.004085589665919542, zero_point=0)
+  (4): Identity()
+  (5): DeQuantize()
+)
 </pre></div>
 </div>
 </div>
@@ -1044,7 +1191,7 @@ Qscheme: torch.per_tensor_symmetric | (tensor([0.0094]), tensor([128]))
     
     <div class="footer-item">
       <p class="last-updated">
-最后更新于 2022-03-18, 10:58:08.<br>
+最后更新于 2022-03-18, 11:29:13.<br>
 </p>
     </div>
     

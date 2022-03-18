@@ -65,7 +65,7 @@
     "\n",
     "inputs = [normal.sample((C, L)),\n",
     "          normal.sample((C, L))]\n",
-    "inputs"
+    "inputs\n"
    ]
   },
   {
@@ -81,9 +81,9 @@
    "metadata": {},
    "outputs": [],
    "source": [
-    "observers = [MinMaxObserver(), \n",
+    "observers = [MinMaxObserver(),\n",
     "             MovingAverageMinMaxObserver(),\n",
-    "             HistogramObserver()]"
+    "             HistogramObserver()]\n"
    ]
   },
   {
@@ -110,8 +110,9 @@
    ],
    "source": [
     "for obs in observers:\n",
-    "    for x in inputs: obs(x)\n",
-    "    print(obs.__class__.__name__, obs.calculate_qparams())"
+    "    for x in inputs:\n",
+    "        obs(x)\n",
+    "    print(obs.__class__.__name__, obs.calculate_qparams())\n"
    ]
   },
   {
@@ -172,7 +173,8 @@
     "\n",
     "# 模拟激活和权重\n",
     "act = torch.distributions.pareto.Pareto(1, 10).sample((1, 1024))\n",
-    "weights = torch.distributions.normal.Normal(0, 0.12).sample((3, 64, 7, 7)).flatten()\n",
+    "weights = torch.distributions.normal.Normal(\n",
+    "    0, 0.12).sample((3, 64, 7, 7)).flatten()\n",
     "\n",
     "fig, axs = plt.subplots(2, 2)\n",
     "plot(axs[0, 0], act, 'affine')\n",
@@ -210,8 +212,9 @@
    "source": [
     "for qscheme in [torch.per_tensor_affine, torch.per_tensor_symmetric]:\n",
     "    obs = MovingAverageMinMaxObserver(qscheme=qscheme)\n",
-    "    for x in inputs: obs(x)\n",
-    "    print(f\"Qscheme: {qscheme} | {obs.calculate_qparams()}\")"
+    "    for x in inputs:\n",
+    "        obs(x)\n",
+    "    print(f\"Qscheme: {qscheme} | {obs.calculate_qparams()}\")\n"
    ]
   },
   {
@@ -244,8 +247,9 @@
     "from torch.ao.quantization.observer import MovingAveragePerChannelMinMaxObserver\n",
     "# 计算全部 `C` 通道的 qparams\n",
     "obs = MovingAveragePerChannelMinMaxObserver(ch_axis=0)\n",
-    "for x in inputs: obs(x)\n",
-    "print(obs.calculate_qparams())"
+    "for x in inputs:\n",
+    "    obs(x)\n",
+    "print(obs.calculate_qparams())\n"
    ]
   },
   {
@@ -264,9 +268,9 @@
    "outputs": [],
    "source": [
     "from torch.ao.quantization.qconfig import get_default_qconfig\n",
-    "backend = 'fbgemm' # if x86 else 'qnnpack'\n",
-    "qconfig = get_default_qconfig(backend)  \n",
-    "torch.backends.quantized.engine = backend"
+    "backend = 'fbgemm'  # if x86 else 'qnnpack'\n",
+    "qconfig = get_default_qconfig(backend)\n",
+    "torch.backends.quantized.engine = backend\n"
    ]
   },
   {
@@ -289,9 +293,10 @@
     "from torch.ao.quantization.qconfig import QConfig\n",
     "\n",
     "my_qconfig = QConfig(\n",
-    "  activation=MovingAverageMinMaxObserver.with_args(qscheme=torch.per_tensor_affine),\n",
-    "  weight=MovingAveragePerChannelMinMaxObserver.with_args(qscheme=torch.qint8)\n",
-    ")"
+    "    activation=MovingAverageMinMaxObserver.with_args(\n",
+    "        qscheme=torch.per_tensor_affine),\n",
+    "    weight=MovingAveragePerChannelMinMaxObserver.with_args(qscheme=torch.qint8)\n",
+    ")\n"
    ]
   },
   {
@@ -311,7 +316,7 @@
     }
    ],
    "source": [
-    "my_qconfig"
+    "my_qconfig\n"
    ]
   },
   {
@@ -351,15 +356,17 @@
     "from torch import nn\n",
     "\n",
     "# 小 model\n",
-    "def create_model():\n",
-    "  m = nn.Sequential(\n",
-    "  nn.Conv2d(2, 64, (8,)),\n",
-    "  nn.ReLU(),\n",
-    "  nn.Linear(16,10),\n",
-    "  nn.LSTM(10, 10))\n",
     "\n",
-    "  m.eval()\n",
-    "  return m"
+    "\n",
+    "def create_model():\n",
+    "    m = nn.Sequential(\n",
+    "        nn.Conv2d(2, 64, (8,)),\n",
+    "        nn.ReLU(),\n",
+    "        nn.Linear(16, 10),\n",
+    "        nn.LSTM(10, 10))\n",
+    "\n",
+    "    m.eval()\n",
+    "    return m\n"
    ]
   },
   {
@@ -381,7 +388,7 @@
     "m = create_model()\n",
     "model_quantized = quantize_dynamic(\n",
     "    model=m, qconfig_spec={nn.LSTM, nn.Linear}, dtype=torch.qint8, inplace=False\n",
-    ")"
+    ")\n"
    ]
   },
   {
@@ -414,7 +421,7 @@
     "# 空键表示应用于所有模块的默认值\n",
     "qconfig_dict = {\"\": default_dynamic_qconfig}\n",
     "model_prepared = quantize_fx.prepare_fx(m, qconfig_dict)\n",
-    "model_quantized = quantize_fx.convert_fx(model_prepared)"
+    "model_quantized = quantize_fx.convert_fx(model_prepared)\n"
    ]
   },
   {
@@ -443,7 +450,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 16,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -451,14 +458,17 @@
     "import torch\n",
     "from torch import nn\n",
     "\n",
-    "backend = \"fbgemm\"  # 运行在x86 CPU 上。如果在ARM上运行，使用“qnnpack”。\n",
+    "backend = \"fbgemm\"  # 运行在x86 CPU 上。如果在ARM上运行，使用 `qnnpack`。\n",
     "\n",
-    "m = nn.Sequential(\n",
-    "    nn.Conv2d(2, 64, 3),\n",
-    "    nn.ReLU(),\n",
-    "    nn.Conv2d(64, 128, 3),\n",
-    "    nn.ReLU()\n",
-    ")"
+    "\n",
+    "def create_model():\n",
+    "    m = nn.Sequential(\n",
+    "        nn.Conv2d(2, 64, 3),\n",
+    "        nn.ReLU(),\n",
+    "        nn.Conv2d(64, 128, 3),\n",
+    "        nn.ReLU()\n",
+    "    )\n",
+    "    return m\n"
    ]
   },
   {
@@ -472,14 +482,37 @@
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 17,
    "metadata": {},
-   "outputs": [],
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "Sequential(\n",
+       "  (0): ConvReLU2d(\n",
+       "    (0): Conv2d(2, 64, kernel_size=(3, 3), stride=(1, 1))\n",
+       "    (1): ReLU()\n",
+       "  )\n",
+       "  (1): Identity()\n",
+       "  (2): ConvReLU2d(\n",
+       "    (0): Conv2d(64, 128, kernel_size=(3, 3), stride=(1, 1))\n",
+       "    (1): ReLU()\n",
+       "  )\n",
+       "  (3): Identity()\n",
+       ")"
+      ]
+     },
+     "execution_count": 17,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
    "source": [
+    "m = create_model()\n",
     "# fuse first Conv-ReLU pair\n",
     "torch.quantization.fuse_modules(m, ['0', '1'], inplace=True)\n",
     "# fuse second Conv-ReLU pair\n",
-    "torch.quantization.fuse_modules(m, ['2', '3'], inplace=True)"
+    "torch.quantization.fuse_modules(m, ['2', '3'], inplace=True)\n"
    ]
   },
   {
@@ -491,13 +524,13 @@
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 18,
    "metadata": {},
    "outputs": [],
    "source": [
     "m = nn.Sequential(torch.quantization.QuantStub(),\n",
     "                  *m,\n",
-    "                  torch.quantization.DeQuantStub())"
+    "                  torch.quantization.DeQuantStub())\n"
    ]
   },
   {
@@ -509,12 +542,51 @@
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 19,
    "metadata": {},
-   "outputs": [],
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "/home/pc/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/ao/quantization/observer.py:177: UserWarning: Please use quant_min and quant_max to specify the range for observers.                     reduce_range will be deprecated in a future release of PyTorch.\n",
+      "  warnings.warn(\n"
+     ]
+    },
+    {
+     "data": {
+      "text/plain": [
+       "Sequential(\n",
+       "  (0): QuantStub(\n",
+       "    (activation_post_process): HistogramObserver()\n",
+       "  )\n",
+       "  (1): ConvReLU2d(\n",
+       "    (0): Conv2d(2, 64, kernel_size=(3, 3), stride=(1, 1))\n",
+       "    (1): ReLU()\n",
+       "    (activation_post_process): HistogramObserver()\n",
+       "  )\n",
+       "  (2): Identity()\n",
+       "  (3): ConvReLU2d(\n",
+       "    (0): Conv2d(64, 128, kernel_size=(3, 3), stride=(1, 1))\n",
+       "    (1): ReLU()\n",
+       "    (activation_post_process): HistogramObserver()\n",
+       "  )\n",
+       "  (4): Identity()\n",
+       "  (5): DeQuantStub()\n",
+       ")"
+      ]
+     },
+     "execution_count": 19,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
    "source": [
-    "m.qconfig = torch.quantization.get_default_qconfig(backend)\n",
-    "torch.quantization.prepare(m, inplace=True)"
+    "from torch.ao.quantization.qconfig import get_default_qconfig\n",
+    "from torch.ao.quantization.quantize import prepare\n",
+    "\n",
+    "m.qconfig = get_default_qconfig(backend)\n",
+    "prepare(m, inplace=True)"
    ]
   },
   {
@@ -526,7 +598,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 20,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -546,9 +618,27 @@
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 21,
    "metadata": {},
-   "outputs": [],
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "Sequential(\n",
+       "  (0): Quantize(scale=tensor([0.0079]), zero_point=tensor([0]), dtype=torch.quint8)\n",
+       "  (1): QuantizedConvReLU2d(2, 64, kernel_size=(3, 3), stride=(1, 1), scale=0.011255446821451187, zero_point=0)\n",
+       "  (2): Identity()\n",
+       "  (3): QuantizedConvReLU2d(64, 128, kernel_size=(3, 3), stride=(1, 1), scale=0.004926858935505152, zero_point=0)\n",
+       "  (4): Identity()\n",
+       "  (5): DeQuantize()\n",
+       ")"
+      ]
+     },
+     "execution_count": 21,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
    "source": [
     "torch.quantization.convert(m, inplace=True)"
    ]
@@ -562,34 +652,78 @@
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 22,
    "metadata": {},
-   "outputs": [],
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "1\n"
+     ]
+    }
+   ],
    "source": [
     "# 1 字节，而不是 FP32 的 4 字节\n",
-    "print(m[1].weight().element_size())"
+    "print(m[1].weight().element_size())\n"
    ]
   },
   {
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "#### FX GRAPH\n",
+    "```{rubric} FX GRAPH\n",
+    "```"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 23,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from torch.ao.quantization.qconfig import get_default_qconfig\n",
+    "from torch.ao.quantization import quantize_fx\n",
     "\n",
-    "```python\n",
-    "from torch.quantization import quantize_fx\n",
+    "\n",
+    "def calibrate(model, data_loader):\n",
+    "    model.eval()\n",
+    "    with torch.no_grad():\n",
+    "        for image, target in data_loader:\n",
+    "            model(image)\n",
+    "\n",
+    "\n",
+    "def ptq(float_model, sample_inference_data, backend='fbgemm'):\n",
+    "    qconfig = get_default_qconfig(backend)\n",
+    "    qconfig_dict = {\"\": qconfig}\n",
+    "    float_model.eval()\n",
+    "\n",
+    "    prepared_model = quantize_fx.prepare_fx(float_model, qconfig_dict)\n",
+    "    # Run calibration\n",
+    "    calibrate(prepared_model, sample_inference_data)\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 24,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from torch.ao.quantization.qconfig import get_default_qconfig\n",
+    "from torch.ao.quantization import quantize_fx\n",
+    "\n",
+    "m = create_model()\n",
     "m.eval()\n",
-    "qconfig_dict = {\"\": torch.quantization.get_default_qconfig(backend)}\n",
+    "qconfig_dict = {\"\": get_default_qconfig(backend)}\n",
     "# 准备\n",
-    "model_prepared = quantize_fx.prepare_fx(model_to_quantize, qconfig_dict)\n",
+    "model_prepared = quantize_fx.prepare_fx(m, qconfig_dict)\n",
     "# Calibrate - Use representative (validation) data.\n",
     "with torch.inference_mode():\n",
-    "  for _ in range(10):\n",
-    "    x = torch.rand(1,2,28, 28)\n",
-    "    model_prepared(x)\n",
+    "    for _ in range(10):\n",
+    "        x = torch.rand(1, 2, 28, 28)\n",
+    "        model_prepared(x)\n",
     "# quantize\n",
-    "model_quantized = quantize_fx.convert_fx(model_prepared)\n",
-    "```"
+    "model_quantized = quantize_fx.convert_fx(model_prepared)\n"
    ]
   },
   {
@@ -619,7 +753,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 25,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -627,14 +761,9 @@
     "from torch import nn\n",
     "\n",
     "# 运行在 x86 CPU 上。如果在 ARM 上运行，使用 \"qnnpack\"。\n",
-    "backend = \"fbgemm\"  \n",
+    "backend = \"fbgemm\"\n",
     "\n",
-    "m = nn.Sequential(\n",
-    "    nn.Conv2d(2, 64, 8),\n",
-    "    nn.ReLU(),\n",
-    "    nn.Conv2d(64, 128, 8),\n",
-    "    nn.ReLU()\n",
-    ")"
+    "m = create_model()"
    ]
   },
   {
@@ -646,12 +775,34 @@
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 26,
    "metadata": {},
-   "outputs": [],
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "Sequential(\n",
+       "  (0): ConvReLU2d(\n",
+       "    (0): Conv2d(2, 64, kernel_size=(3, 3), stride=(1, 1))\n",
+       "    (1): ReLU()\n",
+       "  )\n",
+       "  (1): Identity()\n",
+       "  (2): ConvReLU2d(\n",
+       "    (0): Conv2d(64, 128, kernel_size=(3, 3), stride=(1, 1))\n",
+       "    (1): ReLU()\n",
+       "  )\n",
+       "  (3): Identity()\n",
+       ")"
+      ]
+     },
+     "execution_count": 26,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
    "source": [
-    "torch.quantization.fuse_modules(m, ['0','1'], inplace=True) # 融合第一对 Conv-ReLU\n",
-    "torch.quantization.fuse_modules(m, ['2','3'], inplace=True) # 融合第二对 Conv-ReLU"
+    "torch.quantization.fuse_modules(m, ['0', '1'], inplace=True)  # 融合第一对 Conv-ReLU\n",
+    "torch.quantization.fuse_modules(m, ['2', '3'], inplace=True)  # 融合第二对 Conv-ReLU"
    ]
   },
   {
@@ -663,7 +814,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 27,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -681,13 +832,49 @@
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 28,
    "metadata": {},
-   "outputs": [],
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "/home/pc/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/ao/quantization/observer.py:177: UserWarning: Please use quant_min and quant_max to specify the range for observers.                     reduce_range will be deprecated in a future release of PyTorch.\n",
+      "  warnings.warn(\n"
+     ]
+    },
+    {
+     "data": {
+      "text/plain": [
+       "Sequential(\n",
+       "  (0): QuantStub(\n",
+       "    (activation_post_process): HistogramObserver()\n",
+       "  )\n",
+       "  (1): ConvReLU2d(\n",
+       "    2, 64, kernel_size=(3, 3), stride=(1, 1)\n",
+       "    (weight_fake_quant): PerChannelMinMaxObserver(min_val=tensor([]), max_val=tensor([]))\n",
+       "    (activation_post_process): HistogramObserver()\n",
+       "  )\n",
+       "  (2): Identity()\n",
+       "  (3): ConvReLU2d(\n",
+       "    64, 128, kernel_size=(3, 3), stride=(1, 1)\n",
+       "    (weight_fake_quant): PerChannelMinMaxObserver(min_val=tensor([]), max_val=tensor([]))\n",
+       "    (activation_post_process): HistogramObserver()\n",
+       "  )\n",
+       "  (4): Identity()\n",
+       "  (5): DeQuantStub()\n",
+       ")"
+      ]
+     },
+     "execution_count": 28,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
    "source": [
     "m.train()\n",
     "m.qconfig = torch.quantization.get_default_qconfig(backend)\n",
-    "torch.quantization.prepare_qat(m, inplace=True)"
+    "torch.quantization.prepare_qat(m, inplace=True)\n"
    ]
   },
   {
@@ -699,7 +886,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 29,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -709,12 +896,12 @@
     "\n",
     "\n",
     "for epoch in range(n_epochs):\n",
-    "  x = torch.rand(10, 2, 24, 24)\n",
-    "  out = m(x)\n",
-    "  loss = loss_fn(out, torch.rand_like(out))\n",
-    "  opt.zero_grad()\n",
-    "  loss.backward()\n",
-    "  opt.step()"
+    "    x = torch.rand(10, 2, 24, 24)\n",
+    "    out = m(x)\n",
+    "    loss = loss_fn(out, torch.rand_like(out))\n",
+    "    opt.zero_grad()\n",
+    "    loss.backward()\n",
+    "    opt.step()"
    ]
   },
   {
@@ -726,9 +913,27 @@
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 30,
    "metadata": {},
-   "outputs": [],
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "Sequential(\n",
+       "  (0): Quantize(scale=tensor([0.0080]), zero_point=tensor([0]), dtype=torch.quint8)\n",
+       "  (1): QuantizedConvReLU2d(2, 64, kernel_size=(3, 3), stride=(1, 1), scale=0.01134413294494152, zero_point=0)\n",
+       "  (2): Identity()\n",
+       "  (3): QuantizedConvReLU2d(64, 128, kernel_size=(3, 3), stride=(1, 1), scale=0.004085589665919542, zero_point=0)\n",
+       "  (4): Identity()\n",
+       "  (5): DeQuantize()\n",
+       ")"
+      ]
+     },
+     "execution_count": 30,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
    "source": [
     "m.eval()\n",
     "torch.quantization.convert(m, inplace=True)"
@@ -803,11 +1008,6 @@
     "- 使用 QAT 对原始训练调度的大约 $10\\%$ 进行微调，退火学习率（annealing learning rate）调度从初始训练学习率的 $1\\%$ 开始。\n",
     "- 如果上面的工作流程不适合你，我们想知道更多。发布一个包含你的代码细节的帖子（模型架构，准确性指标，尝试过的技术）。请抄送 [@suraj.pt](https://discuss.pytorch.org/u/suraj.pt/)。"
    ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {},
-   "source": []
   }
  ],
  "metadata": {
