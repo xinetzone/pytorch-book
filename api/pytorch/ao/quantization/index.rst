@@ -6,3 +6,4 @@ torch.ao.quantization
 
     observer
     qconfig
+    quantize
