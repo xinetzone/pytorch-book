@@ -1,0 +1,6 @@
+﻿xinet.CV
+========
+
+.. currentmodule:: xinet
+
+.. autoclass:: CV

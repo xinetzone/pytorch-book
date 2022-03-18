@@ -1,0 +1,6 @@
+﻿torch.ao.quantization.observer.PlaceholderObserver
+==================================================
+
+.. currentmodule:: torch.ao.quantization.observer
+
+.. autoclass:: PlaceholderObserver

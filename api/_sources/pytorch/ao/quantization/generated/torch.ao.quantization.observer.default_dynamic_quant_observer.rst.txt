@@ -1,0 +1,6 @@
+﻿torch.ao.quantization.observer.default\_dynamic\_quant\_observer
+================================================================
+
+.. currentmodule:: torch.ao.quantization.observer
+
+.. autodata:: default_dynamic_quant_observer

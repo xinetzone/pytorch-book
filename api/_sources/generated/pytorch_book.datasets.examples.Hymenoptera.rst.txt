@@ -1,0 +1,6 @@
+﻿pytorch\_book.datasets.examples.Hymenoptera
+===========================================
+
+.. currentmodule:: pytorch_book.datasets.examples
+
+.. autoclass:: Hymenoptera

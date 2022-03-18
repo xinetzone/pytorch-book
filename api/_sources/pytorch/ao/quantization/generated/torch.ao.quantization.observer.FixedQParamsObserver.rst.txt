@@ -1,0 +1,6 @@
+﻿torch.ao.quantization.observer.FixedQParamsObserver
+===================================================
+
+.. currentmodule:: torch.ao.quantization.observer
+
+.. autoclass:: FixedQParamsObserver

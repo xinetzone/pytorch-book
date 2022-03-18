@@ -1,0 +1,6 @@
+﻿torch.ao.quantization.observer.default\_debug\_observer
+=======================================================
+
+.. currentmodule:: torch.ao.quantization.observer
+
+.. autoclass:: default_debug_observer

@@ -1,0 +1,6 @@
+﻿torch.ao.quantization.observer.MovingAverageMinMaxObserver
+==========================================================
+
+.. currentmodule:: torch.ao.quantization.observer
+
+.. autoclass:: MovingAverageMinMaxObserver

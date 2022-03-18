@@ -1,0 +1,6 @@
+﻿torch.ao.quantization.observer.NoopObserver
+===========================================
+
+.. currentmodule:: torch.ao.quantization.observer
+
+.. autoclass:: NoopObserver

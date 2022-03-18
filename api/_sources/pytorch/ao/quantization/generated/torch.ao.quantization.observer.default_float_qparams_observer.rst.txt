@@ -1,0 +1,6 @@
+﻿torch.ao.quantization.observer.default\_float\_qparams\_observer
+================================================================
+
+.. currentmodule:: torch.ao.quantization.observer
+
+.. autodata:: default_float_qparams_observer

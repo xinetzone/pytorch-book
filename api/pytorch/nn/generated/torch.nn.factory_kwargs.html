@@ -1,0 +1,456 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>torch.nn.factory_kwargs &#8212; Pytorch Book 0.0.1 文档</title>
+    
+  <link href="../../../_static/css/theme.css" rel="stylesheet">
+  <link href="../../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/tabs.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/default.css" />
+    
+  <link rel="preload" as="script" href="../../../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script src="../../../_static/translations.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <link rel="canonical" href="https://xinetzone.github.io/pytorch-book/pytorch/nn/generated/torch.nn.factory_kwargs.html" />
+    <link rel="shortcut icon" href="../../../_static/favicon.jpg"/>
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="torch.nn.grad" href="../grad.html" />
+    <link rel="prev" title="torch.nn" href="../index.html" />
+    <link rel="stylesheet" href="../../../_static/css/default.css"/>
+    <link rel="stylesheet" href="../../../_static/css/custom.css"/>
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+
+  <div id="navbar-start">
+    
+    
+
+<a class="navbar-brand" href="../../../index.html">
+  <img src="../../../_static/logo.jpg" class="logo" alt="logo">
+</a>
+
+
+    
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  
+  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+    <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../hymenoptera.html">
+  hymenoptera
+ </a>
+</li>
+
+<li class="toctree-l1 current active nav-item">
+ <a class="reference internal nav-link" href="../../index.html">
+  PyTorch API
+ </a>
+</li>
+
+    
+    <li class="nav-item">
+        <a class="nav-link nav-external" href="https://xinetzone.github.io/pytorch-book">文档<i class="fas fa-external-link-alt"></i></a>
+    </li>
+    
+</ul>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/xinetzone/pytorch-book" rel="noopener" target="_blank" title="GitHub">
+            <span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label>
+          </a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    <ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="../index.html">
+   torch.nn
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     torch.nn.factory_kwargs
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../grad.html">
+     torch.nn.grad
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../ao/index.html">
+   torch.ao
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../ao/quantization/index.html">
+     torch.ao.quantization
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+    <label for="toctree-checkbox-3">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../ao/quantization/observer.html">
+       torch.ao.quantization.observer
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+      <label for="toctree-checkbox-4">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../ao/quantization/generated/torch.ao.quantization.observer.ObserverBase.html">
+         torch.ao.quantization.observer.ObserverBase
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../ao/quantization/generated/torch.ao.quantization.observer._ObserverBase.html">
+         torch.ao.quantization.observer._ObserverBase
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../ao/quantization/generated/torch.ao.quantization.observer.MinMaxObserver.html">
+         torch.ao.quantization.observer.MinMaxObserver
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../ao/quantization/generated/torch.ao.quantization.observer.MovingAverageMinMaxObserver.html">
+         torch.ao.quantization.observer.MovingAverageMinMaxObserver
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../ao/quantization/generated/torch.ao.quantization.observer.PerChannelMinMaxObserver.html">
+         torch.ao.quantization.observer.PerChannelMinMaxObserver
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../ao/quantization/generated/torch.ao.quantization.observer.MovingAveragePerChannelMinMaxObserver.html">
+         torch.ao.quantization.observer.MovingAveragePerChannelMinMaxObserver
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../ao/quantization/generated/torch.ao.quantization.observer.HistogramObserver.html">
+         torch.ao.quantization.observer.HistogramObserver
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../ao/quantization/generated/torch.ao.quantization.observer.FixedQParamsObserver.html">
+         torch.ao.quantization.observer.FixedQParamsObserver
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../ao/quantization/generated/torch.ao.quantization.observer.PlaceholderObserver.html">
+         torch.ao.quantization.observer.PlaceholderObserver
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../ao/quantization/generated/torch.ao.quantization.observer.RecordingObserver.html">
+         torch.ao.quantization.observer.RecordingObserver
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../ao/quantization/generated/torch.ao.quantization.observer.NoopObserver.html">
+         torch.ao.quantization.observer.NoopObserver
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../ao/quantization/generated/torch.ao.quantization.observer.ReuseInputObserver.html">
+         torch.ao.quantization.observer.ReuseInputObserver
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../ao/quantization/generated/torch.ao.quantization.observer.default_debug_observer.html">
+         torch.ao.quantization.observer.default_debug_observer
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../ao/quantization/generated/torch.ao.quantization.observer.default_dynamic_quant_observer.html">
+         torch.ao.quantization.observer.default_dynamic_quant_observer
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../ao/quantization/generated/torch.ao.quantization.observer.default_float_qparams_observer.html">
+         torch.ao.quantization.observer.default_float_qparams_observer
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../ao/quantization/generated/torch.ao.quantization.observer.default_float_qparams_observer_4bit.html">
+         torch.ao.quantization.observer.default_float_qparams_observer_4bit
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../ao/quantization/generated/torch.ao.quantization.observer.default_observer.html">
+         torch.ao.quantization.observer.default_observer
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../ao/quantization/generated/torch.ao.quantization.observer.default_per_channel_weight_observer.html">
+         torch.ao.quantization.observer.default_per_channel_weight_observer
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../ao/quantization/generated/torch.ao.quantization.observer.default_placeholder_observer.html">
+         torch.ao.quantization.observer.default_placeholder_observer
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../ao/quantization/generated/torch.ao.quantization.observer.default_weight_observer.html">
+         torch.ao.quantization.observer.default_weight_observer
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../ao/quantization/generated/torch.ao.quantization.observer.default_reuse_input_observer.html">
+         torch.ao.quantization.observer.default_reuse_input_observer
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../ao/quantization/qconfig.html">
+       torch.ao.quantization.qconfig
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+      <label for="toctree-checkbox-5">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../ao/quantization/generated/torch.ao.quantization.qconfig.QConfig.html">
+         torch.ao.quantization.qconfig.QConfig
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../ao/quantization/generated/torch.ao.quantization.qconfig.QConfigDynamic.html">
+         torch.ao.quantization.qconfig.QConfigDynamic
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../ao/quantization/generated/torch.ao.quantization.qconfig.get_default_qconfig.html">
+         torch.ao.quantization.qconfig.get_default_qconfig
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../ao/quantization/generated/torch.ao.quantization.qconfig.get_default_qat_qconfig.html">
+         torch.ao.quantization.qconfig.get_default_qat_qconfig
+        </a>
+       </li>
+      </ul>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+  </div>
+</nav>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+            
+              
+              <div class="toc-item">
+                
+
+<nav id="bd-toc-nav">
+    
+</nav>
+              </div>
+              
+              <div class="toc-item">
+                
+
+<div class="tocsection editthispage">
+    <a href="https://github.com/xinetzone/pytorch-book/edit/main/docs/pytorch/nn/generated/torch.nn.factory_kwargs.rst">
+        <i class="fas fa-pencil-alt"></i> Edit this page
+    </a>
+</div>
+
+              </div>
+              
+            
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <div class="section" id="torch-nn-factory-kwargs">
+<h1>torch.nn.factory_kwargs<a class="headerlink" href="#torch-nn-factory-kwargs" title="永久链接至标题">¶</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="torch.nn.factory_kwargs">
+<span class="sig-prename descclassname"><span class="pre">torch.nn.</span></span><span class="sig-name descname"><span class="pre">factory_kwargs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/torch/nn.html#factory_kwargs"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#torch.nn.factory_kwargs" title="永久链接至目标">¶</a></dt>
+<dd><p>Given kwargs, returns a canonicalized dict of factory kwargs that can be directly passed
+to factory functions like torch.empty, or errors if unrecognized kwargs are present.</p>
+<p>This function makes it simple to write code like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyModule</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">factory_kwargs</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">factory_kwargs</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">weight</span> <span class="o">=</span> <span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="o">**</span><span class="n">factory_kwargs</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Why should you use this function instead of just passing <cite>kwargs</cite> along directly?</p>
+<p>1. This function does error validation, so if there are unexpected kwargs we will
+immediately report an error, instead of deferring it to the factory call
+2. This function supports a special <cite>factory_kwargs</cite> argument, which can be used to
+explicitly specify a kwarg to be used for factory functions, in the event one of the
+factory kwargs conflicts with an already existing argument in the signature (e.g.
+in the signature <code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">f(dtype,</span> <span class="pre">**kwargs)</span></code>, you can specify <code class="docutils literal notranslate"><span class="pre">dtype</span></code> for factory
+functions, as distinct from the dtype argument, by saying
+<code class="docutils literal notranslate"><span class="pre">f(dtype1,</span> <span class="pre">factory_kwargs={&quot;dtype&quot;:</span> <span class="pre">dtype2})</span></code>)</p>
+</dd></dl>
+
+</div>
+
+
+              </div>
+              
+              
+              <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="../index.html" title="上一页 页">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">上一页</p>
+            <p class="prev-next-title">torch.nn</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="../grad.html" title="下一页 页">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">torch.nn.grad</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+  
+  <script src="../../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+<footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    
+    <div class="footer-item">
+      <p class="copyright">
+    &copy; Copyright 2022, xinetzone.<br>
+</p>
+    </div>
+    
+    <div class="footer-item">
+      <p class="last-updated">
+最后更新于 2022-03-18, 11:42:03.<br>
+</p>
+    </div>
+    
+    <div class="footer-item">
+      <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.4.0.<br>
+</p>
+    </div>
+    
+  </div>
+</footer>
+  </body>
+</html>

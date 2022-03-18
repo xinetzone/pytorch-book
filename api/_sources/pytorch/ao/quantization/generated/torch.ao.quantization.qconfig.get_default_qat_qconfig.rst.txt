@@ -1,0 +1,6 @@
+﻿torch.ao.quantization.qconfig.get\_default\_qat\_qconfig
+========================================================
+
+.. currentmodule:: torch.ao.quantization.qconfig
+
+.. autofunction:: get_default_qat_qconfig

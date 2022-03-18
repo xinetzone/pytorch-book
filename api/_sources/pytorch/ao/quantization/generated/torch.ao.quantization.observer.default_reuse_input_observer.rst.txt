@@ -1,0 +1,6 @@
+﻿torch.ao.quantization.observer.default\_reuse\_input\_observer
+==============================================================
+
+.. currentmodule:: torch.ao.quantization.observer
+
+.. autoclass:: default_reuse_input_observer

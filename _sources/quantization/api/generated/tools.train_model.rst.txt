@@ -1,0 +1,6 @@
+﻿tools.train\_model
+==================
+
+.. currentmodule:: tools
+
+.. autofunction:: train_model

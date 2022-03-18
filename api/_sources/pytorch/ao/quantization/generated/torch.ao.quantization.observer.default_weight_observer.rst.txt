@@ -1,0 +1,6 @@
+﻿torch.ao.quantization.observer.default\_weight\_observer
+========================================================
+
+.. currentmodule:: torch.ao.quantization.observer
+
+.. autodata:: default_weight_observer

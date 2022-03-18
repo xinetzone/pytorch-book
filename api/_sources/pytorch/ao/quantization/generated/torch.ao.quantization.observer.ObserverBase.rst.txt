@@ -1,0 +1,6 @@
+﻿torch.ao.quantization.observer.ObserverBase
+===========================================
+
+.. currentmodule:: torch.ao.quantization.observer
+
+.. autoclass:: ObserverBase

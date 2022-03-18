@@ -1,0 +1,6 @@
+﻿xinet.Fx
+========
+
+.. currentmodule:: xinet
+
+.. autoclass:: Fx

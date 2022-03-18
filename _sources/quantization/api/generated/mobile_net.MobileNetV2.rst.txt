@@ -1,0 +1,6 @@
+﻿mobile\_net.MobileNetV2
+=======================
+
+.. currentmodule:: mobile_net
+
+.. autoclass:: MobileNetV2

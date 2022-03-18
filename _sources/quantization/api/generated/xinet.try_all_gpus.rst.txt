@@ -1,0 +1,6 @@
+﻿xinet.try\_all\_gpus
+====================
+
+.. currentmodule:: xinet
+
+.. autofunction:: try_all_gpus

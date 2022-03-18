@@ -1,0 +1,6 @@
+﻿torch.ao.quantization.observer.HistogramObserver
+================================================
+
+.. currentmodule:: torch.ao.quantization.observer
+
+.. autoclass:: HistogramObserver

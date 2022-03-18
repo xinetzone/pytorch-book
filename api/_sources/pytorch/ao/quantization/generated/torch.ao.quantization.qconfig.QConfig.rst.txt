@@ -1,0 +1,6 @@
+﻿torch.ao.quantization.qconfig.QConfig
+=====================================
+
+.. currentmodule:: torch.ao.quantization.qconfig
+
+.. autoclass:: QConfig
