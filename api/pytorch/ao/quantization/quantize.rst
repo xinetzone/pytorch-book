@@ -8,3 +8,4 @@ torch.ao.quantization.quantize
     :nosignatures:
     :template: classtemplate.rst
     
+    quantize_dynamic

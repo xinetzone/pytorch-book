@@ -97,7 +97,7 @@ nb_render_priority = {
 
 # -- 国际化输出 ----------------------------------------------------------------
 gettext_compact = False
-locale_dirs = [f'{DOC_ROOT}/../locales/']
+locale_dirs = ['../locales/']
 
 # Napoleon 设置
 napoleon_google_docstring = True
@@ -141,6 +141,7 @@ intersphinx_mapping = {
     'sphinx': ('https://daobook.github.io/sphinx/', None),
     'peps': ('https://daobook.github.io/peps', None),
     'pytorch': ('https://pytorch.org/docs/stable', None),
+    'pytorchx': (f"{html_baseurl}/api", None),
     'torchvision': ('https://pytorch.org/vision/stable', None),
     'torchtext': ('https://pytorch.org/text/stable/', None),
     'torchaudio': ('https://pytorch.org/audio/stable/', None)
