@@ -23,7 +23,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          conda install pytorch torchvision torchaudio cpuonly -c pytorch
+          install torch torchvision torchaudio
           python -m pip install --upgrade pip
           pip install .[doc]
 

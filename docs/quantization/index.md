@@ -12,6 +12,7 @@
 ```{toctree}
 :maxdepth: 3
 
+recipes
 start/index
 study/index
 papers/index
