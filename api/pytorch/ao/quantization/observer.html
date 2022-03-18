@@ -47,6 +47,7 @@
     <link rel="shortcut icon" href="../../../_static/favicon.jpg"/>
     <link rel="index" title="索引" href="../../../genindex.html" />
     <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="torch.ao.quantization.qconfig" href="qconfig.html" />
     <link rel="prev" title="torch.ao.quantization" href="index.html" />
     <link rel="stylesheet" href="../../../_static/css/default.css"/>
     <link rel="stylesheet" href="../../../_static/css/custom.css"/>
@@ -133,12 +134,29 @@
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
   <div class="bd-toc-item active">
     <ul class="current nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../nn/index.html">
+   torch.nn
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../nn/grad.html">
+     torch.nn.grad
+    </a>
+   </li>
+  </ul>
+ </li>
  <li class="toctree-l1 current active has-children">
   <a class="reference internal" href="../index.html">
    torch.ao
   </a>
-  <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
-  <label for="toctree-checkbox-1">
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
    <i class="fas fa-chevron-down">
    </i>
   </label>
@@ -147,8 +165,8 @@
     <a class="reference internal" href="index.html">
      torch.ao.quantization
     </a>
-    <input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
-    <label for="toctree-checkbox-2">
+    <input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+    <label for="toctree-checkbox-3">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -156,6 +174,11 @@
      <li class="toctree-l3 current active">
       <a class="current reference internal" href="#">
        torch.ao.quantization.observer
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="qconfig.html">
+       torch.ao.quantization.qconfig
       </a>
      </li>
     </ul>
@@ -215,6 +238,18 @@
 <tbody>
 </tbody>
 </table>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>请使用 <code class="xref py py-attr docutils literal notranslate"><span class="pre">quant_min</span></code> 和 <code class="xref py py-attr docutils literal notranslate"><span class="pre">quant_max</span></code> 来指定观测者的范围。 <code class="xref py py-attr docutils literal notranslate"><span class="pre">reduce_range</span></code> 将在未来的 PyTorch 版本中弃用。</p>
+<p>默认观测者 <code class="xref py py-attr docutils literal notranslate"><span class="pre">qscheme</span></code> 只能选择以下选项之一：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">torch.per_tensor_affine</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">torch.per_tensor_symmetric</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">torch.per_channel_affine</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">torch.per_channel_symmetric</span></code></p></li>
+</ul>
+<p>默认观测者 <code class="xref py py-attr docutils literal notranslate"><span class="pre">dtype</span></code> 只能选择以下选项之一： <code class="xref py py-data docutils literal notranslate"><span class="pre">qint8</span></code>、<code class="xref py py-data docutils literal notranslate"><span class="pre">quint8</span></code>、<code class="xref py py-data docutils literal notranslate"><span class="pre">quint4x2</span></code></p>
+</div>
 </div>
 
 
@@ -229,6 +264,13 @@
             <p class="prev-next-subtitle">上一页</p>
             <p class="prev-next-title">torch.ao.quantization</p>
         </div>
+    </a>
+    <a class='right-next' id="next-link" href="qconfig.html" title="下一页 页">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">torch.ao.quantization.qconfig</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
     </a>
 </div>
               
@@ -250,7 +292,7 @@
     
     <div class="footer-item">
       <p class="last-updated">
-最后更新于 2022-03-18, 03:01:37.<br>
+最后更新于 2022-03-18, 07:44:53.<br>
 </p>
     </div>
     
