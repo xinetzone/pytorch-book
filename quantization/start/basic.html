@@ -774,7 +774,7 @@ Qscheme: torch.per_tensor_symmetric | (tensor([0.0094]), tensor([128]))
 <p>例如，50 层 ResNet 网络有近 2600 万个权值参数，在正向传程中计算近 1600 万个激活。</p>
 <div class="section" id="post-training-dynamic-weight-only-quantization">
 <h3>Post-Training Dynamic/Weight-only Quantization<a class="headerlink" href="#post-training-dynamic-weight-only-quantization" title="永久链接至标题">¶</a></h3>
-<p>这里模型的权值是预量化的；在推理期间，激活是动态量化的。这是所有方法中最简单的一种，它在 <code class="xref py py-func docutils literal notranslate"><span class="pre">quantize_dynamic()</span></code> 中有一行 API 调用。目前只支持线性和循环（LSTM、GRU、RNN）层进行动态量化。</p>
+<p>这里模型的权值是预量化的；在推理期间，激活是动态量化的。这是所有方法中最简单的一种，它在 <a class="reference external" href="https://xinetzone.github.io/pytorch-book/api/pytorch/ao/quantization/generated/torch.ao.quantization.quantize.quantize_dynamic.html#torch.ao.quantization.quantize.quantize_dynamic" title="(在 Pytorch Book)"><code class="xref py py-func docutils literal notranslate"><span class="pre">quantize_dynamic()</span></code></a> 中有一行 API 调用。目前只支持线性和循环（LSTM、GRU、RNN）层进行动态量化。</p>
 <ul class="simple">
 <li><p>可以导致更高的精度，因为每个输入的裁剪范围是精确校准的</p></li>
 <li><p>对于像 LSTM 和 Transformer 这样的模型，动态量化是首选的，因为从内存中写入/检索模型的权值会受制于带宽</p></li>
@@ -1284,7 +1284,7 @@ Qscheme: torch.per_tensor_symmetric | (tensor([0.0094]), tensor([128]))
     
     <div class="footer-item">
       <p class="last-updated">
-最后更新于 2022-03-18, 12:21:51.<br>
+最后更新于 2022-03-18, 12:46:41.<br>
 </p>
     </div>
     

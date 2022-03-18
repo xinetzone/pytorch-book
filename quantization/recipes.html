@@ -444,6 +444,16 @@
    后训练动态量化
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id3">
+   后训练静态量化
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id4">
+   量化感知训练
+  </a>
+ </li>
 </ul>
 
 </nav>
@@ -535,7 +545,7 @@
 </div>
 <div class="section" id="id2">
 <h2>后训练动态量化<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
-<p>要应用动态量化，它将模型中的所有权重从 32 位的浮点数转换为 8 位的整数，但在对这些激活执行计算之前不会将激活转换为 int8，只需调用torque . quantized .quantize_dynamic:</p>
+<p>要应用动态量化，它将模型中的所有权重从 32 位的浮点数转换为 8 位的整数，但在对这些激活执行计算之前不会将激活转换为 int8，只需调用 <a class="reference external" href="https://xinetzone.github.io/pytorch-book/api/pytorch/ao/quantization/generated/torch.ao.quantization.quantize.quantize_dynamic.html#torch.ao.quantization.quantize.quantize_dynamic" title="(在 Pytorch Book)"><code class="xref py py-func docutils literal notranslate"><span class="pre">quantize_dynamic()</span></code></a>：</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">torch.ao.quantization.quantize</span> <span class="kn">import</span> <span class="n">quantize_dynamic</span>
@@ -552,7 +562,99 @@
 <p class="admonition-title">警告</p>
 <p>动态量化的一个重要限制是，虽然它是最简单的工作流程，如果你没有预先训练的量化模型准备使用，它目前在 <code class="docutils literal notranslate"><span class="pre">qconfig_spec</span></code> 中只支持 <code class="docutils literal notranslate"><span class="pre">nn.Linear</span></code> 和 <code class="docutils literal notranslate"><span class="pre">nn.LSTM</span></code>，这意味着你将不得不使用静态量化或量化感知训练，稍后讨论，以量化其他模块，如 <code class="docutils literal notranslate"><span class="pre">nn.Conv2d</span></code>。</p>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">quantize_dynamic</span></code> API 调用的完整文档在 <code class="xref py py-mod docutils literal notranslate"><span class="pre">quantize_dynamic</span></code>。使用训练后动态量化的另外三个例子是 <a class="reference external" href="https://pytorch.org/tutorials/intermediate/dynamic_quantization_bert_tutorial.html">Bert 例子</a>、<a class="reference external" href="https://pytorch.org/tutorials/advanced/dynamic_quantization_tutorial.html#test-dynamic-quantization">LSTM 模型例子</a> 和另一个 <a class="reference external" href="https://pytorch.org/tutorials/recipes/recipes/dynamic_quantization.html#do-the-quantization">LSTM demo 例子</a>。</p>
+<p>使用训练后动态量化的另外三个例子是 <a class="reference external" href="https://pytorch.org/tutorials/intermediate/dynamic_quantization_bert_tutorial.html">Bert 例子</a>、<a class="reference external" href="https://pytorch.org/tutorials/advanced/dynamic_quantization_tutorial.html#test-dynamic-quantization">LSTM 模型例子</a> 和另一个 <a class="reference external" href="https://pytorch.org/tutorials/recipes/recipes/dynamic_quantization.html#do-the-quantization">LSTM demo 例子</a>。</p>
+</div>
+<div class="section" id="id3">
+<h2>后训练静态量化<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>该方法将权值和激活提前转换为 8 位整数，这样就不会像动态量化那样在推理过程中对激活进行实时转换，从而显著提高了性能。</p>
+<p>要在模型上应用静态量化，运行以下代码：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">torch.ao.quantization.quantize</span> <span class="kn">import</span> <span class="n">prepare</span><span class="p">,</span> <span class="n">convert</span>
+<span class="kn">from</span> <span class="nn">torch.ao.quantization.qconfig</span> <span class="kn">import</span> <span class="n">get_default_qconfig</span>
+
+<span class="n">backend</span> <span class="o">=</span> <span class="s2">&quot;qnnpack&quot;</span>
+<span class="n">model</span><span class="o">.</span><span class="n">qconfig</span> <span class="o">=</span> <span class="n">get_default_qconfig</span><span class="p">(</span><span class="n">backend</span><span class="p">)</span>
+<span class="n">torch</span><span class="o">.</span><span class="n">backends</span><span class="o">.</span><span class="n">quantized</span><span class="o">.</span><span class="n">engine</span> <span class="o">=</span> <span class="n">backend</span>
+<span class="n">model_static_quantized</span> <span class="o">=</span> <span class="n">prepare</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">model_static_quantized</span> <span class="o">=</span> <span class="n">convert</span><span class="p">(</span><span class="n">model_static_quantized</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/pc/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/ao/quantization/observer.py:1124: UserWarning: must run observer before calling calculate_qparams.                                    Returning default scale and zero point 
+  warnings.warn(
+</pre></div>
+</div>
+</div>
+</div>
+<p>显示静态量化模型大小：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">print_model_size</span><span class="p">(</span><span class="n">model_static_quantized</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4.00 MB
+</pre></div>
+</div>
+</div>
+</div>
+<p><a class="reference external" href="https://pytorch.org/docs/stable/quantization.html#quantization-api-summary">这里</a>有一个完整的模型定义和静态量化的例子。<a class="reference external" href="https://pytorch.org/tutorials/advanced/static_quantization_tutorial.html">这里</a>有一个专门的静态量化教程。</p>
+<div class="admonition note">
+<p class="admonition-title">备注</p>
+<p>为了使模型运行在通常有 ARM 架构的移动设备上，你需要使用 <code class="docutils literal notranslate"><span class="pre">'qnnpack'</span></code> 作为后台；要在 x86 架构的计算机上运行模型，请使用 <code class="docutils literal notranslate"><span class="pre">'fbgemm'</span></code>。</p>
+</div>
+</div>
+<div class="section" id="id4">
+<h2>量化感知训练<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<p>量化感知训练（Quantization aware training）在模型训练过程中对所有的权值和激活量都插入伪量化，比训练后的量化方法具有更高的推理精度。它通常用于 CNN 的模型中。</p>
+<p>要启用量化感知训练的模型，请在模型定义的 <code class="xref py py-meth docutils literal notranslate"><span class="pre">__init__()</span></code> 方法中定义 <code class="docutils literal notranslate"><span class="pre">QuantStub</span></code> 和 <code class="docutils literal notranslate"><span class="pre">DeQuantStub</span></code>，以将张量从浮点类型转换为量化类型，反之亦然。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">nn</span>
+<span class="kn">from</span> <span class="nn">torch.ao.quantization.stubs</span> <span class="kn">import</span> <span class="n">QuantStub</span><span class="p">,</span> <span class="n">DeQuantStub</span>
+
+<span class="k">class</span> <span class="nc">MyModel</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">quant</span> <span class="o">=</span> <span class="n">QuantStub</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dequant</span> <span class="o">=</span> <span class="n">DeQuantStub</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">quant</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="c1"># 其他运算</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dequant</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">x</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>然后在模型定义的前向方法的开头和结尾分别调用 <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">self.quant(x)</span></code> 和 <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">self.dequant(x)</span></code>。</p>
+<p>要进行量化感知训练，请使用下面的代码片段:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">torch.ao.quantization.quantize</span> <span class="kn">import</span> <span class="n">prepare_qat</span><span class="p">,</span> <span class="n">convert</span>
+<span class="kn">from</span> <span class="nn">torch.ao.quantization.qconfig</span> <span class="kn">import</span> <span class="n">get_default_qat_qconfig</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">MyModel</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">qconfig</span> <span class="o">=</span> <span class="n">get_default_qat_qconfig</span><span class="p">(</span><span class="n">backend</span><span class="p">)</span>
+<span class="n">model_qat</span> <span class="o">=</span> <span class="n">prepare_qat</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="c1"># QAT</span>
+<span class="n">model_qat</span> <span class="o">=</span> <span class="n">convert</span><span class="p">(</span><span class="n">model_qat</span><span class="o">.</span><span class="n">eval</span><span class="p">(),</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/pc/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/ao/quantization/utils.py:210: UserWarning: must run observer before calling calculate_qparams. Returning default values.
+  warnings.warn(
+</pre></div>
+</div>
+</div>
+</div>
+<p>有关量化感知训练的更多详细示例，请参阅<a class="reference external" href="https://pytorch.org/docs/master/quantization.html#quantization-aware-training">此处</a>和<a class="reference external" href="https://pytorch.org/tutorials/advanced/static_quantization_tutorial.html#quantization-aware-training">此处</a>。</p>
+<p>在使用上面的步骤之一生成量化模型之后，在模型可以在移动设备上运行之前，它需要进一步转换为 TorchScript 格式，然后针对移动端应用程序进行优化。请参阅<a class="reference external" href="https://pytorch.org/tutorials/recipes/script_optimized.html">脚本和优化移动端食谱</a>的详细信息。</p>
 </div>
 </div>
 
@@ -596,7 +698,7 @@
     
     <div class="footer-item">
       <p class="last-updated">
-最后更新于 2022-03-18, 12:21:51.<br>
+最后更新于 2022-03-18, 12:46:41.<br>
 </p>
     </div>
     
