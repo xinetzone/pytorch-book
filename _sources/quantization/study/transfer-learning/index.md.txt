@@ -3,6 +3,6 @@
 ```{toctree}
 basic
 quantized
+cifar
 tvm
-test
 ```

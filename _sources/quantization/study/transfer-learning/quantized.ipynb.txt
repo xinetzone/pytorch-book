@@ -35,7 +35,6 @@
     "load_mod()\n",
     "\n",
     "from pytorch_book.datasets.examples import Hymenoptera\n",
-    "from tools import train_model\n",
     "from xinet import ModuleTool, CV"
    ]
   },

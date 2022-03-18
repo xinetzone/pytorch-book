@@ -47,8 +47,8 @@
     <link rel="shortcut icon" href="../../../_static/favicon.jpg"/>
     <link rel="index" title="索引" href="../../../genindex.html" />
     <link rel="search" title="搜索" href="../../../search.html" />
-    <link rel="next" title="QAT（resnet18）" href="../qat-resnet18.html" />
-    <link rel="prev" title="TVM" href="tvm.html" />
+    <link rel="next" title="TVM" href="tvm.html" />
+    <link rel="prev" title="量化计算机视觉分类" href="quantized.html" />
     <link rel="stylesheet" href="../../../_static/css/default.css"/>
     <link rel="stylesheet" href="../../../_static/css/custom.css"/>
 
@@ -217,14 +217,14 @@
        量化计算机视觉分类
       </a>
      </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="tvm.html">
-       TVM
-      </a>
-     </li>
      <li class="toctree-l3 current active">
       <a class="current reference internal" href="#">
        测试
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="tvm.html">
+       TVM
       </a>
      </li>
     </ul>
@@ -346,7 +346,7 @@
                 
 
 <div class="tocsection editthispage">
-    <a href="https://github.com/xinetzone/pytorch-book/edit/main/docs/quantization/study/transfer-learning/test.ipynb">
+    <a href="https://github.com/xinetzone/pytorch-book/edit/main/docs/quantization/study/transfer-learning/cifar.ipynb">
         <i class="fas fa-pencil-alt"></i> Edit this page
     </a>
 </div>
@@ -385,59 +385,7 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
-<span class="kn">from</span> <span class="nn">torchvision.models</span> <span class="kn">import</span> <span class="n">quantization</span> <span class="k">as</span> <span class="n">models</span>
-<span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">nn</span>
-
-<span class="k">def</span> <span class="nf">create_combined_model</span><span class="p">(</span><span class="n">model_fe</span><span class="p">):</span>
-    <span class="c1"># 步骤1：分离特征提取器</span>
-    <span class="n">model_fe_features</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
-        <span class="n">model_fe</span><span class="o">.</span><span class="n">quant</span><span class="p">,</span>  <span class="c1"># 量化 input</span>
-        <span class="n">model_fe</span><span class="o">.</span><span class="n">conv1</span><span class="p">,</span>
-        <span class="n">model_fe</span><span class="o">.</span><span class="n">bn1</span><span class="p">,</span>
-        <span class="n">model_fe</span><span class="o">.</span><span class="n">relu</span><span class="p">,</span>
-        <span class="n">model_fe</span><span class="o">.</span><span class="n">maxpool</span><span class="p">,</span>
-        <span class="n">model_fe</span><span class="o">.</span><span class="n">layer1</span><span class="p">,</span>
-        <span class="n">model_fe</span><span class="o">.</span><span class="n">layer2</span><span class="p">,</span>
-        <span class="n">model_fe</span><span class="o">.</span><span class="n">layer3</span><span class="p">,</span>
-        <span class="n">model_fe</span><span class="o">.</span><span class="n">layer4</span><span class="p">,</span>
-        <span class="n">model_fe</span><span class="o">.</span><span class="n">avgpool</span><span class="p">,</span>
-        <span class="n">model_fe</span><span class="o">.</span><span class="n">dequant</span><span class="p">,</span>  <span class="c1"># 反量化 output</span>
-    <span class="p">)</span>
-
-    <span class="c1"># 步骤2：创建一个新的“头”</span>
-    <span class="n">new_head</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
-        <span class="n">nn</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="n">p</span><span class="o">=</span><span class="mf">0.5</span><span class="p">),</span>
-        <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">num_ftrs</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
-    <span class="p">)</span>
-
-    <span class="c1"># 步骤3：合并，不要忘记量化 stubs</span>
-    <span class="n">new_model</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
-        <span class="n">model_fe_features</span><span class="p">,</span>
-        <span class="n">nn</span><span class="o">.</span><span class="n">Flatten</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
-        <span class="n">new_head</span><span class="p">,</span>
-    <span class="p">)</span>
-    <span class="k">return</span> <span class="n">new_model</span>
-
-
-<span class="c1"># 注意 `quantize=False`</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">resnet18</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">quantize</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="n">num_ftrs</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fc</span><span class="o">.</span><span class="n">in_features</span>
-
-<span class="c1"># Step 1</span>
-<span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fuse_model</span><span class="p">()</span>
-<span class="c1"># Step 2</span>
-<span class="n">model_ft</span> <span class="o">=</span> <span class="n">create_combined_model</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
-<span class="c1"># Use default QAT configuration</span>
-<span class="n">model_ft</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">qconfig</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">quantization</span><span class="o">.</span><span class="n">default_qat_qconfig</span>
-<span class="c1"># Step 3</span>
-<span class="n">model_ft</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">quantization</span><span class="o">.</span><span class="n">prepare_qat</span><span class="p">(</span><span class="n">model_ft</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-<span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">model_ft</span><span class="o">.</span><span class="n">parameters</span><span class="p">():</span>
-  <span class="n">param</span><span class="o">.</span><span class="n">requires_grad</span> <span class="o">=</span> <span class="kc">True</span>
-
-<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">128</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">batch_size</span> <span class="o">=</span> <span class="mi">128</span>
 <span class="n">train_iter</span><span class="p">,</span> <span class="n">test_iter</span> <span class="o">=</span> <span class="n">CV</span><span class="o">.</span><span class="n">load_data_cifar10</span><span class="p">(</span><span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -467,7 +415,7 @@ Files already downloaded and verified
 814.4 examples/sec on [device(type=&#39;cuda&#39;, index=0), device(type=&#39;cuda&#39;, index=1), device(type=&#39;cuda&#39;, index=2)]
 </pre></div>
 </div>
-<img alt="../../../_images/test_3_1.svg" src="../../../_images/test_3_1.svg" /></div>
+<img alt="../../../_images/cifar_3_1.svg" src="../../../_images/cifar_3_1.svg" /></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -489,17 +437,17 @@ Files already downloaded and verified
               
               <!-- Previous / next buttons -->
 <div class='prev-next-area'> 
-    <a class='left-prev' id="prev-link" href="tvm.html" title="上一页 页">
+    <a class='left-prev' id="prev-link" href="quantized.html" title="上一页 页">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">上一页</p>
-            <p class="prev-next-title">TVM</p>
+            <p class="prev-next-title">量化计算机视觉分类</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="../qat-resnet18.html" title="下一页 页">
+    <a class='right-next' id="next-link" href="tvm.html" title="下一页 页">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">下一页</p>
-        <p class="prev-next-title">QAT（resnet18）</p>
+        <p class="prev-next-title">TVM</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
@@ -523,7 +471,7 @@ Files already downloaded and verified
     
     <div class="footer-item">
       <p class="last-updated">
-最后更新于 2022-03-17, 10:48:58.<br>
+最后更新于 2022-03-18, 00:51:36.<br>
 </p>
     </div>
     
