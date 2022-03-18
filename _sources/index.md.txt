@@ -17,7 +17,6 @@ intro
 tutorials/index
 quantization/index
 ecosystem/index
-api/index
 refs
 others/index
 ```
