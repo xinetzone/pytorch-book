@@ -1,0 +1,66 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2022, xinetzone
+# This file is distributed under the same license as the Pytorch Book
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Pytorch Book \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-18 10:45+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../../api/pytorch/ao/quantization/observer.rst:2
+msgid "torch.ao.quantization.observer"
+msgstr ""
+
+#: ../../../api/pytorch/ao/quantization/observer.rst:14:<autosummary>:1
+msgid ":py:obj:`ObserverBase <torch.ao.quantization.observer.ObserverBase>`"
+msgstr ""
+
+#: ../../../api/pytorch/ao/quantization/observer.rst:14:<autosummary>:1
+msgid "Base observer Module."
+msgstr ""
+
+#: ../../../api/pytorch/ao/quantization/observer.rst:14:<autosummary>:1
+msgid ":py:obj:`MinMaxObserver <torch.ao.quantization.observer.MinMaxObserver>`"
+msgstr ""
+
+#: ../../../api/pytorch/ao/quantization/observer.rst:14:<autosummary>:1
+msgid ""
+"Observer module for computing the quantization parameters based on the "
+"running min and max values."
+msgstr ""
+
+#: ../../../api/pytorch/ao/quantization/observer.rst:14:<autosummary>:1
+msgid ""
+":py:obj:`MovingAverageMinMaxObserver "
+"<torch.ao.quantization.observer.MovingAverageMinMaxObserver>`"
+msgstr ""
+
+#: ../../../api/pytorch/ao/quantization/observer.rst:14:<autosummary>:1
+msgid ""
+"Observer module for computing the quantization parameters based on the "
+"moving average of the min and max values."
+msgstr ""
+
+#: ../../../api/pytorch/ao/quantization/observer.rst:14:<autosummary>:1
+msgid ""
+":py:obj:`HistogramObserver "
+"<torch.ao.quantization.observer.HistogramObserver>`"
+msgstr ""
+
+#: ../../../api/pytorch/ao/quantization/observer.rst:14:<autosummary>:1
+msgid ""
+"The module records the running histogram of tensor values along with "
+"min/max values."
+msgstr ""
+
