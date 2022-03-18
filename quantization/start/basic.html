@@ -46,6 +46,7 @@
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="canonical" href="https://xinetzone.github.io/pytorch-book/quantization/start/basic.html" />
     <link rel="shortcut icon" href="../../_static/favicon.jpg"/>
     <link rel="index" title="索引" href="../../genindex.html" />
     <link rel="search" title="搜索" href="../../search.html" />
@@ -122,7 +123,7 @@
 
     
     <li class="nav-item">
-        <a class="nav-link nav-external" href="api">API<i class="fas fa-external-link-alt"></i></a>
+        <a class="nav-link nav-external" href="https://xinetzone.github.io/pytorch-book//api">API<i class="fas fa-external-link-alt"></i></a>
     </li>
     
 </ul>
@@ -671,9 +672,9 @@ Qscheme: torch.per_tensor_symmetric | (tensor([0.0094]), tensor([128]))
 <h2>在 PyTorch 中<a class="headerlink" href="#pytorch" title="永久链接至标题">¶</a></h2>
 <p>PyTorch 允许您使用几种不同的方式来量化您的模型：</p>
 <ul class="simple">
-<li><p>如果你更喜欢灵活但手动的，或受限的自动过程（Eager 模式v/s FX Graph 模式）</p></li>
-<li><p>如果量化激活（层输出）的 <code class="docutils literal notranslate"><span class="pre">qparams</span></code> 为所有输入预计算，或对每个输入重新计算（静态 v/s 动态），</p></li>
-<li><p>如果 <code class="docutils literal notranslate"><span class="pre">qparams</span></code> 是在有或没有重新训练的情况下计算的（量化感知训练（quantization-aware training） v/s 训练后量化（post-training quantization））</p></li>
+<li><p>Eager 模式 v/s FX Graph 模式：如果你更喜欢灵活但手动的，或受限的自动过程</p></li>
+<li><p>静态 v/s 动态：如果量化激活（层的输出）的 <code class="docutils literal notranslate"><span class="pre">qparams</span></code> 为所有输入预先计算，或对每个输入重新计算，</p></li>
+<li><p>量化感知训练（quantization-aware training） v/s 训练后量化（post-training quantization）：如果 <code class="docutils literal notranslate"><span class="pre">qparams</span></code> 是在有或没有重新训练的情况下计算的</p></li>
 </ul>
 <p>FX Graph Mode 自动融合符合条件的模块，插入 Quant/DeQuant stub，校准模型并返回量化模块——所有这些都是在两个方法调用中进行的——但仅适用于 <a class="reference external" href="https://pytorch.org/docs/stable/fx.html#torch.fx.symbolic_trace">可符号跟踪</a> 的网络。</p>
 <p>在 DNN 中，量化的合适候选对象是 FP32 权值（层参数）和激活（层输出）。量化权值可以减少模型的大小。量化激活通常会导致更快的推理。</p>
@@ -1020,7 +1021,7 @@ Qscheme: torch.per_tensor_symmetric | (tensor([0.0094]), tensor([128]))
     
     <div class="footer-item">
       <p class="last-updated">
-最后更新于 2022-03-18, 07:44:59.<br>
+最后更新于 2022-03-18, 08:21:29.<br>
 </p>
     </div>
     
