@@ -69,6 +69,7 @@ html_logo = f'{DOC_ROOT}/_static/images/logo.jpg'
 # docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
 # pixels large.
 html_favicon = f'{DOC_ROOT}/_static/images/favicon.jpg'
+html_baseurl = 'https://xinetzone.github.io/pytorch-book/'
 
 html_last_updated_fmt = '%Y-%m-%d, %H:%M:%S'
 
@@ -121,7 +122,7 @@ html_theme_options = {
     "github_url": "https://github.com/xinetzone/pytorch-book",
     "use_edit_page_button": True,
     "external_links": [
-      {"name": "API", "url": "api"},
+      {"name": "API", "url": f"{html_baseurl}/api"},
   ]
 }
 

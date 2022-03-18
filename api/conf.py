@@ -16,7 +16,7 @@ locale_dirs = ['../locales/']
 html_theme_options.update(
     {
         "external_links": [
-            {"name": "文档", "url": "https://xinetzone.github.io/pytorch-book"},
+            {"name": "文档", "url": html_baseurl},
         ]
     }
 )
