@@ -681,7 +681,7 @@ Qscheme: torch.per_tensor_symmetric | (tensor([0.0094]), tensor([128]))
 <p>例如，50 层 ResNet 网络有近 2600 万个权值参数，在正向传程中计算近 1600 万个激活。</p>
 <div class="section" id="post-training-dynamic-weight-only-quantization">
 <h3>Post-Training Dynamic/Weight-only Quantization<a class="headerlink" href="#post-training-dynamic-weight-only-quantization" title="永久链接至标题">¶</a></h3>
-<p>这里模型的权值是预量化的；在推理期间，激活是动态量化的。这是所有方法中最简单的一种，它在 <code class="docutils literal notranslate"><span class="pre">torch.quantization.quantize_dynamic</span></code> 中有一个一行 API 调用。目前只支持线性和循环（LSTM、GRU、RNN）层进行动态量化。</p>
+<p>这里模型的权值是预量化的；在推理期间，激活是动态量化的。这是所有方法中最简单的一种，它在 <code class="xref py py-func docutils literal notranslate"><span class="pre">quantize_dynamic()</span></code> 中有一行 API 调用。目前只支持线性和循环（LSTM、GRU、RNN）层进行动态量化。</p>
 <ul class="simple">
 <li><p>可以导致更高的精度，因为每个输入的裁剪范围是精确校准的</p></li>
 <li><p>对于像 LSTM 和 Transformer 这样的模型，动态量化是首选的，因为从内存中写入/检索模型的权值会受制于带宽</p></li>
@@ -693,26 +693,49 @@ Qscheme: torch.per_tensor_symmetric | (tensor([0.0094]), tensor([128]))
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">nn</span>
 
 <span class="c1"># 小 model</span>
-<span class="n">m</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+<span class="k">def</span> <span class="nf">create_model</span><span class="p">():</span>
+  <span class="n">m</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
   <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="p">(</span><span class="mi">8</span><span class="p">,)),</span>
   <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
   <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span>
   <span class="n">nn</span><span class="o">.</span><span class="n">LSTM</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
 
-<span class="n">m</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+  <span class="n">m</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+  <span class="k">return</span> <span class="n">m</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p class="rubric">eager 模式</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">torch.ao.quantization.quantize</span> <span class="kn">import</span> <span class="n">quantize_dynamic</span>
 
-<span class="c1">## EAGER MODE</span>
-<span class="kn">from</span> <span class="nn">torch.quantization</span> <span class="kn">import</span> <span class="n">quantize_dynamic</span>
+<span class="n">m</span> <span class="o">=</span> <span class="n">create_model</span><span class="p">()</span>
 <span class="n">model_quantized</span> <span class="o">=</span> <span class="n">quantize_dynamic</span><span class="p">(</span>
     <span class="n">model</span><span class="o">=</span><span class="n">m</span><span class="p">,</span> <span class="n">qconfig_spec</span><span class="o">=</span><span class="p">{</span><span class="n">nn</span><span class="o">.</span><span class="n">LSTM</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">},</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">qint8</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span>
 <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p class="rubric">FX 模式</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">torch.ao.quantization</span> <span class="kn">import</span> <span class="n">quantize_fx</span>
+<span class="kn">from</span> <span class="nn">torch.ao.quantization.qconfig</span> <span class="kn">import</span> <span class="n">default_dynamic_qconfig</span>
 
-<span class="c1">## FX MODE</span>
-<span class="kn">from</span> <span class="nn">torch.quantization</span> <span class="kn">import</span> <span class="n">quantize_fx</span>
+<span class="n">m</span> <span class="o">=</span> <span class="n">create_model</span><span class="p">()</span>
 <span class="c1"># 空键表示应用于所有模块的默认值</span>
-<span class="n">qconfig_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;&quot;</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">quantization</span><span class="o">.</span><span class="n">default_dynamic_qconfig</span><span class="p">}</span>
+<span class="n">qconfig_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;&quot;</span><span class="p">:</span> <span class="n">default_dynamic_qconfig</span><span class="p">}</span>
 <span class="n">model_prepared</span> <span class="o">=</span> <span class="n">quantize_fx</span><span class="o">.</span><span class="n">prepare_fx</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">qconfig_dict</span><span class="p">)</span>
 <span class="n">model_quantized</span> <span class="o">=</span> <span class="n">quantize_fx</span><span class="o">.</span><span class="n">convert_fx</span><span class="p">(</span><span class="n">model_prepared</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/pc/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/ao/quantization/fx/quantization_patterns.py:630: UserWarning: dtype combination: (torch.float32, torch.qint8, torch.quint8) is not supported by Conv supported dtype combinations are: [(torch.quint8, torch.qint8, None)]
+  warnings.warn(
 </pre></div>
 </div>
 </div>
@@ -1021,7 +1044,7 @@ Qscheme: torch.per_tensor_symmetric | (tensor([0.0094]), tensor([128]))
     
     <div class="footer-item">
       <p class="last-updated">
-最后更新于 2022-03-18, 08:27:18.<br>
+最后更新于 2022-03-18, 10:58:08.<br>
 </p>
     </div>
     
