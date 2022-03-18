@@ -1,0 +1,36 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2022, xinetzone
+# This file is distributed under the same license as the Pytorch Book
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Pytorch Book \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-18 13:45+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../../api/pytorch/nn/index.rst:2
+msgid "torch.nn"
+msgstr ""
+
+#: ../../../api/pytorch/nn/index.rst:12:<autosummary>:1
+msgid ":py:obj:`factory_kwargs <torch.nn.factory_kwargs>`"
+msgstr ""
+
+#: ../../../api/pytorch/nn/index.rst:12:<autosummary>:1
+msgid ""
+"Given kwargs, returns a canonicalized dict of factory kwargs that can be "
+"directly passed to factory functions like torch.empty, or errors if "
+"unrecognized kwargs are present."
+msgstr ""
+"给定 kwargs，返回工厂 kwargs 的规范化字典，可以直接传递给工厂函数，"
+"如 torch.empty，或如果存在无法识别的 kwargs，则错误。"

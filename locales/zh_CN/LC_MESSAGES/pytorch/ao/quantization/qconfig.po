@@ -1,0 +1,74 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2022, xinetzone
+# This file is distributed under the same license as the Pytorch Book
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Pytorch Book \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-18 15:28+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../../api/pytorch/ao/quantization/qconfig.rst:2
+msgid "torch.ao.quantization.qconfig"
+msgstr ""
+
+#: ../../../api/pytorch/ao/quantization/qconfig.rst:14:<autosummary>:1
+msgid ":py:obj:`QConfig <torch.ao.quantization.qconfig.QConfig>`"
+msgstr ""
+
+#: ../../../api/pytorch/ao/quantization/qconfig.rst:14:<autosummary>:1
+msgid ""
+"Describes how to quantize a layer or a part of the network by providing "
+"settings (observer classes) for activations and weights respectively."
+msgstr "描述如何通过分别为激活和权重提供设置（观测者类）来量化层或网络的一部分。"
+
+#: ../../../api/pytorch/ao/quantization/qconfig.rst:14:<autosummary>:1
+msgid ":py:obj:`QConfigDynamic <torch.ao.quantization.qconfig.QConfigDynamic>`"
+msgstr ""
+
+#: ../../../api/pytorch/ao/quantization/qconfig.rst:14:<autosummary>:1
+msgid ""
+"Describes how to dynamically quantize a layer or a part of the network by"
+" providing settings (observer classes) for weights."
+msgstr "描述如何通过为权重提供设置（观测者类）来动态量化层或网络的一部分。"
+
+#: ../../../api/pytorch/ao/quantization/qconfig.rst:14:<autosummary>:1
+msgid ""
+":py:obj:`get_default_qconfig "
+"<torch.ao.quantization.qconfig.get_default_qconfig>`"
+msgstr ""
+
+#: ../../../api/pytorch/ao/quantization/qconfig.rst:14:<autosummary>:1
+msgid "Returns the default PTQ qconfig for the specified backend."
+msgstr "返回指定后端的默认 PTQ qconfig。"
+
+#: ../../../api/pytorch/ao/quantization/qconfig.rst:14:<autosummary>:1
+msgid ""
+":py:obj:`get_default_qat_qconfig "
+"<torch.ao.quantization.qconfig.get_default_qat_qconfig>`"
+msgstr ""
+
+#: ../../../api/pytorch/ao/quantization/qconfig.rst:14:<autosummary>:1
+msgid "Returns the default QAT qconfig for the specified backend."
+msgstr "返回指定后端的默认 QAT qconfig。"
+
+#~ msgid ""
+#~ ":py:obj:`get_default_qconfig_dict "
+#~ "<torch.ao.quantization.qconfig.get_default_qconfig_dict>`"
+#~ msgstr ""
+
+#~ msgid ""
+#~ ":py:obj:`get_default_qat_qconfig_dict "
+#~ "<torch.ao.quantization.qconfig.get_default_qat_qconfig_dict>`"
+#~ msgstr ""
+

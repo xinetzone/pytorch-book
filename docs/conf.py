@@ -121,7 +121,7 @@ html_theme_options = {
     "github_url": "https://github.com/xinetzone/pytorch-book",
     "use_edit_page_button": True,
     "external_links": [
-      {"name": "API", "url": "https://xinetzone.github.io/pytorch-book/api"},
+      {"name": "API", "url": "api"},
   ]
 }
 

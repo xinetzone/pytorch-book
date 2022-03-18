@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Pytorch Book \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-18 10:45+0800\n"
+"POT-Creation-Date: 2022-03-18 15:28+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,45 +22,255 @@ msgstr ""
 msgid "torch.ao.quantization.observer"
 msgstr ""
 
-#: ../../../api/pytorch/ao/quantization/observer.rst:14:<autosummary>:1
+#: ../../../api/pytorch/ao/quantization/observer.rst:32:<autosummary>:1
 msgid ":py:obj:`ObserverBase <torch.ao.quantization.observer.ObserverBase>`"
 msgstr ""
 
-#: ../../../api/pytorch/ao/quantization/observer.rst:14:<autosummary>:1
+#: ../../../api/pytorch/ao/quantization/observer.rst:32:<autosummary>:1
 msgid "Base observer Module."
+msgstr "observer 的基模块"
+
+#: ../../../api/pytorch/ao/quantization/observer.rst:32:<autosummary>:1
+msgid ":py:obj:`_ObserverBase <torch.ao.quantization.observer._ObserverBase>`"
 msgstr ""
 
-#: ../../../api/pytorch/ao/quantization/observer.rst:14:<autosummary>:1
+#: ../../../api/pytorch/ao/quantization/observer.rst:32:<autosummary>:1
+msgid "Internal common base for all qint/quint8 observers."
+msgstr "所有 qint/quint8 观测者的内部公共基类。"
+
+#: ../../../api/pytorch/ao/quantization/observer.rst:32:<autosummary>:1
 msgid ":py:obj:`MinMaxObserver <torch.ao.quantization.observer.MinMaxObserver>`"
 msgstr ""
 
-#: ../../../api/pytorch/ao/quantization/observer.rst:14:<autosummary>:1
+#: ../../../api/pytorch/ao/quantization/observer.rst:32:<autosummary>:1
 msgid ""
 "Observer module for computing the quantization parameters based on the "
 "running min and max values."
-msgstr ""
+msgstr "根据运行的最大值和最小值计算量化参数的观测器模块。"
 
-#: ../../../api/pytorch/ao/quantization/observer.rst:14:<autosummary>:1
+#: ../../../api/pytorch/ao/quantization/observer.rst:32:<autosummary>:1
 msgid ""
 ":py:obj:`MovingAverageMinMaxObserver "
 "<torch.ao.quantization.observer.MovingAverageMinMaxObserver>`"
 msgstr ""
 
-#: ../../../api/pytorch/ao/quantization/observer.rst:14:<autosummary>:1
+#: ../../../api/pytorch/ao/quantization/observer.rst:32:<autosummary>:1
 msgid ""
 "Observer module for computing the quantization parameters based on the "
 "moving average of the min and max values."
+msgstr "基于最小值和最大值的移动平均计算量化参数的观测器模块。"
+
+#: ../../../api/pytorch/ao/quantization/observer.rst:32:<autosummary>:1
+msgid ""
+":py:obj:`PerChannelMinMaxObserver "
+"<torch.ao.quantization.observer.PerChannelMinMaxObserver>`"
 msgstr ""
 
-#: ../../../api/pytorch/ao/quantization/observer.rst:14:<autosummary>:1
+#: ../../../api/pytorch/ao/quantization/observer.rst:32:<autosummary>:1
+msgid ""
+"Observer module for computing the quantization parameters based on the "
+"running per channel min and max values."
+msgstr "基于逐通道运行的最小值和最大值计算量化参数的观测者模块。"
+
+#: ../../../api/pytorch/ao/quantization/observer.rst:32:<autosummary>:1
+msgid ""
+":py:obj:`MovingAveragePerChannelMinMaxObserver "
+"<torch.ao.quantization.observer.MovingAveragePerChannelMinMaxObserver>`"
+msgstr ""
+
+#: ../../../api/pytorch/ao/quantization/observer.rst:32:<autosummary>:1
 msgid ""
 ":py:obj:`HistogramObserver "
 "<torch.ao.quantization.observer.HistogramObserver>`"
 msgstr ""
 
-#: ../../../api/pytorch/ao/quantization/observer.rst:14:<autosummary>:1
+#: ../../../api/pytorch/ao/quantization/observer.rst:32:<autosummary>:1
 msgid ""
 "The module records the running histogram of tensor values along with "
 "min/max values."
+msgstr "该模块记录张量值的运行直方图以及最小/最大值。"
+
+#: ../../../api/pytorch/ao/quantization/observer.rst:32:<autosummary>:1
+msgid ""
+":py:obj:`FixedQParamsObserver "
+"<torch.ao.quantization.observer.FixedQParamsObserver>`"
+msgstr ""
+
+#: ../../../api/pytorch/ao/quantization/observer.rst:32:<autosummary>:1
+msgid ""
+"Observer that simulates quantize and dequantize with fixed quantization "
+"parameters in training time."
+msgstr "在训练时间内用固定的量化参数仿真量化和去量化的观测者。"
+
+#: ../../../api/pytorch/ao/quantization/observer.rst:32:<autosummary>:1
+msgid ""
+":py:obj:`PlaceholderObserver "
+"<torch.ao.quantization.observer.PlaceholderObserver>`"
+msgstr ""
+
+#: ../../../api/pytorch/ao/quantization/observer.rst:32:<autosummary>:1
+msgid ""
+"Observer that doesn't do anything and just passes its configuration to "
+"the quantized module's ``.from_float()``."
+msgstr "观测者不做任何事情，只是把它的配置传递给量化模块的 ``.from_float()``。"
+
+#: ../../../api/pytorch/ao/quantization/observer.rst:32:<autosummary>:1
+msgid ""
+":py:obj:`RecordingObserver "
+"<torch.ao.quantization.observer.RecordingObserver>`"
+msgstr ""
+
+#: ../../../api/pytorch/ao/quantization/observer.rst:32:<autosummary>:1
+msgid ""
+"The module is mainly for debug and records the tensor values during "
+"runtime."
+msgstr "该模块主要用于调试，并在运行时记录张量值。"
+
+#: ../../../api/pytorch/ao/quantization/observer.rst:32:<autosummary>:1
+msgid ":py:obj:`NoopObserver <torch.ao.quantization.observer.NoopObserver>`"
+msgstr ""
+
+#: ../../../api/pytorch/ao/quantization/observer.rst:32:<autosummary>:1
+msgid ""
+":py:obj:`ReuseInputObserver "
+"<torch.ao.quantization.observer.ReuseInputObserver>`"
+msgstr ""
+
+#: ../../../api/pytorch/ao/quantization/observer.rst:32:<autosummary>:1
+msgid ""
+"This observer is used when we want to reuse the observer from the "
+"operator that produces the input Tensor, typically used for operators "
+"like reshape, e.g."
+msgstr "当我们想从产生输入张量的算子中重用观测者时，就会使用这个观测者，通常用于像 reshape 这样的算子，例如"
+
+#: ../../../api/pytorch/ao/quantization/observer.rst:32:<autosummary>:1
+msgid ""
+":py:obj:`default_debug_observer "
+"<torch.ao.quantization.observer.default_debug_observer>`"
+msgstr ""
+
+#: ../../../api/pytorch/ao/quantization/observer.rst:32:<autosummary>:1
+msgid "Default debug-only observer."
+msgstr "默认 debug-only 观测者。"
+
+#: ../../../api/pytorch/ao/quantization/observer.rst:32:<autosummary>:1
+msgid ""
+":py:obj:`default_dynamic_quant_observer "
+"<torch.ao.quantization.observer.default_dynamic_quant_observer>`"
+msgstr ""
+
+#: ../../../api/pytorch/ao/quantization/observer.rst:32:<autosummary>:1
+msgid "Default observer for dynamic quantization."
+msgstr "动态量化的默认观测者。"
+
+#: ../../../api/pytorch/ao/quantization/observer.rst:32:<autosummary>:1
+msgid ""
+":py:obj:`default_float_qparams_observer "
+"<torch.ao.quantization.observer.default_float_qparams_observer>`"
+msgstr ""
+
+#: ../../../api/pytorch/ao/quantization/observer.rst:32:<autosummary>:1
+msgid "Default observer for a floating point zero-point."
+msgstr "浮点零点的默认观测者。"
+
+#: ../../../api/pytorch/ao/quantization/observer.rst:32:<autosummary>:1
+msgid ""
+":py:obj:`default_float_qparams_observer_4bit "
+"<torch.ao.quantization.observer.default_float_qparams_observer_4bit>`"
+msgstr ""
+
+#: ../../../api/pytorch/ao/quantization/observer.rst:32:<autosummary>:1
+msgid "Default observer for a floating point zero-point and 4 bit activations."
+msgstr "用于浮点零点和 4 bit 激活的默认观测者。"
+
+#: ../../../api/pytorch/ao/quantization/observer.rst:32:<autosummary>:1
+msgid ""
+":py:obj:`default_observer "
+"<torch.ao.quantization.observer.default_observer>`"
+msgstr ""
+
+#: ../../../api/pytorch/ao/quantization/observer.rst:32:<autosummary>:1
+msgid "Default observer for static quantization, usually used for debugging."
+msgstr "静态量化的默认观测者，通常用于调试。"
+
+#: ../../../api/pytorch/ao/quantization/observer.rst:32:<autosummary>:1
+msgid ""
+":py:obj:`default_per_channel_weight_observer "
+"<torch.ao.quantization.observer.default_per_channel_weight_observer>`"
+msgstr ""
+
+#: ../../../api/pytorch/ao/quantization/observer.rst:32:<autosummary>:1
+msgid ""
+"Default per-channel weight observer, usually used on backends where per-"
+"channel weight quantization is supported, such as `fbgemm`."
+msgstr ""
+"默认的 per-channel 权重观测者，通常用于支持 per-channel 权重量化的后端，如 ``fbgemm``。"
+
+#: ../../../api/pytorch/ao/quantization/observer.rst:32:<autosummary>:1
+msgid ""
+":py:obj:`default_placeholder_observer "
+"<torch.ao.quantization.observer.default_placeholder_observer>`"
+msgstr ""
+
+#: ../../../api/pytorch/ao/quantization/observer.rst:32:<autosummary>:1
+msgid ""
+"Default placeholder observer, usually used for quantization to "
+"torch.float16."
+msgstr ""
+"默认占位符观测者，通常用于量化 ``torch.float16``。"
+
+#: ../../../api/pytorch/ao/quantization/observer.rst:32:<autosummary>:1
+msgid ""
+":py:obj:`default_weight_observer "
+"<torch.ao.quantization.observer.default_weight_observer>`"
+msgstr ""
+
+#: ../../../api/pytorch/ao/quantization/observer.rst:32:<autosummary>:1
+msgid "Default weight observer."
+msgstr "默认权重观测者。"
+
+#: ../../../api/pytorch/ao/quantization/observer.rst:32:<autosummary>:1
+msgid ""
+":py:obj:`default_reuse_input_observer "
+"<torch.ao.quantization.observer.default_reuse_input_observer>`"
+msgstr ""
+
+#: ../../../api/pytorch/ao/quantization/observer.rst:32:<autosummary>:1
+msgid ""
+"Default observer for operators like reshape that reuses the observer of "
+"input to the operator"
+msgstr ""
+#  "算子的默认观测者，比如 reshape 重新使用输入到算子的观测者"
+
+#: ../../../api/pytorch/ao/quantization/observer.rst:34
+msgid ""
+"请使用 :attr:`quant_min` 和 :attr:`quant_max` 来指定观测者的范围。 :attr:`reduce_range`"
+" 将在未来的 PyTorch 版本中弃用。"
+msgstr ""
+
+#: ../../../api/pytorch/ao/quantization/observer.rst:36
+msgid "默认观测者 :attr:`qscheme` 只能选择以下选项之一："
+msgstr ""
+
+#: ../../../api/pytorch/ao/quantization/observer.rst:38
+msgid "``torch.per_tensor_affine``"
+msgstr ""
+
+#: ../../../api/pytorch/ao/quantization/observer.rst:39
+msgid "``torch.per_tensor_symmetric``"
+msgstr ""
+
+#: ../../../api/pytorch/ao/quantization/observer.rst:40
+msgid "``torch.per_channel_affine``"
+msgstr ""
+
+#: ../../../api/pytorch/ao/quantization/observer.rst:41
+msgid "``torch.per_channel_symmetric``"
+msgstr ""
+
+#: ../../../api/pytorch/ao/quantization/observer.rst:43
+msgid ""
+"默认观测者 :attr:`dtype` 只能选择以下选项之一： "
+":data:`qint8`、:data:`quint8`、:data:`quint4x2`"
 msgstr ""
 
