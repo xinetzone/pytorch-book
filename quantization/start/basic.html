@@ -566,7 +566,7 @@
 <div class="section" id="id6">
 <h2>校准<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h2>
 <p>选择输入裁剪范围的过程称为 <strong>校准</strong> （calibration）。最简单的方法（也是 PyTorch 中的默认方法）是记录正在运行的最小值和最大值，并将它们赋值给 <span class="math notranslate nohighlight">\(\alpha\)</span> 和 <span class="math notranslate nohighlight">\(\beta\)</span>。<a class="reference external" href="https://docs.nvidia.com/deeplearning/tensorrt/pytorch-quantization-toolkit/docs/calib.html">TensorRT</a> 也使用熵最小化（KL 散度），均方误差最小化，或输入范围的百分位数。</p>
-<p>在 PyTorch 中，<code class="xref py py-class docutils literal notranslate"><span class="pre">Observer</span></code> 模块收集关于输入值的统计信息并计算 qparams <span class="math notranslate nohighlight">\(S,Z\)</span>。不同的校准方案会产生不同的量化输出，最好通过经验验证哪种方案最适合您的应用程序和体系结构。</p>
+<p>在 PyTorch 中，<a class="reference external" href="https://xinetzone.github.io/pytorch-book/api/pytorch/ao/quantization/generated/torch.ao.quantization.observer.ObserverBase.html#torch.ao.quantization.observer.ObserverBase" title="(在 Pytorch Book)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Observer</span></code></a> 模块收集关于输入值的统计信息并计算 qparams <span class="math notranslate nohighlight">\(S,Z\)</span>。不同的校准方案会产生不同的量化输出，最好通过经验验证哪种方案最适合您的应用程序和体系结构。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
@@ -733,7 +733,7 @@ Qscheme: torch.per_tensor_symmetric | (tensor([0.0094]), tensor([128]))
 </div>
 <div class="section" id="qconfig">
 <h2><code class="docutils literal notranslate"><span class="pre">QConfig</span></code><a class="headerlink" href="#qconfig" title="永久链接至标题">¶</a></h2>
-<p><code class="xref py py-class docutils literal notranslate"><span class="pre">QConfig</span></code> NamedTuple 存储用于量化激活和权重的 Observer 和量化方案。</p>
+<p><a class="reference external" href="https://xinetzone.github.io/pytorch-book/api/pytorch/ao/quantization/generated/torch.ao.quantization.qconfig.QConfig.html#torch.ao.quantization.qconfig.QConfig" title="(在 Pytorch Book)"><code class="xref py py-class docutils literal notranslate"><span class="pre">QConfig</span></code></a> NamedTuple 存储用于量化激活和权重的 Observer 和量化方案。</p>
 <p>一定要传递 <code class="docutils literal notranslate"><span class="pre">Observer</span></code> 类（而不是实例），或者可以返回 <code class="docutils literal notranslate"><span class="pre">Observer</span></code> 实例的可调用对象。使用 <code class="xref py py-func docutils literal notranslate"><span class="pre">with_args()</span></code> 覆盖默认参数。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1284,7 +1284,7 @@ Qscheme: torch.per_tensor_symmetric | (tensor([0.0094]), tensor([128]))
     
     <div class="footer-item">
       <p class="last-updated">
-最后更新于 2022-03-18, 11:42:14.<br>
+最后更新于 2022-03-18, 12:21:51.<br>
 </p>
     </div>
     

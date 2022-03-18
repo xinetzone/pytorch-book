@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>torch.ao.quantization.observer.default_per_channel_weight_observer &#8212; Pytorch Book 0.0.1 文档</title>
+    <title>torch.ao.quantization.quantize.quantize_dynamic &#8212; Pytorch Book 0.0.1 文档</title>
     
   <link href="../../../../_static/css/theme.css" rel="stylesheet">
   <link href="../../../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -44,12 +44,11 @@
     <script src="../../../../_static/togglebutton.js"></script>
     <script src="../../../../_static/translations.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <link rel="canonical" href="https://xinetzone.github.io/pytorch-book/pytorch/ao/quantization/generated/torch.ao.quantization.observer.default_per_channel_weight_observer.html" />
+    <link rel="canonical" href="https://xinetzone.github.io/pytorch-book/pytorch/ao/quantization/generated/torch.ao.quantization.quantize.quantize_dynamic.html" />
     <link rel="shortcut icon" href="../../../../_static/favicon.jpg"/>
     <link rel="index" title="索引" href="../../../../genindex.html" />
     <link rel="search" title="搜索" href="../../../../search.html" />
-    <link rel="next" title="torch.ao.quantization.observer.default_placeholder_observer" href="torch.ao.quantization.observer.default_placeholder_observer.html" />
-    <link rel="prev" title="torch.ao.quantization.observer.default_observer" href="torch.ao.quantization.observer.default_observer.html" />
+    <link rel="prev" title="torch.ao.quantization.quantize" href="../quantize.html" />
     <link rel="stylesheet" href="../../../../_static/css/default.css"/>
     <link rel="stylesheet" href="../../../../_static/css/custom.css"/>
 
@@ -177,16 +176,16 @@
      </i>
     </label>
     <ul class="current">
-     <li class="toctree-l3 current active has-children">
+     <li class="toctree-l3 has-children">
       <a class="reference internal" href="../observer.html">
        torch.ao.quantization.observer
       </a>
-      <input checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+      <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
       <label for="toctree-checkbox-4">
        <i class="fas fa-chevron-down">
        </i>
       </label>
-      <ul class="current">
+      <ul>
        <li class="toctree-l4">
         <a class="reference internal" href="torch.ao.quantization.observer.ObserverBase.html">
          torch.ao.quantization.observer.ObserverBase
@@ -272,8 +271,8 @@
          torch.ao.quantization.observer.default_observer
         </a>
        </li>
-       <li class="toctree-l4 current active">
-        <a class="current reference internal" href="#">
+       <li class="toctree-l4">
+        <a class="reference internal" href="torch.ao.quantization.observer.default_per_channel_weight_observer.html">
          torch.ao.quantization.observer.default_per_channel_weight_observer
         </a>
        </li>
@@ -326,18 +325,18 @@
        </li>
       </ul>
      </li>
-     <li class="toctree-l3 has-children">
+     <li class="toctree-l3 current active has-children">
       <a class="reference internal" href="../quantize.html">
        torch.ao.quantization.quantize
       </a>
-      <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+      <input checked="" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
       <label for="toctree-checkbox-6">
        <i class="fas fa-chevron-down">
        </i>
       </label>
-      <ul>
-       <li class="toctree-l4">
-        <a class="reference internal" href="torch.ao.quantization.quantize.quantize_dynamic.html">
+      <ul class="current">
+       <li class="toctree-l4 current active">
+        <a class="current reference internal" href="#">
          torch.ao.quantization.quantize.quantize_dynamic
         </a>
        </li>
@@ -371,7 +370,7 @@
                 
 
 <div class="tocsection editthispage">
-    <a href="https://github.com/xinetzone/pytorch-book/edit/main/docs/pytorch/ao/quantization/generated/torch.ao.quantization.observer.default_per_channel_weight_observer.rst">
+    <a href="https://github.com/xinetzone/pytorch-book/edit/main/docs/pytorch/ao/quantization/generated/torch.ao.quantization.quantize.quantize_dynamic.rst">
         <i class="fas fa-pencil-alt"></i> Edit this page
     </a>
 </div>
@@ -390,13 +389,38 @@
               
               <div>
                 
-  <div class="section" id="torch-ao-quantization-observer-default-per-channel-weight-observer">
-<h1>torch.ao.quantization.observer.default_per_channel_weight_observer<a class="headerlink" href="#torch-ao-quantization-observer-default-per-channel-weight-observer" title="永久链接至标题">¶</a></h1>
-<dl class="py data">
-<dt class="sig sig-object py" id="torch.ao.quantization.observer.default_per_channel_weight_observer">
-<span class="sig-prename descclassname"><span class="pre">torch.ao.quantization.observer.</span></span><span class="sig-name descname"><span class="pre">default_per_channel_weight_observer</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">functools.partial(&lt;class</span> <span class="pre">'torch.ao.quantization.observer.PerChannelMinMaxObserver'&gt;,</span> <span class="pre">dtype=torch.qint8,</span> <span class="pre">qscheme=torch.per_channel_symmetric){}</span></em><a class="headerlink" href="#torch.ao.quantization.observer.default_per_channel_weight_observer" title="永久链接至目标">¶</a></dt>
-<dd><p>Default per-channel weight observer, usually used on backends where per-channel
-weight quantization is supported, such as <cite>fbgemm</cite>.</p>
+  <div class="section" id="torch-ao-quantization-quantize-quantize-dynamic">
+<h1>torch.ao.quantization.quantize.quantize_dynamic<a class="headerlink" href="#torch-ao-quantization-quantize-quantize-dynamic" title="永久链接至标题">¶</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="torch.ao.quantization.quantize.quantize_dynamic">
+<span class="sig-prename descclassname"><span class="pre">torch.ao.quantization.quantize.</span></span><span class="sig-name descname"><span class="pre">quantize_dynamic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qconfig_spec</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">torch.qint8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mapping</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inplace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/torch/ao/quantization/quantize.html#quantize_dynamic"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#torch.ao.quantization.quantize.quantize_dynamic" title="永久链接至目标">¶</a></dt>
+<dd><p>Converts a float model to dynamic (i.e. weights-only) quantized model.</p>
+<p>Replaces specified modules with dynamic weight-only quantized versions and output the quantized model.</p>
+<p>For simplest usage provide <cite>dtype</cite> argument that can be float16 or qint8. Weight-only quantization
+by default is performed for layers with large weights size - i.e. Linear and RNN variants.</p>
+<p>Fine grained control is possible with <cite>qconfig</cite> and <cite>mapping</cite> that act similarly to <cite>quantize()</cite>.
+If <cite>qconfig</cite> is provided, the <cite>dtype</cite> argument is ignored.</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> – input model</p></li>
+<li><p><strong>qconfig_spec</strong> – <p>Either:</p>
+<ul>
+<li><p>A dictionary that maps from name or type of submodule to quantization
+configuration, qconfig applies to all submodules of a given
+module unless qconfig for the submodules are specified (when the
+submodule already has qconfig attribute). Entries in the dictionary
+need to be QConfig instances.</p></li>
+<li><p>A set of types and/or submodule names to apply dynamic quantization to,
+in which case the <cite>dtype</cite> argument is used to specify the bit-width</p></li>
+</ul>
+</p></li>
+<li><p><strong>inplace</strong> – carry out model transformations in-place, the original module is mutated</p></li>
+<li><p><strong>mapping</strong> – maps type of a submodule to a type of corresponding dynamically quantized version
+with which the submodule needs to be replaced</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -407,19 +431,12 @@ weight quantization is supported, such as <cite>fbgemm</cite>.</p>
               
               <!-- Previous / next buttons -->
 <div class='prev-next-area'> 
-    <a class='left-prev' id="prev-link" href="torch.ao.quantization.observer.default_observer.html" title="上一页 页">
+    <a class='left-prev' id="prev-link" href="../quantize.html" title="上一页 页">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">上一页</p>
-            <p class="prev-next-title">torch.ao.quantization.observer.default_observer</p>
+            <p class="prev-next-title">torch.ao.quantization.quantize</p>
         </div>
-    </a>
-    <a class='right-next' id="next-link" href="torch.ao.quantization.observer.default_placeholder_observer.html" title="下一页 页">
-    <div class="prev-next-info">
-        <p class="prev-next-subtitle">下一页</p>
-        <p class="prev-next-title">torch.ao.quantization.observer.default_placeholder_observer</p>
-    </div>
-    <i class="fas fa-angle-right"></i>
     </a>
 </div>
               
