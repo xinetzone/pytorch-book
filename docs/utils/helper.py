@@ -1,5 +1,6 @@
 from __future__ import annotations
 import os
+from pathlib import Path
 import torch
 
 from mobile_net import MobileNetV2
@@ -67,10 +68,11 @@ def evaluate(model, criterion, data_loader, neval_batches):
     return top1, top5
 
 
-def load_model(model_file):
+def load_model():
     model = MobileNetV2()
-    state_dict = torch.load(model_file)
-    model.load_state_dict(state_dict)
+    # if Path(model_file).exists:
+    #     state_dict = torch.load(model_file)
+    #     model.load_state_dict(state_dict)
     model.to('cpu')
     return model
 

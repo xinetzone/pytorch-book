@@ -21,8 +21,8 @@ class Transforms:
 
 
 def prepare_data_loaders(data_path, train_batch_size, eval_batch_size):
-    dataset = ImageNet(data_path, "train", Transforms.train)
-    dataset_test = ImageNet(data_path, "val", Transforms.val)
+    dataset = ImageNet(data_path, split="train", transform=Transforms.train)
+    dataset_test = ImageNet(data_path, split="val", transform=Transforms.val)
 
     train_sampler = tdata.RandomSampler(dataset)
     test_sampler = tdata.SequentialSampler(dataset_test)
