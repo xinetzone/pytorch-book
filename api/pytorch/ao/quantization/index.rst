@@ -9,3 +9,4 @@ torch.ao.quantization
     quantize
     stubs
     fuse_modules
+    
