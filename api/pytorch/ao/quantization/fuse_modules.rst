@@ -1,7 +1,7 @@
 torch.ao.quantization.fuse_modules
 ##################################
 
-.. currentmodule:: torch.ao.quantization
+.. currentmodule:: torch.ao.quantization.fuse_modules
 
 .. autosummary::
     :toctree: generated

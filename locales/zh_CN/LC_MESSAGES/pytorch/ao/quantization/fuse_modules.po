@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Pytorch Book \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-22 16:55+0800\n"
+"POT-Creation-Date: 2022-03-22 17:23+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,19 +22,29 @@ msgstr ""
 msgid "torch.ao.quantization.fuse_modules"
 msgstr ""
 
-#: ../../../api/pytorch/ao/quantization/fuse_modules.rst:12:<autosummary>:1
+#: ../../../api/pytorch/ao/quantization/fuse_modules.rst:13:<autosummary>:1
 msgid ":py:obj:`fuse_modules <torch.ao.quantization.fuse_modules>`"
 msgstr ""
 
-#: ../../../api/pytorch/ao/quantization/fuse_modules.rst:12:<autosummary>:1
+#: ../../../api/pytorch/ao/quantization/fuse_modules.rst:13:<autosummary>:1
 msgid "Fuses a list of modules into a single module"
 msgstr ""
 
-#: ../../../api/pytorch/ao/quantization/fuse_modules.rst:12:<autosummary>:1
+#: ../../../api/pytorch/ao/quantization/fuse_modules.rst:13:<autosummary>:1
 msgid ":py:obj:`fuse_modules_qat <torch.ao.quantization.fuse_modules_qat>`"
 msgstr ""
 
-#: ../../../api/pytorch/ao/quantization/fuse_modules.rst:12:<autosummary>:1
+#: ../../../api/pytorch/ao/quantization/fuse_modules.rst:13:<autosummary>:1
 msgid "QAT version for `fuse_modules`"
+msgstr ""
+
+#: ../../../api/pytorch/ao/quantization/fuse_modules.rst:13:<autosummary>:1
+msgid ""
+":py:obj:`fuse_modules.fuse_known_modules "
+"<torch.ao.quantization.fuse_modules.fuse_known_modules>`"
+msgstr ""
+
+#: ../../../api/pytorch/ao/quantization/fuse_modules.rst:13:<autosummary>:1
+msgid "Returns a list of modules that fuses the operations specified"
 msgstr ""
 
