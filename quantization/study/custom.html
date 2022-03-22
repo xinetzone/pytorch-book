@@ -463,19 +463,6 @@
   <a class="reference internal nav-link" href="#id2">
    算子融合
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#torch-nn-quantized-floatfunctional">
-     用
-     <code class="xref py py-class docutils literal notranslate">
-      <span class="pre">
-       torch.nn.quantized.FloatFunctional
-      </span>
-     </code>
-     替换加法
-    </a>
-   </li>
-  </ul>
  </li>
 </ul>
 
@@ -532,7 +519,7 @@
 </div>
 </div>
 </div>
-<p>本文以 <code class="xref py py-class docutils literal notranslate"><span class="pre">MobileNetV2</span></code> 为例，介绍如何将其转换为量化模型 <code class="xref py py-func docutils literal notranslate"><span class="pre">QuantizableMobileNetV2()</span></code>。</p>
+<p>本文以 <a class="reference external" href="https://xinetzone.github.io/pytorch-book/api/pytorch/torchvision/generated/torchvision.models.MobileNetV2.html#torchvision.models.MobileNetV2" title="(在 Pytorch Book)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MobileNetV2</span></code></a> 为例，介绍如何将其转换为量化模型 <a class="reference external" href="https://xinetzone.github.io/pytorch-book/api/pytorch/torchvision/generated/torchvision.models.quantization.QuantizableMobileNetV2.html#torchvision.models.quantization.QuantizableMobileNetV2" title="(在 Pytorch Book)"><code class="xref py py-class docutils literal notranslate"><span class="pre">QuantizableMobileNetV2</span></code></a>。</p>
 <div class="section" id="id2">
 <h2>算子融合<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
 <p class="rubric">载入库</p>
@@ -564,8 +551,35 @@
 </div>
 </div>
 <p>通过几个显著的修改来启用量化的 <strong>算子融合</strong>。</p>
-<div class="section" id="torch-nn-quantized-floatfunctional">
-<h3>用 <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.nn.quantized.FloatFunctional.html#torch.nn.quantized.FloatFunctional" title="(在 PyTorch v1.11.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.quantized.FloatFunctional</span></code></a> 替换加法<a class="headerlink" href="#torch-nn-quantized-floatfunctional" title="永久链接至标题">¶</a></h3>
+<ol class="simple">
+<li><p>用 <a class="reference external" href="https://xinetzone.github.io/pytorch-book/api/pytorch/nn/generated/torch.nn.quantized.FloatFunctional.html#torch.nn.quantized.FloatFunctional" title="(在 Pytorch Book)"><code class="xref py py-class docutils literal notranslate"><span class="pre">FloatFunctional</span></code></a> 替换加法</p></li>
+<li><p>使用 <code class="xref py py-func docutils literal notranslate"><span class="pre">torch.ao.quantization.fuse_modules()</span></code> 融合 <code class="docutils literal notranslate"><span class="pre">(Conv,</span> <span class="pre">BN,</span> <span class="pre">ReLU)</span></code>、 <code class="docutils literal notranslate"><span class="pre">(Conv,</span> <span class="pre">BN)</span></code> 和 <code class="docutils literal notranslate"><span class="pre">(Conv,</span> <span class="pre">ReLU)</span></code>。</p></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">备注</p>
+<p><a class="reference external" href="https://xinetzone.github.io/pytorch-book/api/pytorch/nn/generated/torch.nn.quantized.FloatFunctional.html#torch.nn.quantized.FloatFunctional" title="(在 Pytorch Book)"><code class="xref py py-class docutils literal notranslate"><span class="pre">FloatFunctional</span></code></a> 算子比普通的 <code class="docutils literal notranslate"><span class="pre">torch.</span></code> 的运算多了一个后处理，比如：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">FloatFunctional</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">activation_post_process</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Identity</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;FloatFunctional is not intended to use the &quot;</span> <span class="o">+</span>
+                           <span class="s2">&quot;&#39;forward&#39;. Please use the underlying operation&quot;</span><span class="p">)</span>
+
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Operation equivalent to ``torch.add(Tensor, Tensor)``&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">activation_post_process</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">r</span>
+</pre></div>
+</div>
+<p>由于 <code class="docutils literal notranslate"><span class="pre">self.activation_post_process</span> <span class="pre">=</span> <span class="pre">torch.nn.Identity()</span></code> 是自映射，所以 <code class="xref py py-meth docutils literal notranslate"><span class="pre">add()</span></code> 等价于 <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.add.html#torch.add" title="(在 PyTorch v1.11.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">torch.add()</span></code></a>。</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">小技巧</p>
+<p>猜测 <a class="reference external" href="https://xinetzone.github.io/pytorch-book/api/pytorch/nn/generated/torch.nn.quantized.FloatFunctional.html#torch.nn.quantized.FloatFunctional" title="(在 Pytorch Book)"><code class="xref py py-class docutils literal notranslate"><span class="pre">FloatFunctional</span></code></a> 算子提供了自定义算子的官方接口。即只需要对 <code class="docutils literal notranslate"><span class="pre">self.activation_post_process</span></code> 赋值即可添加算子的后处理工作。</p>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">QuantizableInvertedResidual</span><span class="p">(</span><span class="n">InvertedResidual</span><span class="p">):</span>
@@ -591,7 +605,7 @@
 </div>
 </div>
 </div>
-</div>
+<p><code class="xref py py-meth docutils literal notranslate"><span class="pre">torch.nn.quantized.FloatFunctional.add()</span></code></p>
 </div>
 </div>
 
@@ -635,7 +649,7 @@
     
     <div class="footer-item">
       <p class="last-updated">
-最后更新于 2022-03-22, 08:06:20.<br>
+最后更新于 2022-03-22, 09:08:27.<br>
 </p>
     </div>
     

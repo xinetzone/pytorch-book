@@ -1,0 +1,6 @@
+﻿torch.ao.quantization.fuse\_modules\_qat
+========================================
+
+.. currentmodule:: torch.ao.quantization
+
+.. autofunction:: fuse_modules_qat

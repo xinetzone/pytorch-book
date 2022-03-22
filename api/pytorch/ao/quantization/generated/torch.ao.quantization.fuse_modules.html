@@ -1,0 +1,620 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>torch.ao.quantization.fuse_modules &#8212; Pytorch Book 0.0.1 文档</title>
+    
+  <link href="../../../../_static/css/theme.css" rel="stylesheet">
+  <link href="../../../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/tabs.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/default.css" />
+    
+  <link rel="preload" as="script" href="../../../../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+    <script src="../../../../_static/jquery.js"></script>
+    <script src="../../../../_static/underscore.js"></script>
+    <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/clipboard.min.js"></script>
+    <script src="../../../../_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../_static/togglebutton.js"></script>
+    <script src="../../../../_static/translations.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <link rel="canonical" href="https://xinetzone.github.io/pytorch-book/pytorch/ao/quantization/generated/torch.ao.quantization.fuse_modules.html" />
+    <link rel="shortcut icon" href="../../../../_static/favicon.jpg"/>
+    <link rel="index" title="索引" href="../../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../../search.html" />
+    <link rel="next" title="torch.ao.quantization.fuse_modules_qat" href="torch.ao.quantization.fuse_modules_qat.html" />
+    <link rel="prev" title="torch.ao.quantization.fuse_modules" href="../fuse_modules.html" />
+    <link rel="stylesheet" href="../../../../_static/css/default.css"/>
+    <link rel="stylesheet" href="../../../../_static/css/custom.css"/>
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+
+  <div id="navbar-start">
+    
+    
+
+<a class="navbar-brand" href="../../../../index.html">
+  <img src="../../../../_static/logo.jpg" class="logo" alt="logo">
+</a>
+
+
+    
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  
+  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+    <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../../hymenoptera.html">
+  hymenoptera
+ </a>
+</li>
+
+<li class="toctree-l1 current active nav-item">
+ <a class="reference internal nav-link" href="../../../index.html">
+  PyTorch API
+ </a>
+</li>
+
+    
+    <li class="nav-item">
+        <a class="nav-link nav-external" href="https://xinetzone.github.io/pytorch-book">文档<i class="fas fa-external-link-alt"></i></a>
+    </li>
+    
+</ul>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/xinetzone/pytorch-book" rel="noopener" target="_blank" title="GitHub">
+            <span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label>
+          </a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="../../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    <ul class="current nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../../nn/index.html">
+   torch.nn
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../nn/generated/torch.nn.factory_kwargs.html">
+     torch.nn.factory_kwargs
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../nn/grad.html">
+     torch.nn.grad
+    </a>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../nn/quantized.html">
+     torch.nn.quantized
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+    <label for="toctree-checkbox-2">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../nn/generated/torch.nn.quantized.FloatFunctional.html">
+       torch.nn.quantized.FloatFunctional
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../nn/generated/torch.nn.quantized.FXFloatFunctional.html">
+       torch.nn.quantized.FXFloatFunctional
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../nn/generated/torch.nn.quantized.QFunctional.html">
+       torch.nn.quantized.QFunctional
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="../../index.html">
+   torch.ao
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2 current active has-children">
+    <a class="reference internal" href="../index.html">
+     torch.ao.quantization
+    </a>
+    <input checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+    <label for="toctree-checkbox-4">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul class="current">
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../observer.html">
+       torch.ao.quantization.observer
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+      <label for="toctree-checkbox-5">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="torch.ao.quantization.observer.ObserverBase.html">
+         torch.ao.quantization.observer.ObserverBase
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="torch.ao.quantization.observer._ObserverBase.html">
+         torch.ao.quantization.observer._ObserverBase
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="torch.ao.quantization.observer.MinMaxObserver.html">
+         torch.ao.quantization.observer.MinMaxObserver
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="torch.ao.quantization.observer.MovingAverageMinMaxObserver.html">
+         torch.ao.quantization.observer.MovingAverageMinMaxObserver
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="torch.ao.quantization.observer.PerChannelMinMaxObserver.html">
+         torch.ao.quantization.observer.PerChannelMinMaxObserver
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="torch.ao.quantization.observer.MovingAveragePerChannelMinMaxObserver.html">
+         torch.ao.quantization.observer.MovingAveragePerChannelMinMaxObserver
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="torch.ao.quantization.observer.HistogramObserver.html">
+         torch.ao.quantization.observer.HistogramObserver
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="torch.ao.quantization.observer.FixedQParamsObserver.html">
+         torch.ao.quantization.observer.FixedQParamsObserver
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="torch.ao.quantization.observer.PlaceholderObserver.html">
+         torch.ao.quantization.observer.PlaceholderObserver
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="torch.ao.quantization.observer.RecordingObserver.html">
+         torch.ao.quantization.observer.RecordingObserver
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="torch.ao.quantization.observer.NoopObserver.html">
+         torch.ao.quantization.observer.NoopObserver
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="torch.ao.quantization.observer.ReuseInputObserver.html">
+         torch.ao.quantization.observer.ReuseInputObserver
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="torch.ao.quantization.observer.default_debug_observer.html">
+         torch.ao.quantization.observer.default_debug_observer
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="torch.ao.quantization.observer.default_dynamic_quant_observer.html">
+         torch.ao.quantization.observer.default_dynamic_quant_observer
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="torch.ao.quantization.observer.default_float_qparams_observer.html">
+         torch.ao.quantization.observer.default_float_qparams_observer
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="torch.ao.quantization.observer.default_float_qparams_observer_4bit.html">
+         torch.ao.quantization.observer.default_float_qparams_observer_4bit
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="torch.ao.quantization.observer.default_observer.html">
+         torch.ao.quantization.observer.default_observer
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="torch.ao.quantization.observer.default_per_channel_weight_observer.html">
+         torch.ao.quantization.observer.default_per_channel_weight_observer
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="torch.ao.quantization.observer.default_placeholder_observer.html">
+         torch.ao.quantization.observer.default_placeholder_observer
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="torch.ao.quantization.observer.default_weight_observer.html">
+         torch.ao.quantization.observer.default_weight_observer
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="torch.ao.quantization.observer.default_reuse_input_observer.html">
+         torch.ao.quantization.observer.default_reuse_input_observer
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../qconfig.html">
+       torch.ao.quantization.qconfig
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+      <label for="toctree-checkbox-6">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="torch.ao.quantization.qconfig.QConfig.html">
+         torch.ao.quantization.qconfig.QConfig
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="torch.ao.quantization.qconfig.QConfigDynamic.html">
+         torch.ao.quantization.qconfig.QConfigDynamic
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="torch.ao.quantization.qconfig.get_default_qconfig.html">
+         torch.ao.quantization.qconfig.get_default_qconfig
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="torch.ao.quantization.qconfig.get_default_qat_qconfig.html">
+         torch.ao.quantization.qconfig.get_default_qat_qconfig
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../quantize.html">
+       torch.ao.quantization.quantize
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+      <label for="toctree-checkbox-7">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="torch.ao.quantization.quantize.quantize_dynamic.html">
+         torch.ao.quantization.quantize.quantize_dynamic
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../stubs.html">
+       torch.ao.quantization.stubs
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+      <label for="toctree-checkbox-8">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="torch.ao.quantization.stubs.QuantStub.html">
+         torch.ao.quantization.stubs.QuantStub
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="torch.ao.quantization.stubs.DeQuantStub.html">
+         torch.ao.quantization.stubs.DeQuantStub
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="torch.ao.quantization.stubs.QuantWrapper.html">
+         torch.ao.quantization.stubs.QuantWrapper
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 current active has-children">
+      <a class="reference internal" href="../fuse_modules.html">
+       torch.ao.quantization.fuse_modules
+      </a>
+      <input checked="" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
+      <label for="toctree-checkbox-9">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul class="current">
+       <li class="toctree-l4 current active">
+        <a class="current reference internal" href="#">
+         torch.ao.quantization.fuse_modules
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="torch.ao.quantization.fuse_modules_qat.html">
+         torch.ao.quantization.fuse_modules_qat
+        </a>
+       </li>
+      </ul>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../../torchvision/index.html">
+   torchvision
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/>
+  <label for="toctree-checkbox-10">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../torchvision/models.html">
+     torchvision.modules
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/>
+    <label for="toctree-checkbox-11">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../torchvision/generated/torchvision.models.MobileNetV2.html">
+       torchvision.models.MobileNetV2
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../torchvision/generated/torchvision.models.quantization.QuantizableMobileNetV2.html">
+       torchvision.models.quantization.QuantizableMobileNetV2
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+  </div>
+</nav>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+            
+              
+              <div class="toc-item">
+                
+
+<nav id="bd-toc-nav">
+    
+</nav>
+              </div>
+              
+              <div class="toc-item">
+                
+
+<div class="tocsection editthispage">
+    <a href="https://github.com/xinetzone/pytorch-book/edit/main/docs/pytorch/ao/quantization/generated/torch.ao.quantization.fuse_modules.rst">
+        <i class="fas fa-pencil-alt"></i> Edit this page
+    </a>
+</div>
+
+              </div>
+              
+            
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <div class="section" id="torch-ao-quantization-fuse-modules">
+<h1>torch.ao.quantization.fuse_modules<a class="headerlink" href="#torch-ao-quantization-fuse-modules" title="永久链接至标题">¶</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="torch.ao.quantization.fuse_modules">
+<span class="sig-prename descclassname"><span class="pre">torch.ao.quantization.</span></span><span class="sig-name descname"><span class="pre">fuse_modules</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modules_to_fuse</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inplace=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fuser_func=&lt;function</span> <span class="pre">fuse_known_modules&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fuse_custom_config_dict=None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/torch/ao/quantization/fuse_modules.html#fuse_modules"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#torch.ao.quantization.fuse_modules" title="永久链接至目标">¶</a></dt>
+<dd><p>Fuses a list of modules into a single module</p>
+<p>Fuses only the following sequence of modules:
+conv, bn
+conv, bn, relu
+conv, relu
+linear, relu
+bn, relu
+All other sequences are left unchanged.
+For these sequences, replaces the first item in the list
+with the fused module, replacing the rest of the modules
+with identity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> – Model containing the modules to be fused</p></li>
+<li><p><strong>modules_to_fuse</strong> – list of list of module names to fuse. Can also be a list
+of strings if there is only a single list of modules to fuse.</p></li>
+<li><p><strong>inplace</strong> – bool specifying if fusion happens in place on the model, by default
+a new model is returned</p></li>
+<li><p><strong>fuser_func</strong> – Function that takes in a list of modules and outputs a list of fused modules
+of the same length. For example,
+fuser_func([convModule, BNModule]) returns the list [ConvBNModule, nn.Identity()]
+Defaults to torch.ao.quantization.fuse_known_modules</p></li>
+<li><p><strong>fuse_custom_config_dict</strong> – custom configuration for fusion</p></li>
+</ul>
+</dd>
+</dl>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example of fuse_custom_config_dict</span>
+<span class="n">fuse_custom_config_dict</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="c1"># Additional fuser_method mapping</span>
+    <span class="s2">&quot;additional_fuser_method_mapping&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">BatchNorm2d</span><span class="p">):</span> <span class="n">fuse_conv_bn</span>
+    <span class="p">},</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">返回</dt>
+<dd class="field-odd"><p>model with fused modules. A new copy is created if inplace=True.</p>
+</dd>
+</dl>
+<p>Examples:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">M</span><span class="p">()</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># m is a module containing the sub-modules below</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">modules_to_fuse</span> <span class="o">=</span> <span class="p">[</span> <span class="p">[</span><span class="s1">&#39;conv1&#39;</span><span class="p">,</span> <span class="s1">&#39;bn1&#39;</span><span class="p">,</span> <span class="s1">&#39;relu1&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;submodule.conv&#39;</span><span class="p">,</span> <span class="s1">&#39;submodule.relu&#39;</span><span class="p">]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fused_m</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ao</span><span class="o">.</span><span class="n">quantization</span><span class="o">.</span><span class="n">fuse_modules</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">modules_to_fuse</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">output</span> <span class="o">=</span> <span class="n">fused_m</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">M</span><span class="p">()</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Alternately provide a single list of modules to fuse</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">modules_to_fuse</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;conv1&#39;</span><span class="p">,</span> <span class="s1">&#39;bn1&#39;</span><span class="p">,</span> <span class="s1">&#39;relu1&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fused_m</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ao</span><span class="o">.</span><span class="n">quantization</span><span class="o">.</span><span class="n">fuse_modules</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">modules_to_fuse</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">output</span> <span class="o">=</span> <span class="n">fused_m</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+
+
+              </div>
+              
+              
+              <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="../fuse_modules.html" title="上一页 页">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">上一页</p>
+            <p class="prev-next-title">torch.ao.quantization.fuse_modules</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="torch.ao.quantization.fuse_modules_qat.html" title="下一页 页">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">torch.ao.quantization.fuse_modules_qat</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+  
+  <script src="../../../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+<footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    
+    <div class="footer-item">
+      <p class="copyright">
+    &copy; Copyright 2022, xinetzone.<br>
+</p>
+    </div>
+    
+    <div class="footer-item">
+      <p class="last-updated">
+最后更新于 2022-03-22, 09:08:12.<br>
+</p>
+    </div>
+    
+    <div class="footer-item">
+      <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.4.0.<br>
+</p>
+    </div>
+    
+  </div>
+</footer>
+  </body>
+</html>
