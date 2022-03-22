@@ -46,7 +46,7 @@
     "将模型转换为 **可量化模型** 的流程如下：\n",
     "\n",
     "1. 用 {class}`~torch.nn.quantized.FloatFunctional` 替换加法\n",
-    "2. 使用 {func}`~torch.ao.quantization.fuse_modules` 融合如下模块序列：\n",
+    "2. 使用 {func}`~torch.ao.quantization.fuse_modules.fuse_modules` 或者 {func}`~torch.ao.quantization.fuse_modules.fuse_modules_qat` 融合如下模块序列：\n",
     "\n",
     "    - conv, bn\n",
     "    - conv, bn, relu\n",
@@ -60,15 +60,13 @@
     "\n",
     "## 算子融合\n",
     "\n",
-    "```{rubric} 载入库\n",
-    "```\n",
-    "\n",
-    "加载一些库："
+    "```{rubric} 载入一些库\n",
+    "```"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 2,
+   "execution_count": 1,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -97,7 +95,29 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
+    "```{rubric} 模块融合\n",
+    "```\n",
+    "\n",
     "````{note}\n",
+    "\n",
+    "{func}`~torchvision.models.quantization.utils._fuse_modules` 提供了普通模块融合与 QAT 模块融合的统一接口。\n",
+    "```python\n",
+    "from torch.ao.quantization import fuse_modules_qat, fuse_modules\n",
+    "\n",
+    "\n",
+    "def _fuse_modules(\n",
+    "    model: nn.Module, \n",
+    "    modules_to_fuse: list[str] | list[list[str]], \n",
+    "    is_qat: bool | None, \n",
+    "    **kwargs: Any\n",
+    "):\n",
+    "    if is_qat is None:\n",
+    "        is_qat = model.training\n",
+    "    method = fuse_modules_qat if is_qat else  fuse_modules\n",
+    "    return method(model, modules_to_fuse, **kwargs)\n",
+    "```\n",
+    "\n",
+    "\n",
     "{class}`~torch.nn.quantized.FloatFunctional` 算子比普通的 `torch.` 的运算多了一个后处理，比如：\n",
     "\n",
     "```python\n",
@@ -151,13 +171,6 @@
     "                              is_qat,\n",
     "                              inplace=True)"
    ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 4,
-   "metadata": {},
-   "outputs": [],
-   "source": []
   },
   {
    "cell_type": "code",

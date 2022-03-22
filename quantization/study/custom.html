@@ -525,7 +525,7 @@
 <p>将模型转换为 <strong>可量化模型</strong> 的流程如下：</p>
 <ol class="simple">
 <li><p>用 <a class="reference external" href="https://xinetzone.github.io/pytorch-book/api/pytorch/nn/generated/torch.nn.quantized.FloatFunctional.html#torch.nn.quantized.FloatFunctional" title="(在 Pytorch Book)"><code class="xref py py-class docutils literal notranslate"><span class="pre">FloatFunctional</span></code></a> 替换加法</p></li>
-<li><p>使用 <a class="reference external" href="https://xinetzone.github.io/pytorch-book/api/pytorch/ao/quantization/generated/torch.ao.quantization.fuse_modules.html#torch.ao.quantization.fuse_modules" title="(在 Pytorch Book)"><code class="xref py py-func docutils literal notranslate"><span class="pre">fuse_modules()</span></code></a> 融合如下模块序列：</p>
+<li><p>使用 <a class="reference external" href="https://xinetzone.github.io/pytorch-book/api/pytorch/ao/quantization/generated/torch.ao.quantization.fuse_modules.fuse_modules.html#torch.ao.quantization.fuse_modules.fuse_modules" title="(在 Pytorch Book)"><code class="xref py py-func docutils literal notranslate"><span class="pre">fuse_modules()</span></code></a> 或者 <a class="reference external" href="https://xinetzone.github.io/pytorch-book/api/pytorch/ao/quantization/generated/torch.ao.quantization.fuse_modules.fuse_modules_qat.html#torch.ao.quantization.fuse_modules.fuse_modules_qat" title="(在 Pytorch Book)"><code class="xref py py-func docutils literal notranslate"><span class="pre">fuse_modules_qat()</span></code></a> 融合如下模块序列：</p>
 <ul class="simple">
 <li><p>conv, bn</p></li>
 <li><p>conv, bn, relu</p></li>
@@ -540,8 +540,7 @@
 </div>
 <div class="section" id="id2">
 <h2>算子融合<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
-<p class="rubric">载入库</p>
-<p>加载一些库：</p>
+<p class="rubric">载入一些库</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="sd">&#39;&#39;&#39;参考 torchvision/models/quantization/mobilenetv2.py</span>
@@ -567,8 +566,25 @@
 </div>
 </div>
 </div>
+<p class="rubric">模块融合</p>
 <div class="admonition note">
 <p class="admonition-title">备注</p>
+<p><a class="reference external" href="https://xinetzone.github.io/pytorch-book/api/pytorch/torchvision/generated/torchvision.models.quantization.utils._fuse_modules.html#torchvision.models.quantization.utils._fuse_modules" title="(在 Pytorch Book)"><code class="xref py py-func docutils literal notranslate"><span class="pre">_fuse_modules()</span></code></a> 提供了普通模块融合与 QAT 模块融合的统一接口。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">torch.ao.quantization</span> <span class="kn">import</span> <span class="n">fuse_modules_qat</span><span class="p">,</span> <span class="n">fuse_modules</span>
+
+
+<span class="k">def</span> <span class="nf">_fuse_modules</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">:</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">,</span> 
+    <span class="n">modules_to_fuse</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> 
+    <span class="n">is_qat</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> 
+    <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span>
+<span class="p">):</span>
+    <span class="k">if</span> <span class="n">is_qat</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">is_qat</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">training</span>
+    <span class="n">method</span> <span class="o">=</span> <span class="n">fuse_modules_qat</span> <span class="k">if</span> <span class="n">is_qat</span> <span class="k">else</span>  <span class="n">fuse_modules</span>
+    <span class="k">return</span> <span class="n">method</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">modules_to_fuse</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</pre></div>
+</div>
 <p><a class="reference external" href="https://xinetzone.github.io/pytorch-book/api/pytorch/nn/generated/torch.nn.quantized.FloatFunctional.html#torch.nn.quantized.FloatFunctional" title="(在 Pytorch Book)"><code class="xref py py-class docutils literal notranslate"><span class="pre">FloatFunctional</span></code></a> 算子比普通的 <code class="docutils literal notranslate"><span class="pre">torch.</span></code> 的运算多了一个后处理，比如：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">FloatFunctional</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -660,7 +676,7 @@
     
     <div class="footer-item">
       <p class="last-updated">
-最后更新于 2022-03-22, 11:43:38.<br>
+最后更新于 2022-03-22, 12:05:05.<br>
 </p>
     </div>
     
