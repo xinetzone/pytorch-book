@@ -553,8 +553,15 @@
 <p>通过几个显著的修改来启用量化的 <strong>算子融合</strong>。</p>
 <ol class="simple">
 <li><p>用 <a class="reference external" href="https://xinetzone.github.io/pytorch-book/api/pytorch/nn/generated/torch.nn.quantized.FloatFunctional.html#torch.nn.quantized.FloatFunctional" title="(在 Pytorch Book)"><code class="xref py py-class docutils literal notranslate"><span class="pre">FloatFunctional</span></code></a> 替换加法</p></li>
-<li><p>使用 <code class="xref py py-func docutils literal notranslate"><span class="pre">torch.ao.quantization.fuse_modules()</span></code> 融合 <code class="docutils literal notranslate"><span class="pre">(Conv,</span> <span class="pre">BN,</span> <span class="pre">ReLU)</span></code>、 <code class="docutils literal notranslate"><span class="pre">(Conv,</span> <span class="pre">BN)</span></code> 和 <code class="docutils literal notranslate"><span class="pre">(Conv,</span> <span class="pre">ReLU)</span></code>。</p></li>
+<li><p>使用 <code class="xref py py-func docutils literal notranslate"><span class="pre">fuse_modules()</span></code> 融合如下模块序列：</p></li>
 </ol>
+<ul class="simple">
+<li><p>conv, bn</p></li>
+<li><p>conv, bn, relu</p></li>
+<li><p>conv, relu</p></li>
+<li><p>linear, bn</p></li>
+<li><p>linear, relu</p></li>
+</ul>
 <div class="admonition note">
 <p class="admonition-title">备注</p>
 <p><a class="reference external" href="https://xinetzone.github.io/pytorch-book/api/pytorch/nn/generated/torch.nn.quantized.FloatFunctional.html#torch.nn.quantized.FloatFunctional" title="(在 Pytorch Book)"><code class="xref py py-class docutils literal notranslate"><span class="pre">FloatFunctional</span></code></a> 算子比普通的 <code class="docutils literal notranslate"><span class="pre">torch.</span></code> 的运算多了一个后处理，比如：</p>
@@ -605,7 +612,26 @@
 </div>
 </div>
 </div>
-<p><code class="xref py py-meth docutils literal notranslate"><span class="pre">torch.nn.quantized.FloatFunctional.add()</span></code></p>
+<p>这里 <code class="xref py py-func docutils literal notranslate"><span class="pre">_fuse_modules()</span></code> 的定义如下，即把 QAT 封入其中：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">torch.ao.quantization</span> <span class="kn">import</span> <span class="n">fuse_modules_qat</span><span class="p">,</span> <span class="n">fuse_modules</span>
+
+
+<span class="k">def</span> <span class="nf">_fuse_modules</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">:</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">,</span>
+    <span class="n">modules_to_fuse</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span>
+    <span class="n">is_qat</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span>
+<span class="p">):</span>
+    <span class="k">if</span> <span class="n">is_qat</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">is_qat</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">training</span>
+    <span class="n">method</span> <span class="o">=</span> <span class="n">fuse_modules_qat</span> <span class="k">if</span> <span class="n">is_qat</span> <span class="k">else</span> <span class="n">fuse_modules</span>
+    <span class="k">return</span> <span class="n">method</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">modules_to_fuse</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
 </div>
 </div>
 
@@ -649,7 +675,7 @@
     
     <div class="footer-item">
       <p class="last-updated">
-最后更新于 2022-03-22, 09:08:27.<br>
+最后更新于 2022-03-22, 10:48:14.<br>
 </p>
     </div>
     

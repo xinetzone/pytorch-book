@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>torch.ao.quantization.fuse_modules_qat &#8212; Pytorch Book 0.0.1 文档</title>
+    <title>torch.ao.quantization.fuse_modules.fuse_known_modules &#8212; Pytorch Book 0.0.1 文档</title>
     
   <link href="../../../../_static/css/theme.css" rel="stylesheet">
   <link href="../../../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -44,12 +44,12 @@
     <script src="../../../../_static/togglebutton.js"></script>
     <script src="../../../../_static/translations.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <link rel="canonical" href="https://xinetzone.github.io/pytorch-book/pytorch/ao/quantization/generated/torch.ao.quantization.fuse_modules_qat.html" />
+    <link rel="canonical" href="https://xinetzone.github.io/pytorch-book/pytorch/ao/quantization/generated/torch.ao.quantization.fuse_modules.fuse_known_modules.html" />
     <link rel="shortcut icon" href="../../../../_static/favicon.jpg"/>
     <link rel="index" title="索引" href="../../../../genindex.html" />
     <link rel="search" title="搜索" href="../../../../search.html" />
     <link rel="next" title="torchvision" href="../../../torchvision/index.html" />
-    <link rel="prev" title="torch.ao.quantization.fuse_modules" href="torch.ao.quantization.fuse_modules.html" />
+    <link rel="prev" title="torch.ao.quantization.fuse_modules.fuse_modules_qat" href="torch.ao.quantization.fuse_modules.fuse_modules_qat.html" />
     <link rel="stylesheet" href="../../../../_static/css/default.css"/>
     <link rel="stylesheet" href="../../../../_static/css/custom.css"/>
 
@@ -408,13 +408,18 @@
       </label>
       <ul class="current">
        <li class="toctree-l4">
-        <a class="reference internal" href="torch.ao.quantization.fuse_modules.html">
-         torch.ao.quantization.fuse_modules
+        <a class="reference internal" href="torch.ao.quantization.fuse_modules.fuse_modules.html">
+         torch.ao.quantization.fuse_modules.fuse_modules
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="torch.ao.quantization.fuse_modules.fuse_modules_qat.html">
+         torch.ao.quantization.fuse_modules.fuse_modules_qat
         </a>
        </li>
        <li class="toctree-l4 current active">
         <a class="current reference internal" href="#">
-         torch.ao.quantization.fuse_modules_qat
+         torch.ao.quantization.fuse_modules.fuse_known_modules
         </a>
        </li>
       </ul>
@@ -481,7 +486,7 @@
                 
 
 <div class="tocsection editthispage">
-    <a href="https://github.com/xinetzone/pytorch-book/edit/main/docs/pytorch/ao/quantization/generated/torch.ao.quantization.fuse_modules_qat.rst">
+    <a href="https://github.com/xinetzone/pytorch-book/edit/main/docs/pytorch/ao/quantization/generated/torch.ao.quantization.fuse_modules.fuse_known_modules.rst">
         <i class="fas fa-pencil-alt"></i> Edit this page
     </a>
 </div>
@@ -500,12 +505,23 @@
               
               <div>
                 
-  <div class="section" id="torch-ao-quantization-fuse-modules-qat">
-<h1>torch.ao.quantization.fuse_modules_qat<a class="headerlink" href="#torch-ao-quantization-fuse-modules-qat" title="永久链接至标题">¶</a></h1>
+  <div class="section" id="torch-ao-quantization-fuse-modules-fuse-known-modules">
+<h1>torch.ao.quantization.fuse_modules.fuse_known_modules<a class="headerlink" href="#torch-ao-quantization-fuse-modules-fuse-known-modules" title="永久链接至标题">¶</a></h1>
 <dl class="py function">
-<dt class="sig sig-object py" id="torch.ao.quantization.fuse_modules_qat">
-<span class="sig-prename descclassname"><span class="pre">torch.ao.quantization.</span></span><span class="sig-name descname"><span class="pre">fuse_modules_qat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modules_to_fuse</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inplace=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fuser_func=&lt;function</span> <span class="pre">fuse_known_modules&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fuse_custom_config_dict=None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/torch/ao/quantization/fuse_modules.html#fuse_modules_qat"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#torch.ao.quantization.fuse_modules_qat" title="永久链接至目标">¶</a></dt>
-<dd><p>QAT version for <cite>fuse_modules</cite></p>
+<dt class="sig sig-object py" id="torch.ao.quantization.fuse_modules.fuse_known_modules">
+<span class="sig-prename descclassname"><span class="pre">torch.ao.quantization.fuse_modules.</span></span><span class="sig-name descname"><span class="pre">fuse_known_modules</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mod_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_qat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">additional_fuser_method_mapping</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/torch/ao/quantization/fuse_modules.html#fuse_known_modules"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#torch.ao.quantization.fuse_modules.fuse_known_modules" title="永久链接至目标">¶</a></dt>
+<dd><dl class="simple">
+<dt>Returns a list of modules that fuses the operations specified</dt><dd><p>in the input module list.</p>
+</dd>
+</dl>
+<p>Fuses only the following sequence of modules:
+conv, bn
+conv, bn, relu
+conv, relu
+linear, bn
+linear, relu
+For these sequences, the first element in the output module list performs
+the fused operation. The rest of the elements are set to nn.Identity()</p>
 </dd></dl>
 
 </div>
@@ -516,11 +532,11 @@
               
               <!-- Previous / next buttons -->
 <div class='prev-next-area'> 
-    <a class='left-prev' id="prev-link" href="torch.ao.quantization.fuse_modules.html" title="上一页 页">
+    <a class='left-prev' id="prev-link" href="torch.ao.quantization.fuse_modules.fuse_modules_qat.html" title="上一页 页">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">上一页</p>
-            <p class="prev-next-title">torch.ao.quantization.fuse_modules</p>
+            <p class="prev-next-title">torch.ao.quantization.fuse_modules.fuse_modules_qat</p>
         </div>
     </a>
     <a class='right-next' id="next-link" href="../../../torchvision/index.html" title="下一页 页">
@@ -550,7 +566,7 @@
     
     <div class="footer-item">
       <p class="last-updated">
-最后更新于 2022-03-22, 09:08:12.<br>
+最后更新于 2022-03-22, 10:48:01.<br>
 </p>
     </div>
     
