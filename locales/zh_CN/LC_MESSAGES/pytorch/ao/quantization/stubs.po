@@ -1,0 +1,55 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2022, xinetzone
+# This file is distributed under the same license as the Pytorch Book
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Pytorch Book \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-22 16:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../../api/pytorch/ao/quantization/stubs.rst:2
+msgid "torch.ao.quantization.stubs"
+msgstr ""
+
+#: ../../../api/pytorch/ao/quantization/stubs.rst:13:<autosummary>:1
+msgid ":py:obj:`QuantStub <torch.ao.quantization.stubs.QuantStub>`"
+msgstr ""
+
+#: ../../../api/pytorch/ao/quantization/stubs.rst:13:<autosummary>:1
+msgid ""
+"Quantize stub module, before calibration, this is same as an observer, it"
+" will be swapped as `nnq.Quantize` in `convert`."
+msgstr ""
+
+#: ../../../api/pytorch/ao/quantization/stubs.rst:13:<autosummary>:1
+msgid ":py:obj:`DeQuantStub <torch.ao.quantization.stubs.DeQuantStub>`"
+msgstr ""
+
+#: ../../../api/pytorch/ao/quantization/stubs.rst:13:<autosummary>:1
+msgid ""
+"Dequantize stub module, before calibration, this is same as identity, "
+"this will be swapped as `nnq.DeQuantize` in `convert`."
+msgstr ""
+
+#: ../../../api/pytorch/ao/quantization/stubs.rst:13:<autosummary>:1
+msgid ":py:obj:`QuantWrapper <torch.ao.quantization.stubs.QuantWrapper>`"
+msgstr ""
+
+#: ../../../api/pytorch/ao/quantization/stubs.rst:13:<autosummary>:1
+msgid ""
+"A wrapper class that wraps the input module, adds QuantStub and "
+"DeQuantStub and surround the call to module with call to quant and "
+"dequant modules."
+msgstr ""
+

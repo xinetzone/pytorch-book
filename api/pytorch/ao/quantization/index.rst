@@ -8,3 +8,4 @@ torch.ao.quantization
     qconfig
     quantize
     stubs
+    fuse_modules
