@@ -508,10 +508,6 @@
 </div>
 </div>
 </div>
-<ul class="simple">
-<li><p>在网络的开头和结尾分别插入 <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.ao.quantization.QuantStub</span></code> 和 <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.ao.quantization.DeQuantStub</span></code></p></li>
-<li><p>将 <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.nn.ReLU6.html#torch.nn.ReLU6" title="(在 PyTorch v1.11.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.ReLU6</span></code></a> 替换为 <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.nn.ReLU.html#torch.nn.ReLU" title="(在 PyTorch v1.11.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.ReLU</span></code></a></p></li>
-</ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
@@ -521,17 +517,7 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">torch.ao.quantization</span> <span class="kn">import</span> <span class="n">fuse_known_modules</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ImportError</span><span class="g g-Whitespace">                               </span>Traceback (most recent call last)
-<span class="nn">/media/pc/data/4tb/xinet/web/pytorch-book/docs/quantization/study/draft.ipynb Cell 5&#39;</span> in <span class="ni">&lt;cell line: 1&gt;</span><span class="nt">()</span>
-<span class="o">----&gt;</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;vscode-notebook-cell://ssh-remote%2B10.16.11.3/media/pc/data/4tb/xinet/web/pytorch-book/docs/quantization/study/draft.ipynb#ch0000013vscode-remote?line=0&#39;</span><span class="o">&gt;</span><span class="mi">1</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span> <span class="kn">from</span> <span class="nn">torch.ao.quantization</span> <span class="kn">import</span> <span class="n">fuse_known_modules</span>
-
-<span class="ne">ImportError</span>: cannot import name &#39;fuse_known_modules&#39; from &#39;torch.ao.quantization&#39; (/home/pc/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/ao/quantization/__init__.py)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">torch.ao.quantization</span> <span class="kn">import</span> <span class="n">QuantStub</span>
 </pre></div>
 </div>
 </div>
@@ -618,7 +604,7 @@
     
     <div class="footer-item">
       <p class="last-updated">
-最后更新于 2022-03-22, 10:48:14.<br>
+最后更新于 2022-03-22, 11:07:22.<br>
 </p>
     </div>
     

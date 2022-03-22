@@ -550,11 +550,10 @@
 </div>
 </div>
 </div>
-<p>通过几个显著的修改来启用量化的 <strong>算子融合</strong>。</p>
+<p>将模型转换为 <strong>可量化模型</strong> 的流程如下：</p>
 <ol class="simple">
 <li><p>用 <a class="reference external" href="https://xinetzone.github.io/pytorch-book/api/pytorch/nn/generated/torch.nn.quantized.FloatFunctional.html#torch.nn.quantized.FloatFunctional" title="(在 Pytorch Book)"><code class="xref py py-class docutils literal notranslate"><span class="pre">FloatFunctional</span></code></a> 替换加法</p></li>
-<li><p>使用 <code class="xref py py-func docutils literal notranslate"><span class="pre">fuse_modules()</span></code> 融合如下模块序列：</p></li>
-</ol>
+<li><p>使用 <a class="reference external" href="https://xinetzone.github.io/pytorch-book/api/pytorch/ao/quantization/generated/torch.ao.quantization.fuse_modules.html#torch.ao.quantization.fuse_modules" title="(在 Pytorch Book)"><code class="xref py py-func docutils literal notranslate"><span class="pre">fuse_modules()</span></code></a> 融合如下模块序列：</p>
 <ul class="simple">
 <li><p>conv, bn</p></li>
 <li><p>conv, bn, relu</p></li>
@@ -562,6 +561,10 @@
 <li><p>linear, bn</p></li>
 <li><p>linear, relu</p></li>
 </ul>
+</li>
+<li><p>在网络的开头和结尾分别插入 <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.ao.quantization.QuantStub</span></code> 和 <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.ao.quantization.DeQuantStub</span></code></p></li>
+<li><p>将 <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.nn.ReLU6.html#torch.nn.ReLU6" title="(在 PyTorch v1.11.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.ReLU6</span></code></a> 替换为 <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.nn.ReLU.html#torch.nn.ReLU" title="(在 PyTorch v1.11.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.ReLU</span></code></a></p></li>
+</ol>
 <div class="admonition note">
 <p class="admonition-title">备注</p>
 <p><a class="reference external" href="https://xinetzone.github.io/pytorch-book/api/pytorch/nn/generated/torch.nn.quantized.FloatFunctional.html#torch.nn.quantized.FloatFunctional" title="(在 Pytorch Book)"><code class="xref py py-class docutils literal notranslate"><span class="pre">FloatFunctional</span></code></a> 算子比普通的 <code class="docutils literal notranslate"><span class="pre">torch.</span></code> 的运算多了一个后处理，比如：</p>
@@ -675,7 +678,7 @@
     
     <div class="footer-item">
       <p class="last-updated">
-最后更新于 2022-03-22, 10:48:14.<br>
+最后更新于 2022-03-22, 11:07:22.<br>
 </p>
     </div>
     
