@@ -1,0 +1,6 @@
+﻿torchvision.models.quantization.utils.quantize\_model
+=====================================================
+
+.. currentmodule:: torchvision.models.quantization.utils
+
+.. autofunction:: quantize_model

@@ -1,0 +1,6 @@
+﻿torchvision.models.quantization.utils.\_replace\_relu
+=====================================================
+
+.. currentmodule:: torchvision.models.quantization.utils
+
+.. autofunction:: _replace_relu

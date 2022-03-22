@@ -1,0 +1,6 @@
+﻿torchvision.models.quantization.utils.\_fuse\_modules
+=====================================================
+
+.. currentmodule:: torchvision.models.quantization.utils
+
+.. autofunction:: _fuse_modules

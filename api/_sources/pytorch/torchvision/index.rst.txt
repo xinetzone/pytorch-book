@@ -5,3 +5,4 @@ torchvision
     :maxdepth: 2
 
     models
+    utils
