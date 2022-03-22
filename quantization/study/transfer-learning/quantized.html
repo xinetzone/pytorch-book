@@ -48,7 +48,7 @@
     <link rel="shortcut icon" href="../../../_static/favicon.jpg"/>
     <link rel="index" title="索引" href="../../../genindex.html" />
     <link rel="search" title="搜索" href="../../../search.html" />
-    <link rel="next" title="测试" href="cifar.html" />
+    <link rel="next" title="自定义" href="custom.html" />
     <link rel="prev" title="计算机视觉分类" href="basic.html" />
     <link rel="stylesheet" href="../../../_static/css/default.css"/>
     <link rel="stylesheet" href="../../../_static/css/custom.css"/>
@@ -160,8 +160,18 @@
   <div class="bd-toc-item active">
     <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
+  <a class="reference internal" href="../../support.html">
+   量化支持
+  </a>
+ </li>
+ <li class="toctree-l1">
   <a class="reference internal" href="../../recipes.html">
    量化菜谱
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../QuantizedTensor.html">
+   量化张量
   </a>
  </li>
  <li class="toctree-l1 has-children">
@@ -222,6 +232,11 @@
       </a>
      </li>
      <li class="toctree-l3">
+      <a class="reference internal" href="custom.html">
+       自定义
+      </a>
+     </li>
+     <li class="toctree-l3">
       <a class="reference internal" href="cifar.html">
        测试
       </a>
@@ -234,13 +249,23 @@
     </ul>
    </li>
    <li class="toctree-l2">
+    <a class="reference internal" href="../custom.html">
+     自定义量化
+    </a>
+   </li>
+   <li class="toctree-l2">
     <a class="reference internal" href="../qat-resnet18.html">
      QAT（resnet18）
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../qat-mini.html">
-     静态量化（cifar10）
+    <a class="reference internal" href="../test.html">
+     测试 QAT
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../draft.html">
+     回收站
     </a>
    </li>
   </ul>
@@ -492,6 +517,7 @@
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
 <span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">torchvision.models.quantization</span> <span class="kn">import</span> <span class="n">resnet18</span>
 
 <span class="kn">from</span> <span class="nn">mod</span> <span class="kn">import</span> <span class="n">load_mod</span>
 
@@ -519,13 +545,10 @@
 <p>加载预训练模型：在这个练习中，使用 <a class="reference external" href="https://pytorch.org/hub/pytorch_vision_resnet/">ResNet-18</a>。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torchvision.models.quantization</span> <span class="k">as</span> <span class="nn">models</span>
-
-<span class="c1"># 我们需要 `fc` 中过滤器的数量，以便将来使用。</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 我们需要 `fc` 中过滤器的数量，以便将来使用。</span>
 <span class="c1"># 这里每个输出样本的大小设置为 2。</span>
 <span class="c1"># 或者，它可以推广到 nn.Linear(num_ftrs, len(class_names))。</span>
-<span class="n">model_fe</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">resnet18</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">quantize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">num_ftrs</span> <span class="o">=</span> <span class="n">model_fe</span><span class="o">.</span><span class="n">fc</span><span class="o">.</span><span class="n">in_features</span>
+<span class="n">model_fe</span> <span class="o">=</span> <span class="n">resnet18</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">quantize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -548,6 +571,7 @@
 
 
 <span class="k">def</span> <span class="nf">create_combined_model</span><span class="p">(</span><span class="n">model_fe</span><span class="p">):</span>
+    <span class="n">num_ftrs</span> <span class="o">=</span> <span class="n">model_fe</span><span class="o">.</span><span class="n">fc</span><span class="o">.</span><span class="n">in_features</span>
     <span class="c1"># 步骤1：分离特征提取器</span>
     <span class="n">model_fe_features</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
         <span class="n">model_fe</span><span class="o">.</span><span class="n">quant</span><span class="p">,</span>  <span class="c1"># 量化 input</span>
@@ -590,14 +614,6 @@
 <span class="n">new_model</span> <span class="o">=</span> <span class="n">create_combined_model</span><span class="p">(</span><span class="n">model_fe</span><span class="p">)</span>
 
 <span class="n">device</span> <span class="o">=</span> <span class="s1">&#39;cpu&#39;</span>
-<span class="n">criterion</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">CrossEntropyLoss</span><span class="p">()</span>
-
-<span class="c1"># 注意，我们只训练头部</span>
-<span class="n">optimizer_ft</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">new_model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">momentum</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
-
-<span class="c1"># Decay LR by a factor of 0.1 every 7 epochs</span>
-<span class="n">exp_lr_scheduler</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">lr_scheduler</span><span class="o">.</span><span class="n">StepLR</span><span class="p">(</span><span class="n">optimizer_ft</span><span class="p">,</span> <span class="n">step_size</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
-
 <span class="n">train_iter</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">dataloaders</span><span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">]</span>
 <span class="n">test_iter</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">dataloaders</span><span class="p">[</span><span class="s1">&#39;val&#39;</span><span class="p">]</span>
 </pre></div>
@@ -617,20 +633,11 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>loss 0.171, train acc 0.939, test acc 0.922
-167.2 examples/sec on cpu
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>loss 0.132, train acc 0.951, test acc 0.967
+164.5 examples/sec on cpu
 </pre></div>
 </div>
 <img alt="../../../_images/quantized_10_1.svg" src="../../../_images/quantized_10_1.svg" /></div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># new_model = train_model(new_model, loader,</span>
-<span class="c1">#                         criterion, optimizer_ft, exp_lr_scheduler,</span>
-<span class="c1">#                         num_epochs=25, device=device)</span>
-</pre></div>
-</div>
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -645,7 +652,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../../_images/quantized_12_0.svg" src="../../../_images/quantized_12_0.svg" /></div>
+<img alt="../../../_images/quantized_11_0.svg" src="../../../_images/quantized_11_0.svg" /></div>
 </div>
 </div>
 <div class="section" id="id4">
@@ -668,25 +675,17 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
-<span class="c1"># 注意 `quantize=False`</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">resnet18</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">quantize</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="n">num_ftrs</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fc</span><span class="o">.</span><span class="n">in_features</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 注意 `quantize=False`</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">resnet18</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">quantize</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
 <span class="c1"># Step 1</span>
 <span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
 <span class="n">model</span><span class="o">.</span><span class="n">fuse_model</span><span class="p">()</span>
 <span class="c1"># Step 2</span>
 <span class="n">model_ft</span> <span class="o">=</span> <span class="n">create_combined_model</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
-<span class="n">model_ft</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">qconfig</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">quantization</span><span class="o">.</span><span class="n">default_qat_qconfig</span>  <span class="c1"># Use default QAT configuration</span>
+<span class="n">model_ft</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">qconfig</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">quantization</span><span class="o">.</span><span class="n">default_qat_qconfig</span>  <span class="c1"># 使用默认 QAT 配置</span>
 <span class="c1"># Step 3</span>
 <span class="n">model_ft</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">quantization</span><span class="o">.</span><span class="n">prepare_qat</span><span class="p">(</span><span class="n">model_ft</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/pc/xinet/anaconda3/envs/ai/lib/python3.9/site-packages/torch/ao/quantization/observer.py:172: UserWarning: Please use quant_min and quant_max to specify the range for observers.                     reduce_range will be deprecated in a future release of PyTorch.
-  warnings.warn(
 </pre></div>
 </div>
 </div>
@@ -698,10 +697,8 @@
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">model_ft</span><span class="o">.</span><span class="n">parameters</span><span class="p">():</span>
   <span class="n">param</span><span class="o">.</span><span class="n">requires_grad</span> <span class="o">=</span> <span class="kc">True</span>
 
-<span class="c1"># We can fine-tune on GPU if available</span>
+<span class="c1"># 如果可用的话，我们可以对 GPU 进行微调</span>
 <span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda:0&quot;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
-
-<span class="c1"># criterion = nn.CrossEntropyLoss()</span>
 </pre></div>
 </div>
 </div>
@@ -717,11 +714,11 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>loss 0.338, train acc 0.857, test acc 0.928
-60.0 examples/sec on cuda:0
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>loss 0.417, train acc 0.832, test acc 0.928
+60.5 examples/sec on cuda:0
 </pre></div>
 </div>
-<img alt="../../../_images/quantized_17_1.svg" src="../../../_images/quantized_17_1.svg" /></div>
+<img alt="../../../_images/quantized_16_1.svg" src="../../../_images/quantized_16_1.svg" /></div>
 </div>
 <p class="rubric">Step 5. 转换已量化的模型</p>
 <div class="cell docutils container">
@@ -753,7 +750,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../../_images/quantized_21_0.svg" src="../../../_images/quantized_21_0.svg" /></div>
+<img alt="../../../_images/quantized_20_0.svg" src="../../../_images/quantized_20_0.svg" /></div>
 </div>
 </div>
 </div>
@@ -771,10 +768,10 @@
             <p class="prev-next-title">计算机视觉分类</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="cifar.html" title="下一页 页">
+    <a class='right-next' id="next-link" href="custom.html" title="下一页 页">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">下一页</p>
-        <p class="prev-next-title">测试</p>
+        <p class="prev-next-title">自定义</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
@@ -798,7 +795,7 @@
     
     <div class="footer-item">
       <p class="last-updated">
-最后更新于 2022-03-18, 12:46:41.<br>
+最后更新于 2022-03-22, 08:06:20.<br>
 </p>
     </div>
     

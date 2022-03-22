@@ -1,0 +1,6 @@
+﻿torch.nn.quantized.QFunctional
+==============================
+
+.. currentmodule:: torch.nn.quantized
+
+.. autoclass:: QFunctional

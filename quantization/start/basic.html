@@ -162,8 +162,18 @@
   <div class="bd-toc-item active">
     <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
+  <a class="reference internal" href="../support.html">
+   量化支持
+  </a>
+ </li>
+ <li class="toctree-l1">
   <a class="reference internal" href="../recipes.html">
    量化菜谱
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../QuantizedTensor.html">
+   量化张量
   </a>
  </li>
  <li class="toctree-l1 current active has-children">
@@ -224,6 +234,11 @@
       </a>
      </li>
      <li class="toctree-l3">
+      <a class="reference internal" href="../study/transfer-learning/custom.html">
+       自定义
+      </a>
+     </li>
+     <li class="toctree-l3">
       <a class="reference internal" href="../study/transfer-learning/cifar.html">
        测试
       </a>
@@ -236,13 +251,23 @@
     </ul>
    </li>
    <li class="toctree-l2">
+    <a class="reference internal" href="../study/custom.html">
+     自定义量化
+    </a>
+   </li>
+   <li class="toctree-l2">
     <a class="reference internal" href="../study/qat-resnet18.html">
      QAT（resnet18）
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../study/qat-mini.html">
-     静态量化（cifar10）
+    <a class="reference internal" href="../study/test.html">
+     测试 QAT
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../study/draft.html">
+     回收站
     </a>
    </li>
   </ul>
@@ -495,6 +520,11 @@
        急切的模式
       </a>
      </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#fx-graph">
+       FX GRAPH 模式
+      </a>
+     </li>
     </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
@@ -583,12 +613,12 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[tensor([[-0.6123,  0.1598],
-         [ 0.4631, -0.1487],
-         [-0.1753,  1.1975]]),
- tensor([[-2.1246,  1.5558],
-         [-0.8172,  0.5080],
-         [ 0.3117, -0.8401]])]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[tensor([[-0.4145,  0.4905],
+         [ 1.9405, -1.1051],
+         [ 2.1657, -1.1413]]),
+ tensor([[-1.2207,  0.1083],
+         [-0.7169,  2.2443],
+         [-0.3198, -0.2961]])]
 </pre></div>
 </div>
 </div>
@@ -614,9 +644,9 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>MinMaxObserver (tensor([0.0144]), tensor([147], dtype=torch.int32))
-MovingAverageMinMaxObserver (tensor([0.0072]), tensor([88], dtype=torch.int32))
-HistogramObserver (tensor([0.0089]), tensor([79], dtype=torch.int32))
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>MinMaxObserver (tensor([0.0136]), tensor([90], dtype=torch.int32))
+MovingAverageMinMaxObserver (tensor([0.0130]), tensor([88], dtype=torch.int32))
+HistogramObserver (tensor([0.0124]), tensor([72], dtype=torch.int32))
 </pre></div>
 </div>
 </div>
@@ -627,9 +657,7 @@ HistogramObserver (tensor([0.0089]), tensor([79], dtype=torch.int32))
 <p>仿射（affine）或非对称量化（asymmetric quantization）方案分配输入范围的最小和最大观测值。仿射方案通常提供更小的剪切范围，并且对于量化非负激活非常有用（如果你的输入张量永远都不是负的，你就不需要输入范围包含负值）。计算范围为 <span class="math notranslate nohighlight">\(\alpha=\min(r), \beta = \max(r)\)</span>。当用于权值张量 <span id="id8">[<a class="reference internal" href="../../refs.html#id5" title="Hao Wu, Patrick Judd, Xiaojie Zhang, Mikhail Isaev, and Paulius Micikevicius. Integer quantization for deep learning inference: principles and empirical evaluation. 2020. arXiv:2004.09602.">Wu, Judd, Zhang, Isaev, and Micikevicius, 2020</a>]</span> 时，仿射量化会导致更昂贵的计算推理。</p>
 <p>对称量化（Symmetric quantization）方案将输入范围集中在 <span class="math notranslate nohighlight">\(0\)</span> 附近，消除了计算零点偏置的需要。计算范围为 <span class="math notranslate nohighlight">\(-\alpha=\beta=\max(|\max(r)|,|\min(r)|)\)</span>。</p>
 <p>对于倾斜的信号（如非负激活），这可能会导致糟糕的量化分辨率（quantization resolution），因为剪辑范围包括从未在输入中出现的值（参见下面的 pyplot）。</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 
@@ -670,11 +698,6 @@ HistogramObserver (tensor([0.0089]), tensor([79], dtype=torch.int32))
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../../_images/basic_7_0.png" src="../../_images/basic_7_0.png" />
-</div>
-</div>
 <p>在 PyTorch 中，你可以在初始化 <code class="docutils literal notranslate"><span class="pre">Observer</span></code> 时指定仿射或对称模式。注意，并非所有 <code class="docutils literal notranslate"><span class="pre">observer</span></code> 都支持这两种方案。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -687,8 +710,8 @@ HistogramObserver (tensor([0.0089]), tensor([79], dtype=torch.int32))
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Qscheme: torch.per_tensor_affine | (tensor([0.0072]), tensor([88], dtype=torch.int32))
-Qscheme: torch.per_tensor_symmetric | (tensor([0.0094]), tensor([128]))
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Qscheme: torch.per_tensor_affine | (tensor([0.0130]), tensor([88], dtype=torch.int32))
+Qscheme: torch.per_tensor_symmetric | (tensor([0.0170]), tensor([128]))
 </pre></div>
 </div>
 </div>
@@ -711,7 +734,22 @@ Qscheme: torch.per_tensor_symmetric | (tensor([0.0094]), tensor([128]))
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(tensor([0.0031, 0.0024, 0.0054]), tensor([200,  64,  34], dtype=torch.int32))
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(tensor([0.0036, 0.0119, 0.0128]), tensor([119,  92,  88], dtype=torch.int32))
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">obs</span> <span class="o">=</span> <span class="n">MovingAveragePerChannelMinMaxObserver</span><span class="p">(</span><span class="n">ch_axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">inputs</span><span class="p">:</span>
+    <span class="n">obs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">obs</span><span class="o">.</span><span class="n">calculate_qparams</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(tensor([0.0101, 0.0064]), tensor([ 42, 176], dtype=torch.int32))
 </pre></div>
 </div>
 </div>
@@ -744,13 +782,7 @@ Qscheme: torch.per_tensor_symmetric | (tensor([0.0094]), tensor([128]))
         <span class="n">qscheme</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">per_tensor_affine</span><span class="p">),</span>
     <span class="n">weight</span><span class="o">=</span><span class="n">MovingAveragePerChannelMinMaxObserver</span><span class="o">.</span><span class="n">with_args</span><span class="p">(</span><span class="n">qscheme</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">qint8</span><span class="p">)</span>
 <span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">my_qconfig</span>
+<span class="n">my_qconfig</span>
 </pre></div>
 </div>
 </div>
@@ -786,16 +818,12 @@ Qscheme: torch.per_tensor_symmetric | (tensor([0.0094]), tensor([128]))
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">nn</span>
 
 <span class="c1"># 小 model</span>
-
-
 <span class="k">def</span> <span class="nf">create_model</span><span class="p">():</span>
     <span class="n">m</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
         <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="p">(</span><span class="mi">8</span><span class="p">,)),</span>
         <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
         <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
         <span class="n">nn</span><span class="o">.</span><span class="n">LSTM</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
-
-    <span class="n">m</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">m</span>
 </pre></div>
 </div>
@@ -807,9 +835,21 @@ Qscheme: torch.per_tensor_symmetric | (tensor([0.0094]), tensor([128]))
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">torch.ao.quantization.quantize</span> <span class="kn">import</span> <span class="n">quantize_dynamic</span>
 
 <span class="n">m</span> <span class="o">=</span> <span class="n">create_model</span><span class="p">()</span>
+<span class="n">m</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
 <span class="n">model_quantized</span> <span class="o">=</span> <span class="n">quantize_dynamic</span><span class="p">(</span>
     <span class="n">model</span><span class="o">=</span><span class="n">m</span><span class="p">,</span> <span class="n">qconfig_spec</span><span class="o">=</span><span class="p">{</span><span class="n">nn</span><span class="o">.</span><span class="n">LSTM</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">},</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">qint8</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span>
 <span class="p">)</span>
+<span class="n">model_quantized</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sequential(
+  (0): Conv2d(2, 64, kernel_size=(8,), stride=(1, 1))
+  (1): ReLU()
+  (2): DynamicQuantizedLinear(in_features=16, out_features=10, dtype=torch.qint8, qscheme=torch.per_tensor_affine)
+  (3): DynamicQuantizedLSTM(10, 10)
+)
 </pre></div>
 </div>
 </div>
@@ -821,6 +861,7 @@ Qscheme: torch.per_tensor_symmetric | (tensor([0.0094]), tensor([128]))
 <span class="kn">from</span> <span class="nn">torch.ao.quantization.qconfig</span> <span class="kn">import</span> <span class="n">default_dynamic_qconfig</span>
 
 <span class="n">m</span> <span class="o">=</span> <span class="n">create_model</span><span class="p">()</span>
+<span class="n">m</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
 <span class="c1"># 空键表示应用于所有模块的默认值</span>
 <span class="n">qconfig_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;&quot;</span><span class="p">:</span> <span class="n">default_dynamic_qconfig</span><span class="p">}</span>
 <span class="n">model_prepared</span> <span class="o">=</span> <span class="n">quantize_fx</span><span class="o">.</span><span class="n">prepare_fx</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">qconfig_dict</span><span class="p">)</span>
@@ -859,7 +900,8 @@ Qscheme: torch.per_tensor_symmetric | (tensor([0.0094]), tensor([128]))
 <span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">nn</span>
 
-<span class="n">backend</span> <span class="o">=</span> <span class="s2">&quot;fbgemm&quot;</span>  <span class="c1"># 运行在x86 CPU 上。如果在ARM上运行，使用 `qnnpack`。</span>
+<span class="c1"># 如果在ARM上运行，使用 `qnnpack`。</span>
+<span class="n">backend</span> <span class="o">=</span> <span class="s2">&quot;fbgemm&quot;</span>  <span class="c1"># 运行在 x86 CPU 上。</span>
 
 
 <span class="k">def</span> <span class="nf">create_model</span><span class="p">():</span>
@@ -910,6 +952,25 @@ Qscheme: torch.per_tensor_symmetric | (tensor([0.0094]), tensor([128]))
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">m</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">quantization</span><span class="o">.</span><span class="n">QuantStub</span><span class="p">(),</span>
                   <span class="o">*</span><span class="n">m</span><span class="p">,</span>
                   <span class="n">torch</span><span class="o">.</span><span class="n">quantization</span><span class="o">.</span><span class="n">DeQuantStub</span><span class="p">())</span>
+<span class="n">m</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sequential(
+  (0): QuantStub()
+  (1): ConvReLU2d(
+    (0): Conv2d(2, 64, kernel_size=(3, 3), stride=(1, 1))
+    (1): ReLU()
+  )
+  (2): Identity()
+  (3): ConvReLU2d(
+    (0): Conv2d(64, 128, kernel_size=(3, 3), stride=(1, 1))
+    (1): ReLU()
+  )
+  (4): Identity()
+  (5): DeQuantStub()
+)
 </pre></div>
 </div>
 </div>
@@ -974,9 +1035,9 @@ Qscheme: torch.per_tensor_symmetric | (tensor([0.0094]), tensor([128]))
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sequential(
   (0): Quantize(scale=tensor([0.0079]), zero_point=tensor([0]), dtype=torch.quint8)
-  (1): QuantizedConvReLU2d(2, 64, kernel_size=(3, 3), stride=(1, 1), scale=0.011255446821451187, zero_point=0)
+  (1): QuantizedConvReLU2d(2, 64, kernel_size=(3, 3), stride=(1, 1), scale=0.0100000761449337, zero_point=0)
   (2): Identity()
-  (3): QuantizedConvReLU2d(64, 128, kernel_size=(3, 3), stride=(1, 1), scale=0.004926858935505152, zero_point=0)
+  (3): QuantizedConvReLU2d(64, 128, kernel_size=(3, 3), stride=(1, 1), scale=0.004895982798188925, zero_point=0)
   (4): Identity()
   (5): DeQuantize()
 )
@@ -998,7 +1059,9 @@ Qscheme: torch.per_tensor_symmetric | (tensor([0.0094]), tensor([128]))
 </div>
 </div>
 </div>
-<p class="rubric">FX GRAPH</p>
+</div>
+<div class="section" id="fx-graph">
+<h4>FX GRAPH 模式<a class="headerlink" href="#fx-graph" title="永久链接至标题">¶</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">torch.ao.quantization.qconfig</span> <span class="kn">import</span> <span class="n">get_default_qconfig</span>
@@ -1006,9 +1069,11 @@ Qscheme: torch.per_tensor_symmetric | (tensor([0.0094]), tensor([128]))
 
 
 <span class="k">def</span> <span class="nf">calibrate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data_loader</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;使用代表性（验证）数据来校准&#39;&#39;&#39;</span>
     <span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+    <span class="c1"># with torch.inference_mode():</span>
     <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
-        <span class="k">for</span> <span class="n">image</span><span class="p">,</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">data_loader</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">image</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">data_loader</span><span class="p">:</span>
             <span class="n">model</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
 
 
@@ -1018,8 +1083,9 @@ Qscheme: torch.per_tensor_symmetric | (tensor([0.0094]), tensor([128]))
     <span class="n">float_model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
 
     <span class="n">prepared_model</span> <span class="o">=</span> <span class="n">quantize_fx</span><span class="o">.</span><span class="n">prepare_fx</span><span class="p">(</span><span class="n">float_model</span><span class="p">,</span> <span class="n">qconfig_dict</span><span class="p">)</span>
-    <span class="c1"># Run calibration</span>
+    <span class="c1"># 运行校准</span>
     <span class="n">calibrate</span><span class="p">(</span><span class="n">prepared_model</span><span class="p">,</span> <span class="n">sample_inference_data</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">prepared_model</span>
 </pre></div>
 </div>
 </div>
@@ -1029,17 +1095,13 @@ Qscheme: torch.per_tensor_symmetric | (tensor([0.0094]), tensor([128]))
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">torch.ao.quantization.qconfig</span> <span class="kn">import</span> <span class="n">get_default_qconfig</span>
 <span class="kn">from</span> <span class="nn">torch.ao.quantization</span> <span class="kn">import</span> <span class="n">quantize_fx</span>
 
-<span class="n">m</span> <span class="o">=</span> <span class="n">create_model</span><span class="p">()</span>
-<span class="n">m</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
-<span class="n">qconfig_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;&quot;</span><span class="p">:</span> <span class="n">get_default_qconfig</span><span class="p">(</span><span class="n">backend</span><span class="p">)}</span>
-<span class="c1"># 准备</span>
-<span class="n">model_prepared</span> <span class="o">=</span> <span class="n">quantize_fx</span><span class="o">.</span><span class="n">prepare_fx</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">qconfig_dict</span><span class="p">)</span>
-<span class="c1"># Calibrate - Use representative (validation) data.</span>
-<span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">inference_mode</span><span class="p">():</span>
+<span class="k">def</span> <span class="nf">data_iter</span><span class="p">():</span>
     <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">)</span>
-        <span class="n">model_prepared</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="c1"># quantize</span>
+        <span class="k">yield</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">),</span> <span class="n">_</span>
+
+<span class="n">m</span> <span class="o">=</span> <span class="n">create_model</span><span class="p">()</span>
+<span class="n">model_prepared</span> <span class="o">=</span> <span class="n">ptq</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">data_iter</span><span class="p">(),</span> <span class="n">backend</span><span class="o">=</span><span class="s1">&#39;fbgemm&#39;</span><span class="p">)</span>
+<span class="c1"># 量化</span>
 <span class="n">model_quantized</span> <span class="o">=</span> <span class="n">quantize_fx</span><span class="o">.</span><span class="n">convert_fx</span><span class="p">(</span><span class="n">model_prepared</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1119,10 +1181,6 @@ Qscheme: torch.per_tensor_symmetric | (tensor([0.0094]), tensor([128]))
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/pc/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/ao/quantization/observer.py:177: UserWarning: Please use quant_min and quant_max to specify the range for observers.                     reduce_range will be deprecated in a future release of PyTorch.
-  warnings.warn(
-</pre></div>
-</div>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sequential(
   (0): QuantStub(
     (activation_post_process): HistogramObserver()
@@ -1175,9 +1233,9 @@ Qscheme: torch.per_tensor_symmetric | (tensor([0.0094]), tensor([128]))
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sequential(
   (0): Quantize(scale=tensor([0.0080]), zero_point=tensor([0]), dtype=torch.quint8)
-  (1): QuantizedConvReLU2d(2, 64, kernel_size=(3, 3), stride=(1, 1), scale=0.01134413294494152, zero_point=0)
+  (1): QuantizedConvReLU2d(2, 64, kernel_size=(3, 3), stride=(1, 1), scale=0.0106028001755476, zero_point=0)
   (2): Identity()
-  (3): QuantizedConvReLU2d(64, 128, kernel_size=(3, 3), stride=(1, 1), scale=0.004085589665919542, zero_point=0)
+  (3): QuantizedConvReLU2d(64, 128, kernel_size=(3, 3), stride=(1, 1), scale=0.004767395555973053, zero_point=0)
   (4): Identity()
   (5): DeQuantize()
 )
@@ -1284,7 +1342,7 @@ Qscheme: torch.per_tensor_symmetric | (tensor([0.0094]), tensor([128]))
     
     <div class="footer-item">
       <p class="last-updated">
-最后更新于 2022-03-18, 12:46:41.<br>
+最后更新于 2022-03-22, 08:06:20.<br>
 </p>
     </div>
     

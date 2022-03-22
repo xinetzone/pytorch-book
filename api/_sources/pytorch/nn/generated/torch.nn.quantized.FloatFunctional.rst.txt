@@ -1,0 +1,6 @@
+﻿torch.nn.quantized.FloatFunctional
+==================================
+
+.. currentmodule:: torch.nn.quantized
+
+.. autoclass:: FloatFunctional

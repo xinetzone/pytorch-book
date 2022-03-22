@@ -1,0 +1,6 @@
+﻿torch.ao.quantization.stubs.DeQuantStub
+=======================================
+
+.. currentmodule:: torch.ao.quantization.stubs
+
+.. autoclass:: DeQuantStub

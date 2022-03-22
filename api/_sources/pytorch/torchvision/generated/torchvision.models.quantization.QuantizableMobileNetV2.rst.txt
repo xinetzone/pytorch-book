@@ -1,0 +1,6 @@
+﻿torchvision.models.quantization.QuantizableMobileNetV2
+======================================================
+
+.. currentmodule:: torchvision.models.quantization
+
+.. autoclass:: QuantizableMobileNetV2

@@ -1,0 +1,6 @@
+﻿torch.ao.quantization.stubs.QuantWrapper
+========================================
+
+.. currentmodule:: torch.ao.quantization.stubs
+
+.. autoclass:: QuantWrapper

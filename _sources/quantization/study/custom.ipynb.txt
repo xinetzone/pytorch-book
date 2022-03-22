@@ -1,0 +1,167 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# 自定义量化\n",
+    "\n",
+    "参考：[静态量化](https://pytorch.org/tutorials/advanced/static_quantization_tutorial.html)\n",
+    "\n",
+    "本教程展示了如何进行训练后的静态量化，并说明了两个更高级的技术——逐通道量化和感知量化的训练——以进一步提高模型的准确性。注意，量化目前 CPU 支持更好，所以在本教程中我们不会使用 GPU/CUDA。在本教程结束时，您将看到 PyTorch 中的量化如何在提高速度的同时显著降低模型大小。此外，您还将看到如何轻松地应用这里所展示的一些高级量化技术，从而使您的量化模型比其他方法获得更少的精度。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# 提供注解的向前兼容\n",
+    "from __future__ import annotations\n",
+    "\n",
+    "# 设置 warnings\n",
+    "import warnings\n",
+    "warnings.filterwarnings(\n",
+    "    action='ignore',\n",
+    "    category=DeprecationWarning,\n",
+    "    module=r'.*'\n",
+    ")\n",
+    "warnings.filterwarnings(\n",
+    "    action='default',\n",
+    "    module=r'torch.quantization'\n",
+    ")\n",
+    "\n",
+    "from mod import load_mod\n",
+    "load_mod()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "本文以 {class}`~torchvision.models.MobileNetV2` 为例，介绍如何将其转换为量化模型 {func}`~torchvision.models.quantization.QuantizableMobileNetV2`。\n",
+    "\n",
+    "## 算子融合\n",
+    "\n",
+    "```{rubric} 载入库\n",
+    "```\n",
+    "\n",
+    "加载一些库："
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "'''参考 torchvision/models/quantization/mobilenetv2.py\n",
+    "'''\n",
+    "from typing import Any\n",
+    "from torch import Tensor\n",
+    "from torch import nn\n",
+    "\n",
+    "from torchvision._internally_replaced_utils import load_state_dict_from_url\n",
+    "from torchvision.ops.misc import ConvNormActivation\n",
+    "from torchvision.models.quantization.utils import _fuse_modules, _replace_relu, quantize_model\n",
+    "\n",
+    "from torch.ao.quantization import QuantStub, DeQuantStub\n",
+    "from torchvision.models.mobilenetv2 import InvertedResidual, MobileNetV2, model_urls\n",
+    "\n",
+    "\n",
+    "__all__ = [\"QuantizableMobileNetV2\", \"mobilenet_v2\"]\n",
+    "\n",
+    "# 用于微调量化模型\n",
+    "quant_model_urls = {\n",
+    "    \"mobilenet_v2_qnnpack\": \"https://download.pytorch.org/models/quantized/mobilenet_v2_qnnpack_37f702c5.pth\"\n",
+    "}"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "通过几个显著的修改来启用量化的 **算子融合**。\n",
+    "\n",
+    "### 用 {class}`torch.nn.quantized.FloatFunctional` 替换加法"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "class QuantizableInvertedResidual(InvertedResidual):\n",
+    "    def __init__(self, *args: Any, **kwargs: Any) -> None:\n",
+    "        super().__init__(*args, **kwargs)\n",
+    "        self.skip_add = nn.quantized.FloatFunctional()\n",
+    "\n",
+    "    def forward(self, x: Tensor) -> Tensor:\n",
+    "        if self.use_res_connect:\n",
+    "            return self.skip_add.add(x, self.conv(x))\n",
+    "        else:\n",
+    "            return self.conv(x)\n",
+    "\n",
+    "    def fuse_model(self, is_qat: bool | None = None) -> None:\n",
+    "        for idx in range(len(self.conv)):\n",
+    "            if type(self.conv[idx]) is nn.Conv2d:\n",
+    "                _fuse_modules(self.conv,\n",
+    "                              [str(idx),\n",
+    "                               str(idx + 1)],\n",
+    "                              is_qat,\n",
+    "                              inplace=True)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "interpreter": {
+   "hash": "78526419bf48930935ba7e23437b2460cb231485716b036ebb8701887a294fa8"
+  },
+  "kernelspec": {
+   "display_name": "Python 3.10.0 ('torchx')",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.10.0"
+  },
+  "orig_nbformat": 4
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}

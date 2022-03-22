@@ -3,6 +3,7 @@
 ```{toctree}
 basic
 quantized
+custom
 cifar
 tvm
 ```

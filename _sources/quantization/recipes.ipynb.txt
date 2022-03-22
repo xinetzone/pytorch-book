@@ -13,42 +13,32 @@
     "量化模型的方法或工作流程大致有三种：后训练动态量化（post training dynamic quantization）、后训练静态量化（post training dynamic quantization）和量化感知训练（quantization aware training）。但是，如果您想要使用的模型已经有量化版本，您可以直接使用它，而不需要经过上面三个工作流中的任何一个。例如，`torchvision` 库已经包括了模型 MobileNet v2、ResNet 18、ResNet 50、Inception v3、GoogleNet 等的量化版本。因此，我们将最后一种方法作为另一个工作流，尽管很简单。\n",
     "\n",
     "```{note}\n",
-    "量化支持可用于[有限的一组运算符](https://pytorch.org/blog/introduction-to-quantization-on-pytorch/#device-and-operator-support)。\n",
+    "量化支持可用于[有限的一组算子](https://pytorch.org/blog/introduction-to-quantization-on-pytorch/#device-and-operator-support)。\n",
     "```\n",
     "\n",
     "PyTorch 支持四种量化工作流。\n",
     "\n",
-    "## 使用预先训练的量化 MobileNet v2\n",
+    "## 使用预先训练的量化网络\n",
     "\n",
-    "要得到 MobileNet v2 量化模型，只需做："
+    "要得到网络的量化模型，只需做："
    ]
   },
   {
    "cell_type": "code",
    "execution_count": 1,
    "metadata": {},
-   "outputs": [
-    {
-     "name": "stderr",
-     "output_type": "stream",
-     "text": [
-      "/home/pc/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/ao/quantization/utils.py:210: UserWarning: must run observer before calling calculate_qparams. Returning default values.\n",
-      "  warnings.warn(\n",
-      "[W TensorImpl.h:1463] Warning: Named tensors and all their associated APIs are an experimental feature and subject to change. Please do not use them for anything important until they are released as stable. (function operator())\n"
-     ]
-    }
-   ],
+   "outputs": [],
    "source": [
-    "from torchvision.models.quantization import mobilenet_v2 as qmobilenet_v2\n",
+    "from torchvision.models.quantization import resnet18 as qresnet18\n",
     "\n",
-    "model_quantized = qmobilenet_v2(pretrained=True, quantize=True)"
+    "model_quantized = qresnet18(pretrained=True, quantize=True)"
    ]
   },
   {
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "为了比较非量化的 MobileNet v2 模型与其量化版本的大小差异："
+    "为了比较非量化的模型与其量化版本的大小差异："
    ]
   },
   {
@@ -57,37 +47,30 @@
    "metadata": {},
    "outputs": [
     {
-     "name": "stderr",
-     "output_type": "stream",
-     "text": [
-      "Downloading: \"https://download.pytorch.org/models/mobilenet_v2-b0353104.pth\" to /home/pc/.cache/torch/hub/checkpoints/mobilenet_v2-b0353104.pth\n",
-      "100.0%\n"
-     ]
-    },
-    {
      "name": "stdout",
      "output_type": "stream",
      "text": [
-      "14.26 MB\n",
-      "3.63 MB\n"
+      "原始模型  46.83 MB\n",
+      "量化模型  11.84 MB\n"
      ]
     }
    ],
    "source": [
-    "from torchvision.models import mobilenet_v2\n",
+    "from torchvision.models import resnet18\n",
     "\n",
-    "model = mobilenet_v2(pretrained=True)\n",
+    "model = resnet18(pretrained=True)\n",
     "\n",
     "import os\n",
     "import torch\n",
     "\n",
-    "def print_model_size(mdl):\n",
+    "def print_model_size(mdl, name=''):\n",
     "    torch.save(mdl.state_dict(), \"tmp.pt\")\n",
-    "    print(\"%.2f MB\" %(os.path.getsize(\"tmp.pt\")/1e6))\n",
+    "    size = os.path.getsize(\"tmp.pt\")/1e6\n",
+    "    print(f'{name} {size: .2f} MB')\n",
     "    os.remove('tmp.pt')\n",
     "\n",
-    "print_model_size(model)\n",
-    "print_model_size(model_quantized)"
+    "print_model_size(model, '原始模型')\n",
+    "print_model_size(model_quantized, '量化模型')"
    ]
   },
   {
@@ -145,6 +128,8 @@
      "name": "stderr",
      "output_type": "stream",
      "text": [
+      "/home/pc/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/ao/quantization/observer.py:177: UserWarning: Please use quant_min and quant_max to specify the range for observers.                     reduce_range will be deprecated in a future release of PyTorch.\n",
+      "  warnings.warn(\n",
       "/home/pc/xinet/anaconda3/envs/torchx/lib/python3.10/site-packages/torch/ao/quantization/observer.py:1124: UserWarning: must run observer before calling calculate_qparams.                                    Returning default scale and zero point \n",
       "  warnings.warn(\n"
      ]
@@ -153,8 +138,9 @@
    "source": [
     "from torch.ao.quantization.quantize import prepare, convert\n",
     "from torch.ao.quantization.qconfig import get_default_qconfig\n",
+    "from torchvision.models.quantization import resnet18 as qresnet18\n",
     "\n",
-    "backend = \"qnnpack\"\n",
+    "backend = \"fbgemm\" # 若为 x86，否则为 'qnnpack' \n",
     "model.qconfig = get_default_qconfig(backend)\n",
     "torch.backends.quantized.engine = backend\n",
     "model_static_quantized = prepare(model, inplace=False)\n",
@@ -177,7 +163,7 @@
      "name": "stdout",
      "output_type": "stream",
      "text": [
-      "4.00 MB\n"
+      "  11.93 MB\n"
      ]
     }
    ],
@@ -195,7 +181,7 @@
     "为了使模型运行在通常有 ARM 架构的移动设备上，你需要使用 `'qnnpack'` 作为后台；要在 x86 架构的计算机上运行模型，请使用 `'fbgemm'`。\n",
     "```\n",
     "\n",
-    "## 量化感知训练\n",
+    "## 量化感知训练（QAT）\n",
     "\n",
     "量化感知训练（Quantization aware training）在模型训练过程中对所有的权值和激活量都插入伪量化，比训练后的量化方法具有更高的推理精度。它通常用于 CNN 的模型中。\n",
     "\n",
@@ -204,7 +190,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 7,
+   "execution_count": 6,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -235,7 +221,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 9,
+   "execution_count": 7,
    "metadata": {},
    "outputs": [
     {
@@ -266,11 +252,6 @@
     "\n",
     "在使用上面的步骤之一生成量化模型之后，在模型可以在移动设备上运行之前，它需要进一步转换为 TorchScript 格式，然后针对移动端应用程序进行优化。请参阅[脚本和优化移动端食谱](https://pytorch.org/tutorials/recipes/script_optimized.html)的详细信息。"
    ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {},
-   "source": []
   }
  ],
  "metadata": {

@@ -1,0 +1,6 @@
+﻿torchvision.models.MobileNetV2
+==============================
+
+.. currentmodule:: torchvision.models
+
+.. autoclass:: MobileNetV2
