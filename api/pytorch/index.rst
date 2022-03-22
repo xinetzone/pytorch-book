@@ -6,3 +6,4 @@ PyTorch API
 
     nn/index
     ao/index
+    torchvision/index

@@ -14,3 +14,4 @@ torch.nn
     :maxdepth: 3
 
     grad
+    quantized

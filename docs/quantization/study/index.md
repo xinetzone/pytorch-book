@@ -5,7 +5,8 @@
 
 intro
 transfer-learning/index
+custom
 qat-resnet18
-qat-mini
 test
+draft
 ```
