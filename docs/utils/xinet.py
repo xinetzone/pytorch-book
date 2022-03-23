@@ -210,7 +210,8 @@ class CV:
         timer, num_batches = Timer(), len(train_iter)
         animator = Animator(xlabel='epoch', xlim=[1, num_epochs], ylim=[0, 1],
                             legend=['train loss', 'train acc', 'test acc'])
-        net = net.to(device) # nn.DataParallel(net, device_ids=devices).to(devices[0])
+        # nn.DataParallel(net, device_ids=devices).to(devices[0])
+        net = net.to(device)
         for epoch in range(num_epochs):
             # Sum of training loss, sum of training accuracy, no. of examples,
             # no. of predictions
@@ -238,14 +239,16 @@ class CV:
                           learning_rate,
                           num_epochs=5,
                           device='cpu',
-                          param_group=True):
+                          param_group=True,
+                          output_layer='classifier'):
         # 如果param_group=True，输出层中的模型参数将使用十倍的学习率
+        # param_name 可能为 'fc' 或者 'classifier'
         loss = nn.CrossEntropyLoss(reduction="none")
         if param_group:
             params_1x = [param for name, param in net.named_parameters()
-                         if name not in ["fc.weight", "fc.bias"]]
+                         if name.split('.')[0] != output_layer]
             trainer = torch.optim.SGD([{'params': params_1x},
-                                       {'params': net.fc.parameters(),
+                                       {'params': getattr(net, output_layer).parameters(),
                                         'lr': learning_rate * 10}],
                                       lr=learning_rate, weight_decay=0.001)
         else:
