@@ -1,9 +1,13 @@
 from __future__ import annotations
 
+from copy import deepcopy
 import numpy as np
 import torch
 from torch import Tensor, nn
 from torch.utils import data
+from torch.ao.quantization import disable_observer
+from torch.ao.quantization.quantize import convert, prepare_qat
+from torch.ao.quantization.qconfig import get_default_qat_qconfig
 from torchvision import transforms
 import torchvision
 
@@ -153,11 +157,27 @@ class CV:
     def accuracy(y_hat, y):
         """Compute the number of correct predictions.
 
-        Defined in :numref:`sec_softmax_scratch`"""
+        """
         if len(y_hat.shape) > 1 and y_hat.shape[1] > 1:
             y_hat = Fx.argmax(y_hat, axis=1)
         cmp = Fx.astype(y_hat, y.dtype) == y
         return float(Fx.reduce_sum(Fx.astype(cmp, y.dtype)))
+
+    @staticmethod
+    def evaluate_accuracy(net, data_iter, device='cpu'):
+        """计算在指定数据集上模型的精度
+
+        """
+        net = net.to(device)
+        if isinstance(net, torch.nn.Module):
+            net.eval()  # 将模型设置为评估模式
+        metric = Accumulator(2)  # 正确预测数、预测总数
+        with torch.no_grad():
+            for X, y in data_iter:
+                X = X.to(device)
+                y = y.to(device)
+                metric.add(CV.accuracy(net(X), y), Fx.size(y))
+        return metric[0] / metric[1]
 
     @staticmethod
     def evaluate_accuracy_gpu(net, data_iter, device=None):
@@ -203,32 +223,55 @@ class CV:
         return train_loss_sum, train_acc_sum
 
     @staticmethod
-    def train(net, train_iter, test_iter, loss, trainer, num_epochs,
-              device='cpu'):
+    def train(net, train_iter, test_iter,
+              loss, trainer, num_epochs,
+              device='cpu',
+              need_prepare=False,
+              is_freeze=False,
+              is_quantized_acc=False,
+              backend='fbgemm',
+              ylim=[0, 1]):
         """Train a model with mutiple GPUs.
         """
         timer, num_batches = Timer(), len(train_iter)
-        animator = Animator(xlabel='epoch', xlim=[1, num_epochs], ylim=[0, 1],
-                            legend=['train loss', 'train acc', 'test acc'])
+        _ylim = '' if ylim[0] == 0 else f'{ylim[0]}+'
+        animator = Animator(xlabel='epoch', xlim=[1, num_epochs], ylim=ylim,
+                            legend=[f'{_ylim}train loss', 'train acc', 'test acc'])
         # nn.DataParallel(net, device_ids=devices).to(devices[0])
         net = net.to(device)
+        if need_prepare:
+            net.fuse_model()
+            net.qconfig = get_default_qat_qconfig(backend)
+            net = prepare_qat(net)
         for epoch in range(num_epochs):
-            # Sum of training loss, sum of training accuracy, no. of examples,
-            # no. of predictions
             metric = Accumulator(4)
+            if is_freeze:
+                if epoch > 3:
+                    # 冻结 quantizer 参数
+                    net.apply(disable_observer)
+                if epoch > 2:
+                    # 冻结 batch 的平均值和方差估计
+                    net.apply(nn.intrinsic.qat.freeze_bn_stats)
             for i, (features, labels) in enumerate(train_iter):
                 timer.start()
-                l, acc = CV.train_batch(
-                    net, features, labels, loss, trainer, device)
+                l, acc = CV.train_batch(net, features,
+                                        labels, loss,
+                                        trainer, device)
                 metric.add(l, acc, labels.shape[0], labels.numel())
                 timer.stop()
                 if (i + 1) % (num_batches // 5) == 0 or i == num_batches - 1:
                     animator.add(epoch + (i + 1) / num_batches,
                                  (metric[0] / metric[2], metric[1] / metric[3],
                                  None))
-            test_acc = CV.evaluate_accuracy_gpu(net, test_iter)
+            if is_quantized_acc:
+                quantized_model = deepcopy(net).to('cpu').eval()
+                quantized_model = convert(quantized_model, inplace=False)
+                test_acc = CV.evaluate_accuracy(quantized_model, test_iter)
+            else:
+                test_acc = CV.evaluate_accuracy_gpu(net, test_iter)
             animator.add(epoch + 1, (None, None, test_acc))
-        print(f'loss {metric[0] / metric[2]:.3f}, train acc '
+
+        print(f'{_ylim}loss {ylim[0]+(metric[0] / metric[2]):.3f}, train acc '
               f'{metric[1] / metric[3]:.3f}, test acc {test_acc:.3f}')
         print(f'{metric[2] * num_epochs / timer.sum():.1f} examples/sec on '
               f'{str(device)}')
@@ -238,8 +281,12 @@ class CV:
                           train_iter, test_iter,
                           learning_rate,
                           num_epochs=5,
-                          device='cpu',
+                          device='cuda:0',
+                          is_freeze=False,
+                          is_quantized_acc=False,
+                          need_prepare=False,
                           param_group=True,
+                          ylim=[0, 1],
                           output_layer='classifier'):
         # 如果param_group=True，输出层中的模型参数将使用十倍的学习率
         # param_name 可能为 'fc' 或者 'classifier'
@@ -256,4 +303,7 @@ class CV:
                                       weight_decay=0.001)
         CV.train(net, train_iter, test_iter,
                  loss, trainer, num_epochs,
-                 device)
+                 device, ylim=ylim,
+                 need_prepare=need_prepare,
+                 is_freeze=is_freeze,
+                 is_quantized_acc=is_quantized_acc)

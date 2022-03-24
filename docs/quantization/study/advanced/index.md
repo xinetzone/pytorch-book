@@ -5,5 +5,6 @@
 
 custom
 run
+qat
 cifar
 ```

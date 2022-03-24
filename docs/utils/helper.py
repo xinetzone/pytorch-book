@@ -48,7 +48,7 @@ def accuracy(output, target, topk=(1,)):
         return res
 
 
-def evaluate(model, criterion, data_loader, neval_batches):
+def evaluate(model, criterion, data_loader, neval_batches=-1):
     model.eval()
     top1 = AverageMeter('Acc@1', ':6.2f')
     top5 = AverageMeter('Acc@5', ':6.2f')
@@ -56,15 +56,17 @@ def evaluate(model, criterion, data_loader, neval_batches):
     with torch.no_grad():
         for image, target in data_loader:
             output = model(image)
-            loss = criterion(output, target)
-            cnt += 1
+            _ = criterion(output, target)
             acc1, acc5 = accuracy(output, target, topk=(1, 5))
-            print('.', end='')
+            #print('.', end='')
             top1.update(acc1[0], image.size(0))
             top5.update(acc5[0], image.size(0))
-            if cnt >= neval_batches:
-                return top1, top5
-
+            if neval_batches == -1:
+                continue
+            else:
+                cnt += 1
+                if cnt >= neval_batches:
+                    return top1, top5
     return top1, top5
 
 
@@ -74,12 +76,18 @@ def load_model(model, model_file):
     return model
 
 
-def print_size_of_model(model):
-    torch.save(model.state_dict(), "temp.p")
-    print('Size (MB):', os.path.getsize("temp.p")/1e6)
+def get_size_of_model(model_path):
+    '''获取模型的大小（MB）'''
+    return os.path.getsize(model_path)/1e6
+
+
+def print_size_of_model(model, model_path="temp.p"):
+    torch.save(model.state_dict(), model_path)
+    print(f'模型大小：{get_size_of_model(model_path)} MB', )
     os.remove('temp.p')
 
-def train_one_epoch(model, criterion, optimizer, data_loader, device, ntrain_batches):
+
+def train_one_epoch(model, criterion, optimizer, data_loader, device, ntrain_batches=-1):
     model = model.to(device)
     model.train()
     top1 = AverageMeter('Acc@1', ':6.2f')
@@ -89,8 +97,7 @@ def train_one_epoch(model, criterion, optimizer, data_loader, device, ntrain_bat
     cnt = 0
     for image, target in data_loader:
         # start_time = time.time()
-        print('.', end = '')
-        cnt += 1
+        print('.', end='')
         image, target = image.to(device), target.to(device)
         output = model(image)
         loss = criterion(output, target)
@@ -101,11 +108,15 @@ def train_one_epoch(model, criterion, optimizer, data_loader, device, ntrain_bat
         top1.update(acc1[0], image.size(0))
         top5.update(acc5[0], image.size(0))
         avgloss.update(loss, image.size(0))
-        if cnt >= ntrain_batches:
-            print('Loss', avgloss.avg)
-            print('Training: * Acc@1 {top1.avg:.3f} Acc@5 {top5.avg:.3f}'
-                  .format(top1=top1, top5=top5))
-            return
+        if ntrain_batches == -1:
+            continue
+        else:
+            cnt += 1
+            if cnt >= ntrain_batches:
+                print('Loss', avgloss.avg)
+                print('Training: * Acc@1 {top1.avg:.3f} Acc@5 {top5.avg:.3f}'
+                    .format(top1=top1, top5=top5))
+                return
 
     print('Full imagenet train set:  * Acc@1 {top1.global_avg:.3f} Acc@5 {top5.global_avg:.3f}'
           .format(top1=top1, top5=top5))
