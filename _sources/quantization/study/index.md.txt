@@ -5,7 +5,7 @@
 
 intro
 transfer-learning/index
-custom
+advanced/index
 qat-resnet18
 test
 draft

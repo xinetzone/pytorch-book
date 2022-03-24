@@ -229,7 +229,7 @@
         <span class="k">return</span> <span class="n">res</span></div>
 
 
-<div class="viewcode-block" id="evaluate"><a class="viewcode-back" href="../quantization/api/generated/helper.evaluate.html#helper.evaluate">[文档]</a><span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">criterion</span><span class="p">,</span> <span class="n">data_loader</span><span class="p">,</span> <span class="n">neval_batches</span><span class="p">):</span>
+<div class="viewcode-block" id="evaluate"><a class="viewcode-back" href="../quantization/api/generated/helper.evaluate.html#helper.evaluate">[文档]</a><span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">criterion</span><span class="p">,</span> <span class="n">data_loader</span><span class="p">,</span> <span class="n">neval_batches</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
     <span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
     <span class="n">top1</span> <span class="o">=</span> <span class="n">AverageMeter</span><span class="p">(</span><span class="s1">&#39;Acc@1&#39;</span><span class="p">,</span> <span class="s1">&#39;:6.2f&#39;</span><span class="p">)</span>
     <span class="n">top5</span> <span class="o">=</span> <span class="n">AverageMeter</span><span class="p">(</span><span class="s1">&#39;Acc@5&#39;</span><span class="p">,</span> <span class="s1">&#39;:6.2f&#39;</span><span class="p">)</span>
@@ -237,31 +237,71 @@
     <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
         <span class="k">for</span> <span class="n">image</span><span class="p">,</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">data_loader</span><span class="p">:</span>
             <span class="n">output</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
-            <span class="n">loss</span> <span class="o">=</span> <span class="n">criterion</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
-            <span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">_</span> <span class="o">=</span> <span class="n">criterion</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
             <span class="n">acc1</span><span class="p">,</span> <span class="n">acc5</span> <span class="o">=</span> <span class="n">accuracy</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">topk</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="c1">#print(&#39;.&#39;, end=&#39;&#39;)</span>
             <span class="n">top1</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">acc1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">image</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
             <span class="n">top5</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">acc5</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">image</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
-            <span class="k">if</span> <span class="n">cnt</span> <span class="o">&gt;=</span> <span class="n">neval_batches</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">top1</span><span class="p">,</span> <span class="n">top5</span>
-
+            <span class="k">if</span> <span class="n">neval_batches</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="n">cnt</span> <span class="o">&gt;=</span> <span class="n">neval_batches</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">top1</span><span class="p">,</span> <span class="n">top5</span>
     <span class="k">return</span> <span class="n">top1</span><span class="p">,</span> <span class="n">top5</span></div>
 
 
-<div class="viewcode-block" id="load_model"><a class="viewcode-back" href="../quantization/api/generated/helper.load_model.html#helper.load_model">[文档]</a><span class="k">def</span> <span class="nf">load_model</span><span class="p">():</span>
-    <span class="n">model</span> <span class="o">=</span> <span class="n">MobileNetV2</span><span class="p">()</span>
-    <span class="c1"># if Path(model_file).exists:</span>
-    <span class="c1">#     state_dict = torch.load(model_file)</span>
-    <span class="c1">#     model.load_state_dict(state_dict)</span>
-    <span class="n">model</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;cpu&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="load_model"><a class="viewcode-back" href="../quantization/api/generated/helper.load_model.html#helper.load_model">[文档]</a><span class="k">def</span> <span class="nf">load_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">model_file</span><span class="p">):</span>
+    <span class="n">state_dict</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">model_file</span><span class="p">)</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">state_dict</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">model</span></div>
 
 
-<div class="viewcode-block" id="print_size_of_model"><a class="viewcode-back" href="../quantization/api/generated/helper.print_size_of_model.html#helper.print_size_of_model">[文档]</a><span class="k">def</span> <span class="nf">print_size_of_model</span><span class="p">(</span><span class="n">model</span><span class="p">):</span>
-    <span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">state_dict</span><span class="p">(),</span> <span class="s2">&quot;temp.p&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Size (MB):&#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="s2">&quot;temp.p&quot;</span><span class="p">)</span><span class="o">/</span><span class="mf">1e6</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">get_size_of_model</span><span class="p">(</span><span class="n">model_path</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;获取模型的大小（MB）&#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="n">model_path</span><span class="p">)</span><span class="o">/</span><span class="mf">1e6</span>
+
+
+<div class="viewcode-block" id="print_size_of_model"><a class="viewcode-back" href="../quantization/api/generated/helper.print_size_of_model.html#helper.print_size_of_model">[文档]</a><span class="k">def</span> <span class="nf">print_size_of_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">model_path</span><span class="o">=</span><span class="s2">&quot;temp.p&quot;</span><span class="p">):</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">state_dict</span><span class="p">(),</span> <span class="n">model_path</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;模型大小：</span><span class="si">{</span><span class="n">get_size_of_model</span><span class="p">(</span><span class="n">model_path</span><span class="p">)</span><span class="si">}</span><span class="s1"> MB&#39;</span><span class="p">,</span> <span class="p">)</span>
     <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">&#39;temp.p&#39;</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">train_one_epoch</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">criterion</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">data_loader</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">ntrain_batches</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+    <span class="n">top1</span> <span class="o">=</span> <span class="n">AverageMeter</span><span class="p">(</span><span class="s1">&#39;Acc@1&#39;</span><span class="p">,</span> <span class="s1">&#39;:6.2f&#39;</span><span class="p">)</span>
+    <span class="n">top5</span> <span class="o">=</span> <span class="n">AverageMeter</span><span class="p">(</span><span class="s1">&#39;Acc@5&#39;</span><span class="p">,</span> <span class="s1">&#39;:6.2f&#39;</span><span class="p">)</span>
+    <span class="n">avgloss</span> <span class="o">=</span> <span class="n">AverageMeter</span><span class="p">(</span><span class="s1">&#39;Loss&#39;</span><span class="p">,</span> <span class="s1">&#39;1.5f&#39;</span><span class="p">)</span>
+
+    <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">image</span><span class="p">,</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">data_loader</span><span class="p">:</span>
+        <span class="c1"># start_time = time.time()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">image</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">),</span> <span class="n">target</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="n">criterion</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+        <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+        <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+        <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+        <span class="n">acc1</span><span class="p">,</span> <span class="n">acc5</span> <span class="o">=</span> <span class="n">accuracy</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">topk</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+        <span class="n">top1</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">acc1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">image</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+        <span class="n">top5</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">acc5</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">image</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+        <span class="n">avgloss</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="n">image</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">ntrain_batches</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">cnt</span> <span class="o">&gt;=</span> <span class="n">ntrain_batches</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Loss&#39;</span><span class="p">,</span> <span class="n">avgloss</span><span class="o">.</span><span class="n">avg</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Training: * Acc@1 </span><span class="si">{top1.avg:.3f}</span><span class="s1"> Acc@5 </span><span class="si">{top5.avg:.3f}</span><span class="s1">&#39;</span>
+                    <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">top1</span><span class="o">=</span><span class="n">top1</span><span class="p">,</span> <span class="n">top5</span><span class="o">=</span><span class="n">top5</span><span class="p">))</span>
+                <span class="k">return</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Full imagenet train set:  * Acc@1 </span><span class="si">{top1.global_avg:.3f}</span><span class="s1"> Acc@5 </span><span class="si">{top5.global_avg:.3f}</span><span class="s1">&#39;</span>
+          <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">top1</span><span class="o">=</span><span class="n">top1</span><span class="p">,</span> <span class="n">top5</span><span class="o">=</span><span class="n">top5</span><span class="p">))</span>
+    <span class="k">return</span>
 </pre></div>
 
               </div>
@@ -289,7 +329,7 @@
     
     <div class="footer-item">
       <p class="last-updated">
-最后更新于 2022-03-22, 12:05:05.<br>
+最后更新于 2022-03-24, 10:54:39.<br>
 </p>
     </div>
     

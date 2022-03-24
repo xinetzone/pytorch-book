@@ -181,10 +181,14 @@
   <h1>xinet 源代码</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
+<span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">nn</span>
 <span class="kn">from</span> <span class="nn">torch.utils</span> <span class="kn">import</span> <span class="n">data</span>
+<span class="kn">from</span> <span class="nn">torch.ao.quantization</span> <span class="kn">import</span> <span class="n">disable_observer</span>
+<span class="kn">from</span> <span class="nn">torch.ao.quantization.quantize</span> <span class="kn">import</span> <span class="n">convert</span><span class="p">,</span> <span class="n">prepare_qat</span>
+<span class="kn">from</span> <span class="nn">torch.ao.quantization.qconfig</span> <span class="kn">import</span> <span class="n">get_default_qat_qconfig</span>
 <span class="kn">from</span> <span class="nn">torchvision</span> <span class="kn">import</span> <span class="n">transforms</span>
 <span class="kn">import</span> <span class="nn">torchvision</span>
 
@@ -334,11 +338,27 @@
     <span class="k">def</span> <span class="nf">accuracy</span><span class="p">(</span><span class="n">y_hat</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Compute the number of correct predictions.</span>
 
-<span class="sd">        Defined in :numref:`sec_softmax_scratch`&quot;&quot;&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">y_hat</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">y_hat</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
             <span class="n">y_hat</span> <span class="o">=</span> <span class="n">Fx</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">y_hat</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
         <span class="n">cmp</span> <span class="o">=</span> <span class="n">Fx</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">y_hat</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span> <span class="o">==</span> <span class="n">y</span>
         <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">Fx</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span><span class="n">Fx</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">cmp</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">dtype</span><span class="p">)))</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">evaluate_accuracy</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">data_iter</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="s1">&#39;cpu&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;计算在指定数据集上模型的精度</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">net</span> <span class="o">=</span> <span class="n">net</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+            <span class="n">net</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>  <span class="c1"># 将模型设置为评估模式</span>
+        <span class="n">metric</span> <span class="o">=</span> <span class="n">Accumulator</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># 正确预测数、预测总数</span>
+        <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">data_iter</span><span class="p">:</span>
+                <span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+                <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+                <span class="n">metric</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">CV</span><span class="o">.</span><span class="n">accuracy</span><span class="p">(</span><span class="n">net</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">y</span><span class="p">),</span> <span class="n">Fx</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">metric</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">metric</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">evaluate_accuracy_gpu</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">data_iter</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -384,31 +404,55 @@
         <span class="k">return</span> <span class="n">train_loss_sum</span><span class="p">,</span> <span class="n">train_acc_sum</span>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">train_iter</span><span class="p">,</span> <span class="n">test_iter</span><span class="p">,</span> <span class="n">loss</span><span class="p">,</span> <span class="n">trainer</span><span class="p">,</span> <span class="n">num_epochs</span><span class="p">,</span>
-              <span class="n">device</span><span class="o">=</span><span class="s1">&#39;cpu&#39;</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">train_iter</span><span class="p">,</span> <span class="n">test_iter</span><span class="p">,</span>
+              <span class="n">loss</span><span class="p">,</span> <span class="n">trainer</span><span class="p">,</span> <span class="n">num_epochs</span><span class="p">,</span>
+              <span class="n">device</span><span class="o">=</span><span class="s1">&#39;cpu&#39;</span><span class="p">,</span>
+              <span class="n">need_prepare</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+              <span class="n">is_freeze</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+              <span class="n">is_quantized_acc</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+              <span class="n">backend</span><span class="o">=</span><span class="s1">&#39;fbgemm&#39;</span><span class="p">,</span>
+              <span class="n">ylim</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]):</span>
         <span class="sd">&quot;&quot;&quot;Train a model with mutiple GPUs.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">timer</span><span class="p">,</span> <span class="n">num_batches</span> <span class="o">=</span> <span class="n">Timer</span><span class="p">(),</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_iter</span><span class="p">)</span>
-        <span class="n">animator</span> <span class="o">=</span> <span class="n">Animator</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;epoch&#39;</span><span class="p">,</span> <span class="n">xlim</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_epochs</span><span class="p">],</span> <span class="n">ylim</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
-                            <span class="n">legend</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;train loss&#39;</span><span class="p">,</span> <span class="s1">&#39;train acc&#39;</span><span class="p">,</span> <span class="s1">&#39;test acc&#39;</span><span class="p">])</span>
-        <span class="n">net</span> <span class="o">=</span> <span class="n">net</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span> <span class="c1"># nn.DataParallel(net, device_ids=devices).to(devices[0])</span>
+        <span class="n">_ylim</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="k">if</span> <span class="n">ylim</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">ylim</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s1">+&#39;</span>
+        <span class="n">animator</span> <span class="o">=</span> <span class="n">Animator</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;epoch&#39;</span><span class="p">,</span> <span class="n">xlim</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_epochs</span><span class="p">],</span> <span class="n">ylim</span><span class="o">=</span><span class="n">ylim</span><span class="p">,</span>
+                            <span class="n">legend</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">_ylim</span><span class="si">}</span><span class="s1">train loss&#39;</span><span class="p">,</span> <span class="s1">&#39;train acc&#39;</span><span class="p">,</span> <span class="s1">&#39;test acc&#39;</span><span class="p">])</span>
+        <span class="c1"># nn.DataParallel(net, device_ids=devices).to(devices[0])</span>
+        <span class="n">net</span> <span class="o">=</span> <span class="n">net</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">need_prepare</span><span class="p">:</span>
+            <span class="n">net</span><span class="o">.</span><span class="n">fuse_model</span><span class="p">()</span>
+            <span class="n">net</span><span class="o">.</span><span class="n">qconfig</span> <span class="o">=</span> <span class="n">get_default_qat_qconfig</span><span class="p">(</span><span class="n">backend</span><span class="p">)</span>
+            <span class="n">net</span> <span class="o">=</span> <span class="n">prepare_qat</span><span class="p">(</span><span class="n">net</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_epochs</span><span class="p">):</span>
-            <span class="c1"># Sum of training loss, sum of training accuracy, no. of examples,</span>
-            <span class="c1"># no. of predictions</span>
             <span class="n">metric</span> <span class="o">=</span> <span class="n">Accumulator</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">is_freeze</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">epoch</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">:</span>
+                    <span class="c1"># 冻结 quantizer 参数</span>
+                    <span class="n">net</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">disable_observer</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">epoch</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+                    <span class="c1"># 冻结 batch 的平均值和方差估计</span>
+                    <span class="n">net</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">intrinsic</span><span class="o">.</span><span class="n">qat</span><span class="o">.</span><span class="n">freeze_bn_stats</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">train_iter</span><span class="p">):</span>
                 <span class="n">timer</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-                <span class="n">l</span><span class="p">,</span> <span class="n">acc</span> <span class="o">=</span> <span class="n">CV</span><span class="o">.</span><span class="n">train_batch</span><span class="p">(</span>
-                    <span class="n">net</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">loss</span><span class="p">,</span> <span class="n">trainer</span><span class="p">,</span> <span class="n">device</span><span class="p">)</span>
+                <span class="n">l</span><span class="p">,</span> <span class="n">acc</span> <span class="o">=</span> <span class="n">CV</span><span class="o">.</span><span class="n">train_batch</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span>
+                                        <span class="n">labels</span><span class="p">,</span> <span class="n">loss</span><span class="p">,</span>
+                                        <span class="n">trainer</span><span class="p">,</span> <span class="n">device</span><span class="p">)</span>
                 <span class="n">metric</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">acc</span><span class="p">,</span> <span class="n">labels</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">labels</span><span class="o">.</span><span class="n">numel</span><span class="p">())</span>
                 <span class="n">timer</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
                 <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="p">(</span><span class="n">num_batches</span> <span class="o">//</span> <span class="mi">5</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">i</span> <span class="o">==</span> <span class="n">num_batches</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
                     <span class="n">animator</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">epoch</span> <span class="o">+</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">num_batches</span><span class="p">,</span>
                                  <span class="p">(</span><span class="n">metric</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">metric</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">metric</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">metric</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span>
                                  <span class="kc">None</span><span class="p">))</span>
-            <span class="n">test_acc</span> <span class="o">=</span> <span class="n">CV</span><span class="o">.</span><span class="n">evaluate_accuracy_gpu</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">test_iter</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">is_quantized_acc</span><span class="p">:</span>
+                <span class="n">quantized_model</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">net</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;cpu&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+                <span class="n">quantized_model</span> <span class="o">=</span> <span class="n">convert</span><span class="p">(</span><span class="n">quantized_model</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+                <span class="n">test_acc</span> <span class="o">=</span> <span class="n">CV</span><span class="o">.</span><span class="n">evaluate_accuracy</span><span class="p">(</span><span class="n">quantized_model</span><span class="p">,</span> <span class="n">test_iter</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">test_acc</span> <span class="o">=</span> <span class="n">CV</span><span class="o">.</span><span class="n">evaluate_accuracy_gpu</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">test_iter</span><span class="p">)</span>
             <span class="n">animator</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">epoch</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">test_acc</span><span class="p">))</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;loss </span><span class="si">{</span><span class="n">metric</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">metric</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">, train acc &#39;</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">_ylim</span><span class="si">}</span><span class="s1">loss </span><span class="si">{</span><span class="n">ylim</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="p">(</span><span class="n">metric</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">metric</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">, train acc &#39;</span>
               <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">metric</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">metric</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">, test acc </span><span class="si">{</span><span class="n">test_acc</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">metric</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">num_epochs</span> <span class="o">/</span> <span class="n">timer</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1"> examples/sec on &#39;</span>
               <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">device</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
@@ -418,15 +462,21 @@
                           <span class="n">train_iter</span><span class="p">,</span> <span class="n">test_iter</span><span class="p">,</span>
                           <span class="n">learning_rate</span><span class="p">,</span>
                           <span class="n">num_epochs</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
-                          <span class="n">device</span><span class="o">=</span><span class="s1">&#39;cpu&#39;</span><span class="p">,</span>
-                          <span class="n">param_group</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+                          <span class="n">device</span><span class="o">=</span><span class="s1">&#39;cuda:0&#39;</span><span class="p">,</span>
+                          <span class="n">is_freeze</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                          <span class="n">is_quantized_acc</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                          <span class="n">need_prepare</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                          <span class="n">param_group</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                          <span class="n">ylim</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+                          <span class="n">output_layer</span><span class="o">=</span><span class="s1">&#39;classifier&#39;</span><span class="p">):</span>
         <span class="c1"># 如果param_group=True，输出层中的模型参数将使用十倍的学习率</span>
+        <span class="c1"># param_name 可能为 &#39;fc&#39; 或者 &#39;classifier&#39;</span>
         <span class="n">loss</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">CrossEntropyLoss</span><span class="p">(</span><span class="n">reduction</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">param_group</span><span class="p">:</span>
             <span class="n">params_1x</span> <span class="o">=</span> <span class="p">[</span><span class="n">param</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">net</span><span class="o">.</span><span class="n">named_parameters</span><span class="p">()</span>
-                         <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;fc.weight&quot;</span><span class="p">,</span> <span class="s2">&quot;fc.bias&quot;</span><span class="p">]]</span>
+                         <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">output_layer</span><span class="p">]</span>
             <span class="n">trainer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">SGD</span><span class="p">([{</span><span class="s1">&#39;params&#39;</span><span class="p">:</span> <span class="n">params_1x</span><span class="p">},</span>
-                                       <span class="p">{</span><span class="s1">&#39;params&#39;</span><span class="p">:</span> <span class="n">net</span><span class="o">.</span><span class="n">fc</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span>
+                                       <span class="p">{</span><span class="s1">&#39;params&#39;</span><span class="p">:</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">output_layer</span><span class="p">)</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span>
                                         <span class="s1">&#39;lr&#39;</span><span class="p">:</span> <span class="n">learning_rate</span> <span class="o">*</span> <span class="mi">10</span><span class="p">}],</span>
                                       <span class="n">lr</span><span class="o">=</span><span class="n">learning_rate</span><span class="p">,</span> <span class="n">weight_decay</span><span class="o">=</span><span class="mf">0.001</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
@@ -434,7 +484,10 @@
                                       <span class="n">weight_decay</span><span class="o">=</span><span class="mf">0.001</span><span class="p">)</span>
         <span class="n">CV</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">train_iter</span><span class="p">,</span> <span class="n">test_iter</span><span class="p">,</span>
                  <span class="n">loss</span><span class="p">,</span> <span class="n">trainer</span><span class="p">,</span> <span class="n">num_epochs</span><span class="p">,</span>
-                 <span class="n">device</span><span class="p">)</span></div>
+                 <span class="n">device</span><span class="p">,</span> <span class="n">ylim</span><span class="o">=</span><span class="n">ylim</span><span class="p">,</span>
+                 <span class="n">need_prepare</span><span class="o">=</span><span class="n">need_prepare</span><span class="p">,</span>
+                 <span class="n">is_freeze</span><span class="o">=</span><span class="n">is_freeze</span><span class="p">,</span>
+                 <span class="n">is_quantized_acc</span><span class="o">=</span><span class="n">is_quantized_acc</span><span class="p">)</span></div>
 </pre></div>
 
               </div>
@@ -462,7 +515,7 @@
     
     <div class="footer-item">
       <p class="last-updated">
-最后更新于 2022-03-22, 12:05:05.<br>
+最后更新于 2022-03-24, 10:54:39.<br>
 </p>
     </div>
     

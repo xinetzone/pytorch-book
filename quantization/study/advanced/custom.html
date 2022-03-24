@@ -7,51 +7,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>自定义量化 &#8212; Pytorch Book 0.0.1 文档</title>
     
-  <link href="../../_static/css/theme.css" rel="stylesheet">
-  <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+  <link href="../../../_static/css/theme.css" rel="stylesheet">
+  <link href="../../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
 
     
   <link rel="stylesheet"
-    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
   <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
   <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
     
       
 
     
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/css/style.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/tabs.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/default.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/tabs.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/default.css" />
     
-  <link rel="preload" as="script" href="../../_static/js/index.be7d3bbb2ef33a8344ce.js">
+  <link rel="preload" as="script" href="../../../_static/js/index.be7d3bbb2ef33a8344ce.js">
 
-    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
-    <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/clipboard.min.js"></script>
-    <script src="../../_static/copybutton.js"></script>
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../../_static/togglebutton.js"></script>
-    <script src="../../_static/translations.js"></script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script src="../../../_static/translations.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <link rel="canonical" href="https://xinetzone.github.io/pytorch-book/quantization/study/custom.html" />
-    <link rel="shortcut icon" href="../../_static/favicon.jpg"/>
-    <link rel="index" title="索引" href="../../genindex.html" />
-    <link rel="search" title="搜索" href="../../search.html" />
-    <link rel="next" title="QAT（resnet18）" href="qat-resnet18.html" />
-    <link rel="prev" title="TVM" href="transfer-learning/tvm.html" />
-    <link rel="stylesheet" href="../../_static/css/default.css"/>
-    <link rel="stylesheet" href="../../_static/css/custom.css"/>
+    <link rel="canonical" href="https://xinetzone.github.io/pytorch-book/quantization/study/advanced/custom.html" />
+    <link rel="shortcut icon" href="../../../_static/favicon.jpg"/>
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="通用量化模型" href="run.html" />
+    <link rel="prev" title="高级教程" href="index.html" />
+    <link rel="stylesheet" href="../../../_static/css/default.css"/>
+    <link rel="stylesheet" href="../../../_static/css/custom.css"/>
 
   </head>
   <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
@@ -65,8 +65,8 @@
     
     
 
-<a class="navbar-brand" href="../../index.html">
-  <img src="../../_static/logo.jpg" class="logo" alt="logo">
+<a class="navbar-brand" href="../../../index.html">
+  <img src="../../../_static/logo.jpg" class="logo" alt="logo">
 </a>
 
 
@@ -84,37 +84,37 @@
       <div class="navbar-center-item">
         <ul id="navbar-main-elements" class="navbar-nav">
     <li class="toctree-l1 nav-item">
- <a class="reference internal nav-link" href="../../intro.html">
+ <a class="reference internal nav-link" href="../../../intro.html">
   项目简介
  </a>
 </li>
 
 <li class="toctree-l1 nav-item">
- <a class="reference internal nav-link" href="../../tutorials/index.html">
+ <a class="reference internal nav-link" href="../../../tutorials/index.html">
   教程
  </a>
 </li>
 
 <li class="toctree-l1 current active nav-item">
- <a class="reference internal nav-link" href="../index.html">
+ <a class="reference internal nav-link" href="../../index.html">
   量化
  </a>
 </li>
 
 <li class="toctree-l1 nav-item">
- <a class="reference internal nav-link" href="../../ecosystem/index.html">
+ <a class="reference internal nav-link" href="../../../ecosystem/index.html">
   生态系统
  </a>
 </li>
 
 <li class="toctree-l1 nav-item">
- <a class="reference internal nav-link" href="../../refs.html">
+ <a class="reference internal nav-link" href="../../../refs.html">
   参考文献
  </a>
 </li>
 
 <li class="toctree-l1 nav-item">
- <a class="reference internal nav-link" href="../../others/index.html">
+ <a class="reference internal nav-link" href="../../../others/index.html">
   其他
  </a>
 </li>
@@ -153,29 +153,29 @@
           
             
             <!-- Only show if we have sidebars configured, else just a small margin  -->
-            <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+            <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
   <div class="bd-toc-item active">
     <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="../support.html">
+  <a class="reference internal" href="../../support.html">
    量化支持
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../recipes.html">
+  <a class="reference internal" href="../../recipes.html">
    量化菜谱
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../QuantizedTensor.html">
+  <a class="reference internal" href="../../QuantizedTensor.html">
    量化张量
   </a>
  </li>
  <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../start/index.html">
+  <a class="reference internal" href="../../start/index.html">
    快速上手
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
@@ -185,19 +185,19 @@
   </label>
   <ul>
    <li class="toctree-l2">
-    <a class="reference internal" href="../start/basic.html">
+    <a class="reference internal" href="../../start/basic.html">
      基础
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../start/ns.html">
+    <a class="reference internal" href="../../start/ns.html">
      Pytorch 数值套件教程
     </a>
    </li>
   </ul>
  </li>
  <li class="toctree-l1 current active has-children">
-  <a class="reference internal" href="index.html">
+  <a class="reference internal" href="../index.html">
    学习
   </a>
   <input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
@@ -207,12 +207,12 @@
   </label>
   <ul class="current">
    <li class="toctree-l2">
-    <a class="reference internal" href="intro.html">
+    <a class="reference internal" href="../intro.html">
      概述
     </a>
    </li>
    <li class="toctree-l2 has-children">
-    <a class="reference internal" href="transfer-learning/index.html">
+    <a class="reference internal" href="../transfer-learning/index.html">
      迁移学习
     </a>
     <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
@@ -222,74 +222,84 @@
     </label>
     <ul>
      <li class="toctree-l3">
-      <a class="reference internal" href="transfer-learning/basic.html">
+      <a class="reference internal" href="../transfer-learning/basic.html">
        计算机视觉分类
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="transfer-learning/quantized.html">
+      <a class="reference internal" href="../transfer-learning/quantized.html">
        量化计算机视觉分类
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="transfer-learning/custom.html">
+      <a class="reference internal" href="../transfer-learning/custom.html">
        自定义
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="transfer-learning/cifar.html">
+      <a class="reference internal" href="../transfer-learning/cifar.html">
        测试
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="transfer-learning/tvm.html">
+      <a class="reference internal" href="../transfer-learning/tvm.html">
        TVM
       </a>
      </li>
     </ul>
    </li>
-   <li class="toctree-l2 current active">
-    <a class="current reference internal" href="#">
-     自定义量化
+   <li class="toctree-l2 current active has-children">
+    <a class="reference internal" href="index.html">
+     高级教程
     </a>
+    <input checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+    <label for="toctree-checkbox-4">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul class="current">
+     <li class="toctree-l3 current active">
+      <a class="current reference internal" href="#">
+       自定义量化
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="run.html">
+       通用量化模型
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="qat.html">
+       QAT
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="cifar.html">
+       特定于 cifar10 的量化（待更）
+      </a>
+     </li>
+    </ul>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="qat-resnet18.html">
+    <a class="reference internal" href="../qat-resnet18.html">
      QAT（resnet18）
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="test.html">
+    <a class="reference internal" href="../test.html">
      测试 QAT
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="draft.html">
+    <a class="reference internal" href="../draft.html">
      回收站
     </a>
    </li>
   </ul>
  </li>
  <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../papers/index.html">
+  <a class="reference internal" href="../../papers/index.html">
    论文
-  </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
-  <label for="toctree-checkbox-4">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../papers/gholami2021survey.html">
-     A Survey of Quantization Methods for Efficient Neural Network Inference
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../api/index.html">
-   量化 API
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
   <label for="toctree-checkbox-5">
@@ -297,41 +307,26 @@
    </i>
   </label>
   <ul>
-   <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../api/runner.html">
-     runner
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../papers/gholami2021survey.html">
+     A Survey of Quantization Methods for Efficient Neural Network Inference
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
-    <label for="toctree-checkbox-6">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../api/generated/runner.Timer.html">
-       runner.Timer
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../api/generated/runner.Accumulator.html">
-       runner.Accumulator
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../api/generated/runner.Animator.html">
-       runner.Animator
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../api/generated/runner.show_images.html">
-       runner.show_images
-      </a>
-     </li>
-    </ul>
    </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../api/index.html">
+   量化 API
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
    <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../api/xinet.html">
-     xinet
+    <a class="reference internal" href="../../api/runner.html">
+     runner
     </a>
     <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
     <label for="toctree-checkbox-7">
@@ -340,35 +335,30 @@
     </label>
     <ul>
      <li class="toctree-l3">
-      <a class="reference internal" href="../api/generated/xinet.ModuleTool.html">
-       xinet.ModuleTool
+      <a class="reference internal" href="../../api/generated/runner.Timer.html">
+       runner.Timer
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../api/generated/xinet.CV.html">
-       xinet.CV
+      <a class="reference internal" href="../../api/generated/runner.Accumulator.html">
+       runner.Accumulator
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../api/generated/xinet.Fx.html">
-       xinet.Fx
+      <a class="reference internal" href="../../api/generated/runner.Animator.html">
+       runner.Animator
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../api/generated/xinet.try_all_gpus.html">
-       xinet.try_all_gpus
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../api/generated/xinet.try_gpu.html">
-       xinet.try_gpu
+      <a class="reference internal" href="../../api/generated/runner.show_images.html">
+       runner.show_images
       </a>
      </li>
     </ul>
    </li>
    <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../api/net.html">
-     NN 模块
+    <a class="reference internal" href="../../api/xinet.html">
+     xinet
     </a>
     <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
     <label for="toctree-checkbox-8">
@@ -377,15 +367,35 @@
     </label>
     <ul>
      <li class="toctree-l3">
-      <a class="reference internal" href="../api/generated/mobile_net.MobileNetV2.html">
-       mobile_net.MobileNetV2
+      <a class="reference internal" href="../../api/generated/xinet.ModuleTool.html">
+       xinet.ModuleTool
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/generated/xinet.CV.html">
+       xinet.CV
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/generated/xinet.Fx.html">
+       xinet.Fx
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/generated/xinet.try_all_gpus.html">
+       xinet.try_all_gpus
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/generated/xinet.try_gpu.html">
+       xinet.try_gpu
       </a>
      </li>
     </ul>
    </li>
    <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../api/helper.html">
-     辅助工具
+    <a class="reference internal" href="../../api/net.html">
+     NN 模块
     </a>
     <input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
     <label for="toctree-checkbox-9">
@@ -394,35 +404,15 @@
     </label>
     <ul>
      <li class="toctree-l3">
-      <a class="reference internal" href="../api/generated/helper.accuracy.html">
-       helper.accuracy
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../api/generated/helper.evaluate.html">
-       helper.evaluate
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../api/generated/helper.load_model.html">
-       helper.load_model
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../api/generated/helper.print_size_of_model.html">
-       helper.print_size_of_model
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../api/generated/helper.AverageMeter.html">
-       helper.AverageMeter
+      <a class="reference internal" href="../../api/generated/mobile_net.MobileNetV2.html">
+       mobile_net.MobileNetV2
       </a>
      </li>
     </ul>
    </li>
    <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../api/tools.html">
-     工具
+    <a class="reference internal" href="../../api/helper.html">
+     辅助工具
     </a>
     <input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/>
     <label for="toctree-checkbox-10">
@@ -431,7 +421,44 @@
     </label>
     <ul>
      <li class="toctree-l3">
-      <a class="reference internal" href="../api/generated/tools.train_model.html">
+      <a class="reference internal" href="../../api/generated/helper.accuracy.html">
+       helper.accuracy
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/generated/helper.evaluate.html">
+       helper.evaluate
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/generated/helper.load_model.html">
+       helper.load_model
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/generated/helper.print_size_of_model.html">
+       helper.print_size_of_model
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/generated/helper.AverageMeter.html">
+       helper.AverageMeter
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../api/tools.html">
+     工具
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/>
+    <label for="toctree-checkbox-11">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/generated/tools.train_model.html">
        tools.train_model
       </a>
      </li>
@@ -461,7 +488,18 @@
     <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id2">
-   算子融合
+   量化流程
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#mobilenetv2">
+   特定于
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     MobileNetV2
+    </span>
+   </code>
+   的量化
   </a>
  </li>
 </ul>
@@ -473,7 +511,7 @@
                 
 
 <div class="tocsection editthispage">
-    <a href="https://github.com/xinetzone/pytorch-book/edit/main/docs/quantization/study/custom.ipynb">
+    <a href="https://github.com/xinetzone/pytorch-book/edit/main/docs/quantization/study/advanced/custom.ipynb">
         <i class="fas fa-pencil-alt"></i> Edit this page
     </a>
 </div>
@@ -500,26 +538,12 @@
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 提供注解的向前兼容</span>
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
-
-<span class="c1"># 设置 warnings</span>
-<span class="kn">import</span> <span class="nn">warnings</span>
-<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span>
-    <span class="n">action</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">,</span>
-    <span class="n">category</span><span class="o">=</span><span class="ne">DeprecationWarning</span><span class="p">,</span>
-    <span class="n">module</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;.*&#39;</span>
-<span class="p">)</span>
-<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span>
-    <span class="n">action</span><span class="o">=</span><span class="s1">&#39;default&#39;</span><span class="p">,</span>
-    <span class="n">module</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;torch.quantization&#39;</span>
-<span class="p">)</span>
-
-<span class="kn">from</span> <span class="nn">mod</span> <span class="kn">import</span> <span class="n">load_mod</span>
-<span class="n">load_mod</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>本文以 <a class="reference external" href="https://xinetzone.github.io/pytorch-book/api/pytorch/torchvision/generated/torchvision.models.MobileNetV2.html#torchvision.models.MobileNetV2" title="(在 Pytorch Book)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MobileNetV2</span></code></a> 为例，介绍如何将其转换为量化模型 <a class="reference external" href="https://xinetzone.github.io/pytorch-book/api/pytorch/torchvision/generated/torchvision.models.quantization.QuantizableMobileNetV2.html#torchvision.models.quantization.QuantizableMobileNetV2" title="(在 Pytorch Book)"><code class="xref py py-class docutils literal notranslate"><span class="pre">QuantizableMobileNetV2</span></code></a>。</p>
+<div class="section" id="id2">
+<h2>量化流程<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
 <div class="admonition important">
 <p class="admonition-title">重要</p>
 <p>将模型转换为 <strong>可量化模型</strong> 的流程如下：</p>
@@ -538,8 +562,6 @@
 <li><p>将 <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.nn.ReLU6.html#torch.nn.ReLU6" title="(在 PyTorch v1.11.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.ReLU6</span></code></a> 替换为 <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.nn.ReLU.html#torch.nn.ReLU" title="(在 PyTorch v1.11.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.ReLU</span></code></a></p></li>
 </ol>
 </div>
-<div class="section" id="id2">
-<h2>算子融合<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
 <p class="rubric">载入一些库</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -553,15 +575,6 @@
 <span class="kn">from</span> <span class="nn">torchvision.ops.misc</span> <span class="kn">import</span> <span class="n">ConvNormActivation</span>
 <span class="kn">from</span> <span class="nn">torchvision.models.quantization.utils</span> <span class="kn">import</span> <span class="n">_fuse_modules</span><span class="p">,</span> <span class="n">_replace_relu</span><span class="p">,</span> <span class="n">quantize_model</span>
 <span class="kn">from</span> <span class="nn">torch.ao.quantization</span> <span class="kn">import</span> <span class="n">QuantStub</span><span class="p">,</span> <span class="n">DeQuantStub</span>
-<span class="kn">from</span> <span class="nn">torchvision.models.mobilenetv2</span> <span class="kn">import</span> <span class="n">InvertedResidual</span><span class="p">,</span> <span class="n">MobileNetV2</span><span class="p">,</span> <span class="n">model_urls</span>
-
-
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;QuantizableMobileNetV2&quot;</span><span class="p">,</span> <span class="s2">&quot;mobilenet_v2&quot;</span><span class="p">]</span>
-
-<span class="c1"># 用于微调量化模型</span>
-<span class="n">quant_model_urls</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;mobilenet_v2_qnnpack&quot;</span><span class="p">:</span> <span class="s2">&quot;https://download.pytorch.org/models/quantized/mobilenet_v2_qnnpack_37f702c5.pth&quot;</span>
-<span class="p">}</span>
 </pre></div>
 </div>
 </div>
@@ -569,7 +582,7 @@
 <p class="rubric">模块融合</p>
 <div class="admonition note">
 <p class="admonition-title">备注</p>
-<p><a class="reference external" href="https://xinetzone.github.io/pytorch-book/api/pytorch/torchvision/generated/torchvision.models.quantization.utils._fuse_modules.html#torchvision.models.quantization.utils._fuse_modules" title="(在 Pytorch Book)"><code class="xref py py-func docutils literal notranslate"><span class="pre">_fuse_modules()</span></code></a> 提供了普通模块融合与 QAT 模块融合的统一接口。</p>
+<p><a class="reference external" href="https://xinetzone.github.io/pytorch-book/api/pytorch/torchvision/generated/torchvision.models.quantization.utils._fuse_modules.html#torchvision.models.quantization.utils._fuse_modules" title="(在 Pytorch Book)"><code class="xref py py-func docutils literal notranslate"><span class="pre">_fuse_modules()</span></code></a> 提供了 <a class="reference external" href="https://xinetzone.github.io/pytorch-book/api/pytorch/ao/quantization/generated/torch.ao.quantization.fuse_modules.fuse_modules.html#torch.ao.quantization.fuse_modules.fuse_modules" title="(在 Pytorch Book)"><code class="xref py py-func docutils literal notranslate"><span class="pre">fuse_modules()</span></code></a> 和 <a class="reference external" href="https://xinetzone.github.io/pytorch-book/api/pytorch/ao/quantization/generated/torch.ao.quantization.fuse_modules.fuse_modules_qat.html#torch.ao.quantization.fuse_modules.fuse_modules_qat" title="(在 Pytorch Book)"><code class="xref py py-func docutils literal notranslate"><span class="pre">fuse_modules_qat()</span></code></a> 的统一接口。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">torch.ao.quantization</span> <span class="kn">import</span> <span class="n">fuse_modules_qat</span><span class="p">,</span> <span class="n">fuse_modules</span>
 
 
@@ -585,7 +598,7 @@
     <span class="k">return</span> <span class="n">method</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">modules_to_fuse</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="https://xinetzone.github.io/pytorch-book/api/pytorch/nn/generated/torch.nn.quantized.FloatFunctional.html#torch.nn.quantized.FloatFunctional" title="(在 Pytorch Book)"><code class="xref py py-class docutils literal notranslate"><span class="pre">FloatFunctional</span></code></a> 算子比普通的 <code class="docutils literal notranslate"><span class="pre">torch.</span></code> 的运算多了一个后处理，比如：</p>
+<p><a class="reference external" href="https://xinetzone.github.io/pytorch-book/api/pytorch/nn/generated/torch.nn.quantized.FloatFunctional.html#torch.nn.quantized.FloatFunctional" title="(在 Pytorch Book)"><code class="xref py py-class docutils literal notranslate"><span class="pre">FloatFunctional</span></code></a> 算子比普通的 <code class="docutils literal notranslate"><span class="pre">torch.</span></code> 的运算多了后处理操作，比如：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">FloatFunctional</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
@@ -608,9 +621,20 @@
 <p class="admonition-title">小技巧</p>
 <p>猜测 <a class="reference external" href="https://xinetzone.github.io/pytorch-book/api/pytorch/nn/generated/torch.nn.quantized.FloatFunctional.html#torch.nn.quantized.FloatFunctional" title="(在 Pytorch Book)"><code class="xref py py-class docutils literal notranslate"><span class="pre">FloatFunctional</span></code></a> 算子提供了自定义算子的官方接口。即只需要对 <code class="docutils literal notranslate"><span class="pre">self.activation_post_process</span></code> 赋值即可添加算子的后处理工作。</p>
 </div>
+</div>
+<div class="section" id="mobilenetv2">
+<h2>特定于 <code class="docutils literal notranslate"><span class="pre">MobileNetV2</span></code> 的量化<a class="headerlink" href="#mobilenetv2" title="永久链接至标题">¶</a></h2>
+<p>下面以 <a class="reference external" href="https://xinetzone.github.io/pytorch-book/api/pytorch/torchvision/generated/torchvision.models.MobileNetV2.html#torchvision.models.MobileNetV2" title="(在 Pytorch Book)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MobileNetV2</span></code></a> 为例，介绍如何将其转换为量化模型 <a class="reference external" href="https://xinetzone.github.io/pytorch-book/api/pytorch/torchvision/generated/torchvision.models.quantization.QuantizableMobileNetV2.html#torchvision.models.quantization.QuantizableMobileNetV2" title="(在 Pytorch Book)"><code class="xref py py-class docutils literal notranslate"><span class="pre">QuantizableMobileNetV2</span></code></a>。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">QuantizableInvertedResidual</span><span class="p">(</span><span class="n">InvertedResidual</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">torchvision.models.mobilenetv2</span> <span class="kn">import</span> <span class="n">InvertedResidual</span><span class="p">,</span> <span class="n">MobileNetV2</span><span class="p">,</span> <span class="n">model_urls</span>
+
+<span class="n">quant_model_urls</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;mobilenet_v2_qnnpack&quot;</span><span class="p">:</span> <span class="s2">&quot;https://download.pytorch.org/models/quantized/mobilenet_v2_qnnpack_37f702c5.pth&quot;</span>
+<span class="p">}</span>
+
+
+<span class="k">class</span> <span class="nc">QuantizableInvertedResidual</span><span class="p">(</span><span class="n">InvertedResidual</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">skip_add</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">quantized</span><span class="o">.</span><span class="n">FloatFunctional</span><span class="p">()</span>
@@ -629,6 +653,70 @@
                                <span class="nb">str</span><span class="p">(</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)],</span>
                               <span class="n">is_qat</span><span class="p">,</span>
                               <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">QuantizableMobileNetV2</span><span class="p">(</span><span class="n">MobileNetV2</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        MobileNet V2 main class</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">           继承自浮点 MobileNetV2 的参数</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">quant</span> <span class="o">=</span> <span class="n">QuantStub</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dequant</span> <span class="o">=</span> <span class="n">DeQuantStub</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">quant</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_forward_impl</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dequant</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">x</span>
+
+    <span class="k">def</span> <span class="nf">fuse_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">is_qat</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">m</span><span class="p">)</span> <span class="ow">is</span> <span class="n">ConvNormActivation</span><span class="p">:</span>
+                <span class="n">_fuse_modules</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;0&quot;</span><span class="p">,</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;2&quot;</span><span class="p">],</span> <span class="n">is_qat</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">m</span><span class="p">)</span> <span class="ow">is</span> <span class="n">QuantizableInvertedResidual</span><span class="p">:</span>
+                <span class="n">m</span><span class="o">.</span><span class="n">fuse_model</span><span class="p">(</span><span class="n">is_qat</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">mobilenet_v2</span><span class="p">(</span>
+    <span class="n">pretrained</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">progress</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">quantize</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">QuantizableMobileNetV2</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    从 `MobileNetV2：反向残差和线性瓶颈 &lt;https://arxiv.org/abs/1801.04381&gt;`_ 构建 MobileNetV2 架构。</span>
+
+<span class="sd">    注意，quantize = True 返回具有 8 bit 权值的量化模型。量化模型只支持推理并在 CPU 上运行。</span>
+<span class="sd">    目前还不支持 GPU 推理</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        pretrained (bool): 如果为 True，返回在 ImageNet 上训练过的模型。</span>
+<span class="sd">        progress (bool): 如果为 True，则显示下载到标准错误的进度条</span>
+<span class="sd">        quantize(bool): 如果为 True，则返回量化模型，否则返回浮点模型</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">QuantizableMobileNetV2</span><span class="p">(</span><span class="n">block</span><span class="o">=</span><span class="n">QuantizableInvertedResidual</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">_replace_relu</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">quantize</span><span class="p">:</span>
+        <span class="c1"># TODO use pretrained as a string to specify the backend</span>
+        <span class="n">backend</span> <span class="o">=</span> <span class="s2">&quot;qnnpack&quot;</span>
+        <span class="n">quantize_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">backend</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">pretrained</span> <span class="ow">in</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">pretrained</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">quantize</span><span class="p">:</span>
+            <span class="n">model_url</span> <span class="o">=</span> <span class="n">quant_model_urls</span><span class="p">[</span><span class="s2">&quot;mobilenet_v2_&quot;</span> <span class="o">+</span> <span class="n">backend</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">model_url</span> <span class="o">=</span> <span class="n">model_urls</span><span class="p">[</span><span class="s2">&quot;mobilenet_v2&quot;</span><span class="p">]</span>
+
+        <span class="n">state_dict</span> <span class="o">=</span> <span class="n">load_state_dict_from_url</span><span class="p">(</span><span class="n">model_url</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="n">progress</span><span class="p">)</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">state_dict</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">model</span>
 </pre></div>
 </div>
 </div>
@@ -642,17 +730,17 @@
               
               <!-- Previous / next buttons -->
 <div class='prev-next-area'> 
-    <a class='left-prev' id="prev-link" href="transfer-learning/tvm.html" title="上一页 页">
+    <a class='left-prev' id="prev-link" href="index.html" title="上一页 页">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">上一页</p>
-            <p class="prev-next-title">TVM</p>
+            <p class="prev-next-title">高级教程</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="qat-resnet18.html" title="下一页 页">
+    <a class='right-next' id="next-link" href="run.html" title="下一页 页">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">下一页</p>
-        <p class="prev-next-title">QAT（resnet18）</p>
+        <p class="prev-next-title">通用量化模型</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
@@ -664,7 +752,7 @@
       </div>
     </div>
   
-  <script src="../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+  <script src="../../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
 <footer class="footer mt-5 mt-md-0">
   <div class="container">
     
@@ -676,7 +764,7 @@
     
     <div class="footer-item">
       <p class="last-updated">
-最后更新于 2022-03-22, 12:05:05.<br>
+最后更新于 2022-03-24, 10:54:39.<br>
 </p>
     </div>
     
