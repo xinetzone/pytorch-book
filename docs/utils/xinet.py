@@ -260,8 +260,9 @@ class CV:
                 metric.add(l, acc, labels.shape[0], labels.numel())
                 timer.stop()
                 if (i + 1) % (num_batches // 5) == 0 or i == num_batches - 1:
+                    # print((metric[0] / metric[2])+ylim[0])
                     animator.add(epoch + (i + 1) / num_batches,
-                                 (metric[0] / metric[2], metric[1] / metric[3],
+                                 ((metric[0] / metric[2])+ylim[0], metric[1] / metric[3],
                                  None))
             if is_quantized_acc:
                 quantized_model = deepcopy(net).to('cpu').eval()
@@ -271,7 +272,7 @@ class CV:
                 test_acc = CV.evaluate_accuracy_gpu(net, test_iter)
             animator.add(epoch + 1, (None, None, test_acc))
 
-        print(f'{_ylim}loss {ylim[0]+(metric[0] / metric[2]):.3f}, train acc '
+        print(f'loss {metric[0] / metric[2]:.3f}, train acc '
               f'{metric[1] / metric[3]:.3f}, test acc {test_acc:.3f}')
         print(f'{metric[2] * num_epochs / timer.sum():.1f} examples/sec on '
               f'{str(device)}')
