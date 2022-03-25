@@ -535,6 +535,62 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+<span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">empty_cache</span><span class="p">()</span> <span class="c1"># 清空 GPU 缓存</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">memory_summary</span><span class="p">())</span> <span class="c1"># 打印显存</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>|===========================================================================|
+|                  PyTorch CUDA memory summary, device ID 0                 |
+|---------------------------------------------------------------------------|
+|            CUDA OOMs: 0            |        cudaMalloc retries: 0         |
+|===========================================================================|
+|        Metric         | Cur Usage  | Peak Usage | Tot Alloc  | Tot Freed  |
+|---------------------------------------------------------------------------|
+| Allocated memory      |       0 B  |       0 B  |       0 B  |       0 B  |
+|       from large pool |       0 B  |       0 B  |       0 B  |       0 B  |
+|       from small pool |       0 B  |       0 B  |       0 B  |       0 B  |
+|---------------------------------------------------------------------------|
+| Active memory         |       0 B  |       0 B  |       0 B  |       0 B  |
+|       from large pool |       0 B  |       0 B  |       0 B  |       0 B  |
+|       from small pool |       0 B  |       0 B  |       0 B  |       0 B  |
+|---------------------------------------------------------------------------|
+| GPU reserved memory   |       0 B  |       0 B  |       0 B  |       0 B  |
+|       from large pool |       0 B  |       0 B  |       0 B  |       0 B  |
+|       from small pool |       0 B  |       0 B  |       0 B  |       0 B  |
+|---------------------------------------------------------------------------|
+| Non-releasable memory |       0 B  |       0 B  |       0 B  |       0 B  |
+|       from large pool |       0 B  |       0 B  |       0 B  |       0 B  |
+|       from small pool |       0 B  |       0 B  |       0 B  |       0 B  |
+|---------------------------------------------------------------------------|
+| Allocations           |       0    |       0    |       0    |       0    |
+|       from large pool |       0    |       0    |       0    |       0    |
+|       from small pool |       0    |       0    |       0    |       0    |
+|---------------------------------------------------------------------------|
+| Active allocs         |       0    |       0    |       0    |       0    |
+|       from large pool |       0    |       0    |       0    |       0    |
+|       from small pool |       0    |       0    |       0    |       0    |
+|---------------------------------------------------------------------------|
+| GPU reserved segments |       0    |       0    |       0    |       0    |
+|       from large pool |       0    |       0    |       0    |       0    |
+|       from small pool |       0    |       0    |       0    |       0    |
+|---------------------------------------------------------------------------|
+| Non-releasable allocs |       0    |       0    |       0    |       0    |
+|       from large pool |       0    |       0    |       0    |       0    |
+|       from small pool |       0    |       0    |       0    |       0    |
+|---------------------------------------------------------------------------|
+| Oversize allocations  |       0    |       0    |       0    |       0    |
+|---------------------------------------------------------------------------|
+| Oversize GPU segments |       0    |       0    |       0    |       0    |
+|===========================================================================|
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 设置 warnings</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
 <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span>
@@ -580,12 +636,12 @@
 <span class="n">scripted_qat_model_file</span> <span class="o">=</span> <span class="s1">&#39;mobilenet_qat_scripted_quantized.pth&#39;</span>
 <span class="c1"># 超参数</span>
 <span class="n">float_model_path</span> <span class="o">=</span> <span class="n">saved_model_dir</span> <span class="o">+</span> <span class="n">float_model_file</span>
-<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">16</span>
 <span class="n">num_classes</span> <span class="o">=</span> <span class="mi">10</span>
 <span class="n">device</span> <span class="o">=</span> <span class="s1">&#39;cuda:0&#39;</span>
-<span class="n">num_epochs</span> <span class="o">=</span> <span class="mi">30</span>
-<span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">14e-4</span>
-<span class="n">ylim</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.85</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">num_epochs</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">5e-5</span>
+<span class="n">ylim</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.6</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
 
 <span class="c1"># 设置评估策略</span>
 <span class="n">criterion</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">CrossEntropyLoss</span><span class="p">()</span>
@@ -612,6 +668,28 @@ Files already downloaded and verified
 </div>
 </div>
 </div>
+<p>普通策略：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">is_quantized_acc</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">is_freeze</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">param_group</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">qat_model</span> <span class="o">=</span> <span class="n">create_qat_model</span><span class="p">(</span><span class="n">num_classes</span><span class="p">,</span> <span class="n">float_model_path</span><span class="p">)</span>
+<span class="n">CV</span><span class="o">.</span><span class="n">train_fine_tuning</span><span class="p">(</span><span class="n">qat_model</span><span class="p">,</span> <span class="n">train_iter</span><span class="p">,</span> <span class="n">test_iter</span><span class="p">,</span>
+                     <span class="n">learning_rate</span><span class="o">=</span><span class="n">learning_rate</span><span class="p">,</span>
+                     <span class="n">num_epochs</span><span class="o">=</span><span class="n">num_epochs</span><span class="p">,</span>
+                     <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span>
+                     <span class="n">param_group</span><span class="o">=</span><span class="n">param_group</span><span class="p">,</span>
+                     <span class="n">is_freeze</span><span class="o">=</span><span class="n">is_freeze</span><span class="p">,</span>
+                     <span class="n">is_quantized_acc</span><span class="o">=</span><span class="n">is_quantized_acc</span><span class="p">,</span>
+                     <span class="n">need_prepare</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                     <span class="n">ylim</span><span class="o">=</span><span class="n">ylim</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/qat_9_0.svg" src="../../../_images/qat_9_0.svg" /></div>
+</div>
 <p>冻结前几次训练的量化器以及观测器：</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -631,8 +709,6 @@ Files already downloaded and verified
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="../../../_images/qat_8_0.svg" src="../../../_images/qat_8_0.svg" /></div>
 </div>
 <p>输出量化精度：</p>
 <div class="cell docutils container">
@@ -660,26 +736,6 @@ Files already downloaded and verified
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">is_quantized_acc</span> <span class="o">=</span> <span class="kc">True</span>
 <span class="n">is_freeze</span> <span class="o">=</span> <span class="kc">True</span>
-<span class="n">param_group</span> <span class="o">=</span> <span class="kc">True</span>
-<span class="n">qat_model</span> <span class="o">=</span> <span class="n">create_qat_model</span><span class="p">(</span><span class="n">num_classes</span><span class="p">,</span> <span class="n">float_model_path</span><span class="p">)</span>
-<span class="n">CV</span><span class="o">.</span><span class="n">train_fine_tuning</span><span class="p">(</span><span class="n">qat_model</span><span class="p">,</span> <span class="n">train_iter</span><span class="p">,</span> <span class="n">test_iter</span><span class="p">,</span>
-                     <span class="n">learning_rate</span><span class="o">=</span><span class="n">learning_rate</span><span class="p">,</span>
-                     <span class="n">num_epochs</span><span class="o">=</span><span class="n">num_epochs</span><span class="p">,</span>
-                     <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span>
-                     <span class="n">param_group</span><span class="o">=</span><span class="n">param_group</span><span class="p">,</span>
-                     <span class="n">is_freeze</span><span class="o">=</span><span class="n">is_freeze</span><span class="p">,</span>
-                     <span class="n">is_quantized_acc</span><span class="o">=</span><span class="n">is_quantized_acc</span><span class="p">,</span>
-                     <span class="n">need_prepare</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                     <span class="n">ylim</span><span class="o">=</span><span class="n">ylim</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>普通策略：</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">is_quantized_acc</span> <span class="o">=</span> <span class="kc">False</span>
-<span class="n">is_freeze</span> <span class="o">=</span> <span class="kc">False</span>
 <span class="n">param_group</span> <span class="o">=</span> <span class="kc">True</span>
 <span class="n">qat_model</span> <span class="o">=</span> <span class="n">create_qat_model</span><span class="p">(</span><span class="n">num_classes</span><span class="p">,</span> <span class="n">float_model_path</span><span class="p">)</span>
 <span class="n">CV</span><span class="o">.</span><span class="n">train_fine_tuning</span><span class="p">(</span><span class="n">qat_model</span><span class="p">,</span> <span class="n">train_iter</span><span class="p">,</span> <span class="n">test_iter</span><span class="p">,</span>
@@ -737,7 +793,7 @@ Files already downloaded and verified
     
     <div class="footer-item">
       <p class="last-updated">
-最后更新于 2022-03-24, 10:54:39.<br>
+最后更新于 2022-03-25, 00:49:29.<br>
 </p>
     </div>
     
