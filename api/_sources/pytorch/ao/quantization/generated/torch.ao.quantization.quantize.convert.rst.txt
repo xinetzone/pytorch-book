@@ -1,0 +1,6 @@
+﻿torch.ao.quantization.quantize.convert
+======================================
+
+.. currentmodule:: torch.ao.quantization.quantize
+
+.. autofunction:: convert

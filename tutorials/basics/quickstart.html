@@ -4,11 +4,13 @@
 <html lang="zh_CN">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>快速入门 &#8212; Pytorch Book 0.0.1 文档</title>
     
-  <link href="../../_static/css/theme.css" rel="stylesheet">
-  <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
 
     
   <link rel="stylesheet"
@@ -18,10 +20,6 @@
   <link rel="preload" as="font" type="font/woff2" crossorigin
     href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
-    
-      
-
-    
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/style.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
@@ -30,7 +28,8 @@
     <link rel="stylesheet" type="text/css" href="../../_static/tabs.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/default.css" />
     
-  <link rel="preload" as="script" href="../../_static/js/index.be7d3bbb2ef33a8344ce.js">
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
 
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
@@ -54,7 +53,7 @@
     <link rel="stylesheet" href="../../_static/css/custom.css"/>
 
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
     
     <div class="container-fluid" id="banner"></div>
 
@@ -134,10 +133,8 @@
       <div class="navbar-end-item">
         <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
         <li class="nav-item">
-          <a class="nav-link" href="https://github.com/xinetzone/pytorch-book" rel="noopener" target="_blank" title="GitHub">
-            <span><i class="fab fa-github-square"></i></span>
-            <label class="sr-only">GitHub</label>
-          </a>
+          <a class="nav-link" href="https://github.com/xinetzone/pytorch-book" rel="noopener" target="_blank" title="GitHub"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
         </li>
       </ul>
       </div>
@@ -153,7 +150,8 @@
           
             
             <!-- Only show if we have sidebars configured, else just a small margin  -->
-            <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+            <div class="col-12 col-md-3 bd-sidebar">
+              <div class="sidebar-start-items"><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
@@ -207,6 +205,9 @@
 
   </div>
 </nav>
+              </div>
+              <div class="sidebar-end-items">
+              </div>
             </div>
             
           
@@ -217,7 +218,7 @@
               
               <div class="toc-item">
                 
-<div class="tocsection onthispage pt-5 pb-3">
+<div class="tocsection onthispage mt-5 pt-1 pb-3">
     <i class="fas fa-list"></i> On this page
 </div>
 
@@ -283,12 +284,12 @@
 </div>
 </div>
 </div>
-<div class="tex2jax_ignore mathjax_ignore section" id="id1">
-<h1>快速入门<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>快速入门<a class="headerlink" href="#id1" title="永久链接至标题">#</a></h1>
 <p><span class="guilabel">参考</span>：<a class="reference external" href="https://pytorch.org/tutorials/beginner/basics/quickstart_tutorial.html">quickstart_tutorial</a></p>
 <p>本节介绍机器学习中常见任务的 API。</p>
-<div class="section" id="id2">
-<h2>数据准备<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<section id="id2">
+<h2>数据准备<a class="headerlink" href="#id2" title="永久链接至标题">#</a></h2>
 <p>PyTorch 有两个原语来处理数据：<a class="reference external" href="https://pytorch.org/docs/stable/data.html#torch.utils.data.DataLoader" title="(在 PyTorch v1.11.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataLoader</span></code></a> 和 <a class="reference external" href="https://pytorch.org/docs/stable/data.html#torch.utils.data.Dataset" title="(在 PyTorch v1.11.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></a>。<a class="reference external" href="https://pytorch.org/docs/stable/data.html#torch.utils.data.Dataset" title="(在 PyTorch v1.11.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></a> 存储样本及其对应的标签，而 <a class="reference external" href="https://pytorch.org/docs/stable/data.html#torch.utils.data.DataLoader" title="(在 PyTorch v1.11.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataLoader</span></code></a> 在 <a class="reference external" href="https://pytorch.org/docs/stable/data.html#torch.utils.data.Dataset" title="(在 PyTorch v1.11.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></a> 周围包装了可迭代对象。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -373,9 +374,9 @@ y 的 shape 和 dtype：torch.Size([64]) torch.int64
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="id3">
-<h2>构建模型<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+</section>
+<section id="id3">
+<h2>构建模型<a class="headerlink" href="#id3" title="永久链接至标题">#</a></h2>
 <p>要在 PyTorch 中定义神经网络，需要创建继承自 <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.nn.Module.html#torch.nn.Module" title="(在 PyTorch v1.11.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.Module</span></code></a> 的类。在 <code class="xref py py-func docutils literal notranslate"><span class="pre">__init__()</span></code> 函数中定义网络层，并在 <code class="xref py py-func docutils literal notranslate"><span class="pre">forward()</span></code> 函数中指定数据将如何传递给网络。为了加速神经网络的运算，将其移动到 GPU（如果可用的话）。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -422,10 +423,10 @@ NeuralNetwork(
 </div>
 </div>
 </div>
-</div>
+</section>
 <hr class="docutils" />
-<div class="section" id="id4">
-<h2>模型参数优化<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<section id="id4">
+<h2>模型参数优化<a class="headerlink" href="#id4" title="永久链接至标题">#</a></h2>
 <p>为了训练模型，需要定义 <a class="reference external" href="https://pytorch.org/docs/stable/nn.html#loss-functions">损失函数</a> 和 <a class="reference external" href="https://pytorch.org/docs/stable/optim.html" title="(在 PyTorch v1.11.0)"><span class="xref myst">优化器</span></a>。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -575,9 +576,9 @@ Done!
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="id5">
-<h2>保存模型<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+</section>
+<section id="id5">
+<h2>保存模型<a class="headerlink" href="#id5" title="永久链接至标题">#</a></h2>
 <p>保存模型的常见方法是序列化内部状态字典（包含模型参数）。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -592,9 +593,9 @@ Done!
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="id6">
-<h2>加载模型<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h2>
+</section>
+<section id="id6">
+<h2>加载模型<a class="headerlink" href="#id6" title="永久链接至标题">#</a></h2>
 <p>加载模型的过程包括重新创建模型结构和将状态字典加载到其中。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -640,15 +641,15 @@ Done!
 </div>
 </div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
               </div>
               
               
               <!-- Previous / next buttons -->
-<div class='prev-next-area'> 
+<div class='prev-next-area'>
     <a class='left-prev' id="prev-link" href="index.html" title="上一页 页">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
@@ -671,7 +672,8 @@ Done!
       </div>
     </div>
   
-  <script src="../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
 <footer class="footer mt-5 mt-md-0">
   <div class="container">
     
@@ -683,7 +685,7 @@ Done!
     
     <div class="footer-item">
       <p class="last-updated">
-最后更新于 2022-03-25, 00:49:29.<br>
+最后更新于 2022-03-26, 01:34:45.<br>
 </p>
     </div>
     

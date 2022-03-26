@@ -9,3 +9,6 @@ torch.ao.quantization.quantize
     :template: classtemplate.rst
     
     quantize_dynamic
+    prepare_qat
+    prepare
+    convert

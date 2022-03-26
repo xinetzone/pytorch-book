@@ -4,11 +4,13 @@
 <html lang="zh_CN">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Pytorch 数值套件教程 &#8212; Pytorch Book 0.0.1 文档</title>
     
-  <link href="../../_static/css/theme.css" rel="stylesheet">
-  <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
 
     
   <link rel="stylesheet"
@@ -18,10 +20,6 @@
   <link rel="preload" as="font" type="font/woff2" crossorigin
     href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
-    
-      
-
-    
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/style.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
@@ -30,7 +28,8 @@
     <link rel="stylesheet" type="text/css" href="../../_static/tabs.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/default.css" />
     
-  <link rel="preload" as="script" href="../../_static/js/index.be7d3bbb2ef33a8344ce.js">
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
 
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
@@ -54,7 +53,7 @@
     <link rel="stylesheet" href="../../_static/css/custom.css"/>
 
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
     
     <div class="container-fluid" id="banner"></div>
 
@@ -134,10 +133,8 @@
       <div class="navbar-end-item">
         <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
         <li class="nav-item">
-          <a class="nav-link" href="https://github.com/xinetzone/pytorch-book" rel="noopener" target="_blank" title="GitHub">
-            <span><i class="fab fa-github-square"></i></span>
-            <label class="sr-only">GitHub</label>
-          </a>
+          <a class="nav-link" href="https://github.com/xinetzone/pytorch-book" rel="noopener" target="_blank" title="GitHub"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
         </li>
       </ul>
       </div>
@@ -153,7 +150,8 @@
           
             
             <!-- Only show if we have sidebars configured, else just a small margin  -->
-            <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+            <div class="col-12 col-md-3 bd-sidebar">
+              <div class="sidebar-start-items"><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
@@ -470,6 +468,9 @@
 
   </div>
 </nav>
+              </div>
+              <div class="sidebar-end-items">
+              </div>
             </div>
             
           
@@ -480,7 +481,7 @@
               
               <div class="toc-item">
                 
-<div class="tocsection onthispage pt-5 pb-3">
+<div class="tocsection onthispage mt-5 pt-1 pb-3">
     <i class="fas fa-list"></i> On this page
 </div>
 
@@ -575,14 +576,14 @@
 </div>
 </div>
 </div>
-<div class="tex2jax_ignore mathjax_ignore section" id="pytorch">
-<h1>Pytorch 数值套件教程<a class="headerlink" href="#pytorch" title="永久链接至标题">¶</a></h1>
+<section class="tex2jax_ignore mathjax_ignore" id="pytorch">
+<h1>Pytorch 数值套件教程<a class="headerlink" href="#pytorch" title="永久链接至标题">#</a></h1>
 <p>当它工作时，量化是好的，但很难知道什么是错误的，当它不满足我们期望的准确性。量化精度问题的调试并不容易，且耗时较长。</p>
 <p>调试的一个重要步骤是度量浮点模型及其相应量化模型的统计量，以了解它们的最大差异在哪里。PyTorch 量化中构建了一套名为 PyTorch Numeric Suite 的数值工具，以支持量化模块和浮点模块之间的统计量的度量，从而支持量化调试工作。即使对于精度较高的量化模型，PyTorch Numeric Suite 仍然可以作为剖析工具，更好地理解模型内部的量化误差，并为进一步优化提供指导。</p>
 <p>PyTorch Numeric Suite 目前支持通过统一的 API 的静态量化和动态量化来量化模型。</p>
 <p>在本教程中，首先使用 ResNet18 作为一个例子来展示如何使用 PyTorch Numeric Suite 来度量静态量化模型和浮点模型之间的统计信息。然后将以基于 LSTM 的序列模型为例，展示 PyTorch Numeric Suite 在动态量化模型中的应用。</p>
-<div class="section" id="id1">
-<h2>数值套件之静态量化<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<section id="id1">
+<h2>数值套件之静态量化<a class="headerlink" href="#id1" title="永久链接至标题">#</a></h2>
 <p class="rubric">设置</p>
 <p>从必要的导入开始：</p>
 <div class="cell docutils container">
@@ -622,8 +623,8 @@
 </div>
 </div>
 </div>
-<div class="section" id="id2">
-<h3>1. 比较浮点模型和量化模型的权重<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h3>
+<section id="id2">
+<h3>1. 比较浮点模型和量化模型的权重<a class="headerlink" href="#id2" title="永久链接至标题">#</a></h3>
 <p>首先要比较的是量化模型和浮点模型的权值。可以从 PyTorch Numeric Suite 调用 <code class="docutils literal notranslate"><span class="pre">compare_weights()</span></code> 来获得字典 <code class="docutils literal notranslate"><span class="pre">wt_compare_dict</span></code>，其键对应于模块名，每个条目都是一个字典，有两个键 <code class="docutils literal notranslate"><span class="pre">'float'</span></code> 和 <code class="docutils literal notranslate"><span class="pre">'quantized'</span></code>，包含 float 和 quantized 权重。<code class="docutils literal notranslate"><span class="pre">compare_weights()</span></code> 接受浮点和量化状态字典并返回一个字典，与浮点权值对应的键和值是浮点和量化权值的字典：</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -717,13 +718,13 @@ fc._packed_params._packed_params tensor(32.6506)
 <img alt="../../_images/ns_10_1.png" src="../../_images/ns_10_1.png" />
 </div>
 </div>
-</div>
-<div class="section" id="id3">
-<h3>2. 比较浮点和量化模型在相应的位置<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
+</section>
+<section id="id3">
+<h3>2. 比较浮点和量化模型在相应的位置<a class="headerlink" href="#id3" title="永久链接至标题">#</a></h3>
 <p>第二个工具允许对相同输入在相应位置上的浮点模型和量化模型之间的权重和激活进行比较，如下图所示。红色箭头表示比较的位置。</p>
-<div class="figure align-default">
+<figure class="align-default">
 <img alt="../../_images/compare_output.png" src="../../_images/compare_output.png" />
-</div>
+</figure>
 <p>我们从 PyTorch Numeric Suite 调用 <code class="docutils literal notranslate"><span class="pre">compare_model_outputs()</span></code> 来获取给定输入数据对应位置的浮点模型和量化模型中的激活。这个 API 返回一个字典，其中模块名为键。每个条目本身是一个字典，有两个包含激活的键 ‘float’ 和 ‘quantized’。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -812,17 +813,17 @@ fc._packed_params._packed_params tensor(32.6506)
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="id4">
-<h3>3. 使用相同的输入数据，将量化模型中的模块与等效的浮点模块进行比较<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+</section>
+<section id="id4">
+<h3>3. 使用相同的输入数据，将量化模型中的模块与等效的浮点模块进行比较<a class="headerlink" href="#id4" title="永久链接至标题">#</a></h3>
 <p>第三个工具允许比较模型中的量化模块和对应的浮点模块，为它们提供相同的输入，并比较它们的输出，如下所示。</p>
-<div class="figure align-default">
+<figure class="align-default">
 <img alt="../../_images/compare_stub.png" src="../../_images/compare_stub.png" />
-</div>
+</figure>
 <p>在实践中，我们调用 <code class="docutils literal notranslate"><span class="pre">prepare_model_with_stub()</span></code> 来交换我们想要比较的量化模块与 <code class="docutils literal notranslate"><span class="pre">Shadow</span></code> 模块，如下所示:</p>
-<div class="figure align-default">
+<figure class="align-default">
 <img alt="../../_images/shadow.png" src="../../_images/shadow.png" />
-</div>
+</figure>
 <p><code class="docutils literal notranslate"><span class="pre">Shadow</span></code> 模块以量化模块、浮点模块和 logger 作为输入，并在其中创建 forward 路径，使浮点模块与 shadow 量化模块共享同输入张量。</p>
 <p>logger 可以自定义，默认的记录器是 <code class="docutils literal notranslate"><span class="pre">ShadowLogger</span></code>，它将保存量化模块和浮点模块的输出，用于计算模块级量化误差。</p>
 <p>注意，在每次调用 <code class="docutils literal notranslate"><span class="pre">compare_model_outputs()</span></code> 和 <code class="docutils literal notranslate"><span class="pre">compare_model_stub()</span></code> 之前，我们需要有干净的浮点和量化模型。这是因为 <code class="docutils literal notranslate"><span class="pre">compare_model_outputs()</span></code> 和 <code class="docutils literal notranslate"><span class="pre">compare_model_stub()</span></code> 对 float 和量化模型进行了原地修改，如果一个接一个地调用，将导致意想不到的结果。</p>
@@ -919,13 +920,13 @@ fc._packed_params._packed_params tensor(32.6506)
 </div>
 </div>
 </div>
-</div>
-</div>
-<div class="section" id="numeric-suite">
-<h2>Numeric Suite 之动态量化<a class="headerlink" href="#numeric-suite" title="永久链接至标题">¶</a></h2>
+</section>
+</section>
+<section id="numeric-suite">
+<h2>Numeric Suite 之动态量化<a class="headerlink" href="#numeric-suite" title="永久链接至标题">#</a></h2>
 <p>Numeric Suite APIs are designed in such as way that they work for both dynamic quantized model and static quantized model. We will use a model with both LSTM and Linear modules to demonstrate the usage of Numeric Suite on dynamic quantized model. This model is the same one used in the tutorial of dynamic quantization on LSTM word language model <a class="footnote-reference brackets" href="#id8" id="id5">1</a>.</p>
-<div class="section" id="id6">
-<h3>设置<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
+<section id="id6">
+<h3>设置<a class="headerlink" href="#id6" title="永久链接至标题">#</a></h3>
 <p>First we define the model as below. Notice that within this model only <code class="docutils literal notranslate"><span class="pre">nn.LSTM</span></code> and <code class="docutils literal notranslate"><span class="pre">nn.Linear</span></code> modules will be quantized dynamically and <code class="docutils literal notranslate"><span class="pre">nn.Embedding</span></code> will remain as floating point module after quantization.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -984,9 +985,9 @@ fc._packed_params._packed_params tensor(32.6506)
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="compare-the-weights-of-float-and-quantized-models">
-<h3>1. Compare the weights of float and quantized models<a class="headerlink" href="#compare-the-weights-of-float-and-quantized-models" title="永久链接至标题">¶</a></h3>
+</section>
+<section id="compare-the-weights-of-float-and-quantized-models">
+<h3>1. Compare the weights of float and quantized models<a class="headerlink" href="#compare-the-weights-of-float-and-quantized-models" title="永久链接至标题">#</a></h3>
 <p>We first call <code class="docutils literal notranslate"><span class="pre">compare_weights()</span></code> from PyTorch Numeric Suite to get a dictionary <code class="docutils literal notranslate"><span class="pre">wt_compare_dict</span></code> with key corresponding to module names and each entry is a dictionary with two keys ‘float’ and ‘quantized’, containing the float and quantized weights.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1008,9 +1009,9 @@ fc._packed_params._packed_params tensor(32.6506)
 </div>
 </div>
 <p>The Inf value in <code class="docutils literal notranslate"><span class="pre">encoder.weight</span></code> entry above is because encoder module is not quantized and the weights are the same in both floating point and quantized models.</p>
-</div>
-<div class="section" id="compare-float-point-and-quantized-models-at-corresponding-locations">
-<h3>2. Compare float point and quantized models at corresponding locations<a class="headerlink" href="#compare-float-point-and-quantized-models-at-corresponding-locations" title="永久链接至标题">¶</a></h3>
+</section>
+<section id="compare-float-point-and-quantized-models-at-corresponding-locations">
+<h3>2. Compare float point and quantized models at corresponding locations<a class="headerlink" href="#compare-float-point-and-quantized-models-at-corresponding-locations" title="永久链接至标题">#</a></h3>
 <p>Then we call <code class="docutils literal notranslate"><span class="pre">compare_model_outputs()</span></code> from PyTorch Numeric Suite to get the activations in float model and quantized model at corresponding locations for the given input data. This API returns a dict with module names being keys. Each entry is itself a dict with two keys ‘float’ and ‘quantized’ containing the activations. Notice that this sequence model has two inputs, and we can pass both inputs into <code class="docutils literal notranslate"><span class="pre">compare_model_outputs()</span></code> and <code class="docutils literal notranslate"><span class="pre">compare_model_stub()</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1032,9 +1033,9 @@ fc._packed_params._packed_params tensor(32.6506)
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="compare-a-module-in-a-quantized-model-with-its-float-point-equivalent-with-the-same-input-data">
-<h3>3. Compare a module in a quantized model with its float point equivalent, with the same input data<a class="headerlink" href="#compare-a-module-in-a-quantized-model-with-its-float-point-equivalent-with-the-same-input-data" title="永久链接至标题">¶</a></h3>
+</section>
+<section id="compare-a-module-in-a-quantized-model-with-its-float-point-equivalent-with-the-same-input-data">
+<h3>3. Compare a module in a quantized model with its float point equivalent, with the same input data<a class="headerlink" href="#compare-a-module-in-a-quantized-model-with-its-float-point-equivalent-with-the-same-input-data" title="永久链接至标题">#</a></h3>
 <p>Next we call <code class="docutils literal notranslate"><span class="pre">compare_model_stub()</span></code> from PyTorch Numeric Suite to compare LSTM and Linear module with its float point equivalent. This API returns a dict with key corresponding to module names and each entry being a dictionary with two keys ‘float’ and ‘quantized’, containing the output tensors of quantized and its matching float shadow module.</p>
 <p>We reset the model first.</p>
 <div class="cell docutils container">
@@ -1074,10 +1075,10 @@ fc._packed_params._packed_params tensor(32.6506)
 </div>
 </div>
 <p>40db 的 SQNR 是很高的，在这种情况下，我们在浮点和量化模型之间有很好的数值对齐。</p>
-</div>
-</div>
-<div class="section" id="id7">
-<h2>结论<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h2>
+</section>
+</section>
+<section id="id7">
+<h2>结论<a class="headerlink" href="#id7" title="永久链接至标题">#</a></h2>
 <p>在本教程中，我们演示了如何使用 PyTorch Numeric Suite 来度量量化模型和浮点模型之间的统计数据，并使用用于静态量化和动态量化的统一 API 在即时模式下进行比较。
 感谢你的阅读!一如既往，我们欢迎任何反馈，所以如果您有任何问题，请创建 <a class="reference external" href="https://github.com/pytorch/pytorch/issues">issue</a>。</p>
 <hr class="footnotes docutils" />
@@ -1086,15 +1087,15 @@ fc._packed_params._packed_params tensor(32.6506)
 <dd><p><a class="reference external" href="https://pytorch.org/tutorials/advanced/dynamic_quantization_tutorial.html">DYNAMIC QUANTIZATION ON AN LSTM WORD LANGUAGE MODEL</a>.</p>
 </dd>
 </dl>
-</div>
-</div>
+</section>
+</section>
 
 
               </div>
               
               
               <!-- Previous / next buttons -->
-<div class='prev-next-area'> 
+<div class='prev-next-area'>
     <a class='left-prev' id="prev-link" href="basic.html" title="上一页 页">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
@@ -1117,7 +1118,8 @@ fc._packed_params._packed_params tensor(32.6506)
       </div>
     </div>
   
-  <script src="../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
 <footer class="footer mt-5 mt-md-0">
   <div class="container">
     
@@ -1129,7 +1131,7 @@ fc._packed_params._packed_params tensor(32.6506)
     
     <div class="footer-item">
       <p class="last-updated">
-最后更新于 2022-03-25, 00:49:29.<br>
+最后更新于 2022-03-26, 01:34:45.<br>
 </p>
     </div>
     

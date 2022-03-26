@@ -4,11 +4,13 @@
 <html lang="zh_CN">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>量化张量 &#8212; Pytorch Book 0.0.1 文档</title>
     
-  <link href="../_static/css/theme.css" rel="stylesheet">
-  <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
 
     
   <link rel="stylesheet"
@@ -18,10 +20,6 @@
   <link rel="preload" as="font" type="font/woff2" crossorigin
     href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
-    
-      
-
-    
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/css/style.css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
@@ -30,7 +28,8 @@
     <link rel="stylesheet" type="text/css" href="../_static/tabs.css" />
     <link rel="stylesheet" type="text/css" href="../_static/default.css" />
     
-  <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
@@ -54,7 +53,7 @@
     <link rel="stylesheet" href="../_static/css/custom.css"/>
 
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
     
     <div class="container-fluid" id="banner"></div>
 
@@ -134,10 +133,8 @@
       <div class="navbar-end-item">
         <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
         <li class="nav-item">
-          <a class="nav-link" href="https://github.com/xinetzone/pytorch-book" rel="noopener" target="_blank" title="GitHub">
-            <span><i class="fab fa-github-square"></i></span>
-            <label class="sr-only">GitHub</label>
-          </a>
+          <a class="nav-link" href="https://github.com/xinetzone/pytorch-book" rel="noopener" target="_blank" title="GitHub"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
         </li>
       </ul>
       </div>
@@ -153,7 +150,8 @@
           
             
             <!-- Only show if we have sidebars configured, else just a small margin  -->
-            <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+            <div class="col-12 col-md-3 bd-sidebar">
+              <div class="sidebar-start-items"><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
@@ -470,6 +468,9 @@
 
   </div>
 </nav>
+              </div>
+              <div class="sidebar-end-items">
+              </div>
             </div>
             
           
@@ -480,7 +481,7 @@
               
               <div class="toc-item">
                 
-<div class="tocsection onthispage pt-5 pb-3">
+<div class="tocsection onthispage mt-5 pt-1 pb-3">
     <i class="fas fa-list"></i> On this page
 </div>
 
@@ -539,11 +540,11 @@
               
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="id1">
-<h1>量化张量<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>量化张量<a class="headerlink" href="#id1" title="永久链接至标题">#</a></h1>
 <p>参考：<a class="reference external" href="https://github.com/pytorch/pytorch/wiki/Introducing-Quantized-Tensor">量化张量</a></p>
-<div class="section" id="id2">
-<h2>创建量化张量<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<section id="id2">
+<h2>创建量化张量<a class="headerlink" href="#id2" title="永久链接至标题">#</a></h2>
 <ul class="simple">
 <li><p>通过量化非量化的浮点张量得到量化张量</p></li>
 </ul>
@@ -658,9 +659,9 @@
 </div>
 </div>
 <p>在当前的 API 中，我们必须专一每个量化方案的函数，例如，如果我们想量化张量，我们将有 <code class="docutils literal notranslate"><span class="pre">quantize_per_tensor</span></code> 和 <code class="docutils literal notranslate"><span class="pre">quantize_per_channel</span></code>。类似地，对于 <code class="docutils literal notranslate"><span class="pre">q_scale</span></code> 和 <code class="docutils literal notranslate"><span class="pre">q_zero_point</span></code>，我们应该有以 <code class="docutils literal notranslate"><span class="pre">Quantizer</span></code> 作为参数的单一量化函数。为了检查量化参数，我们应该让量化张量返回 <code class="docutils literal notranslate"><span class="pre">Quantizer</span></code> 对象，这样我们就可以在 <code class="docutils literal notranslate"><span class="pre">Quantizer</span></code> 对象上检查量化参数，而不是把所有东西都放到张量 API 中。当前的基础设施还没有为这种支持做好准备，目前正在开发中。</p>
-</div>
-<div class="section" id="id3">
-<h2>量化张量的运算<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+</section>
+<section id="id3">
+<h2>量化张量的运算<a class="headerlink" href="#id3" title="永久链接至标题">#</a></h2>
 <p class="rubric">反量化</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -759,9 +760,9 @@
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="id4">
-<h2>检查量化张量<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+</section>
+<section id="id4">
+<h2>检查量化张量<a class="headerlink" href="#id4" title="永久链接至标题">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Check size of Tensor</span>
@@ -873,13 +874,13 @@
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="id5">
-<h2>量化的算子/内核<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+</section>
+<section id="id5">
+<h2>量化的算子/内核<a class="headerlink" href="#id5" title="永久链接至标题">#</a></h2>
 <p>我们也在研究量化算子，如量化 <code class="docutils literal notranslate"><span class="pre">QRelu</span></code>、<code class="docutils literal notranslate"><span class="pre">QAdd</span></code>、<code class="docutils literal notranslate"><span class="pre">QCat</span></code>、<code class="docutils literal notranslate"><span class="pre">QLinear</span></code>、<code class="docutils literal notranslate"><span class="pre">QConv</span></code> 等。我们要么使用简单的操作符实现，要么在操作符中封装 fbgemm 实现。所有的操作员都是在 C10 中注册的，而且他们现在只在 CPU 中。我们也有关于<a class="reference external" href="https://github.com/pytorch/pytorch/blob/master/aten/src/ATen/native/quantized/README.md">如何写量化算子/内核的说明</a>。</p>
-</div>
-<div class="section" id="id6">
-<h2>量化模型<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h2>
+</section>
+<section id="id6">
+<h2>量化模型<a class="headerlink" href="#id6" title="永久链接至标题">#</a></h2>
 <p>我们还有量化的模块，它们封装了这些内核实现，这些内核实现位于 <code class="docutils literal notranslate"><span class="pre">torch.nn.quantized</span></code> 命名空间中，将在模型开发中使用。我们将提供实用函数来将 <code class="docutils literal notranslate"><span class="pre">torch.nn.Module</span></code> 替换为 <code class="docutils literal notranslate"><span class="pre">torch.nn.quantized.Module</span></code>，但用户也可以自由地直接使用它们。我们会尽量将量化模块的 api 与 <code class="docutils literal notranslate"><span class="pre">torch.nn.Module</span></code> 中的对应 api 匹配。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -893,15 +894,15 @@
 </div>
 </div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
               </div>
               
               
               <!-- Previous / next buttons -->
-<div class='prev-next-area'> 
+<div class='prev-next-area'>
     <a class='left-prev' id="prev-link" href="recipes.html" title="上一页 页">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
@@ -924,7 +925,8 @@
       </div>
     </div>
   
-  <script src="../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
 <footer class="footer mt-5 mt-md-0">
   <div class="container">
     
@@ -936,7 +938,7 @@
     
     <div class="footer-item">
       <p class="last-updated">
-最后更新于 2022-03-25, 00:49:29.<br>
+最后更新于 2022-03-26, 01:34:45.<br>
 </p>
     </div>
     

@@ -4,11 +4,13 @@
 <html lang="zh_CN">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>A Survey of Quantization Methods for Efficient Neural Network Inference &#8212; Pytorch Book 0.0.1 文档</title>
     
-  <link href="../../_static/css/theme.css" rel="stylesheet">
-  <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
 
     
   <link rel="stylesheet"
@@ -18,10 +20,6 @@
   <link rel="preload" as="font" type="font/woff2" crossorigin
     href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
-    
-      
-
-    
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/style.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
@@ -30,7 +28,8 @@
     <link rel="stylesheet" type="text/css" href="../../_static/tabs.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/default.css" />
     
-  <link rel="preload" as="script" href="../../_static/js/index.be7d3bbb2ef33a8344ce.js">
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
 
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
@@ -54,7 +53,7 @@
     <link rel="stylesheet" href="../../_static/css/custom.css"/>
 
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
     
     <div class="container-fluid" id="banner"></div>
 
@@ -134,10 +133,8 @@
       <div class="navbar-end-item">
         <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
         <li class="nav-item">
-          <a class="nav-link" href="https://github.com/xinetzone/pytorch-book" rel="noopener" target="_blank" title="GitHub">
-            <span><i class="fab fa-github-square"></i></span>
-            <label class="sr-only">GitHub</label>
-          </a>
+          <a class="nav-link" href="https://github.com/xinetzone/pytorch-book" rel="noopener" target="_blank" title="GitHub"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
         </li>
       </ul>
       </div>
@@ -153,7 +150,8 @@
           
             
             <!-- Only show if we have sidebars configured, else just a small margin  -->
-            <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+            <div class="col-12 col-md-3 bd-sidebar">
+              <div class="sidebar-start-items"><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
@@ -470,6 +468,9 @@
 
   </div>
 </nav>
+              </div>
+              <div class="sidebar-end-items">
+              </div>
             </div>
             
           
@@ -480,7 +481,7 @@
               
               <div class="toc-item">
                 
-<div class="tocsection onthispage pt-5 pb-3">
+<div class="tocsection onthispage mt-5 pt-1 pb-3">
     <i class="fas fa-list"></i> On this page
 </div>
 
@@ -553,8 +554,8 @@
               
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="a-survey-of-quantization-methods-for-efficient-neural-network-inference">
-<h1>A Survey of Quantization Methods for Efficient Neural Network Inference<a class="headerlink" href="#a-survey-of-quantization-methods-for-efficient-neural-network-inference" title="永久链接至标题">¶</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="a-survey-of-quantization-methods-for-efficient-neural-network-inference">
+<h1>A Survey of Quantization Methods for Efficient Neural Network Inference<a class="headerlink" href="#a-survey-of-quantization-methods-for-efficient-neural-network-inference" title="永久链接至标题">#</a></h1>
 <p><span id="id1">[<a class="reference internal" href="../../refs.html#id3" title="Amir Gholami, Sehoon Kim, Zhen Dong, Zhewei Yao, Michael W. Mahoney, and Kurt Keutzer. A survey of quantization methods for efficient neural network inference. 2021. arXiv:2103.13630.">Gholami <em>et al.</em>, 2021</a>]</span></p>
 <p>量化问题
 :   一组连续实数以何种方式分布在一组固定的离散数集上，以最小化所需的比特数，同时最大化 <strong>伴随计算</strong> （attendant computation）的 accuracy。</p>
@@ -564,10 +565,10 @@
 <li><p>低能耗</p></li>
 <li><p>高 accuracy</p></li>
 </ul>
-<div class="section" id="id2">
-<h2>不同的设计方法<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
-<div class="section" id="nn">
-<h3>设计高效 NN 架构<a class="headerlink" href="#nn" title="永久链接至标题">¶</a></h3>
+<section id="id2">
+<h2>不同的设计方法<a class="headerlink" href="#id2" title="永久链接至标题">#</a></h2>
+<section id="nn">
+<h3>设计高效 NN 架构<a class="headerlink" href="#nn" title="永久链接至标题">#</a></h3>
 <p>micro-architecture
 微架构
 :   kernel types，如深度卷积（depth-wise convolution）或 低秩分解（low-rank factorization）</p>
@@ -575,19 +576,19 @@
 宏架构
 :   module types，如 residual 或 inception</p>
 <p>利用 AutoML（Automated machine learning）或者 NAS（Neural Architecture Search）寻找新的架构：旨在以自动化的方式，在给到模型大小、深度和/或宽度的约束下，找到更好的神经网络架构。</p>
-</div>
-<div class="section" id="id3">
-<h3>NN 架构与硬件的协同设计<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
+</section>
+<section id="id3">
+<h3>NN 架构与硬件的协同设计<a class="headerlink" href="#id3" title="永久链接至标题">#</a></h3>
 <p>架构与硬件的初始化状态是手动设计的，而 adapt/change NN 架构使用自动化方法。</p>
-</div>
-<div class="section" id="id4">
-<h3>剪枝<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+</section>
+<section id="id4">
+<h3>剪枝<a class="headerlink" href="#id4" title="永久链接至标题">#</a></h3>
 <p>剪枝（pruning）目标：通过去除对模型输出或者损失函数影响最小的神经元，以减少 NN 内存占用和计算成本。</p>
 <p>剪除具有小显著性（saliency）的神经元（sensitivity），获得稀疏的计算图。</p>
-</div>
-</div>
-<div class="section" id="id5">
-<h2>量化简介<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+</section>
+</section>
+<section id="id5">
+<h2>量化简介<a class="headerlink" href="#id5" title="永久链接至标题">#</a></h2>
 <p>量化
 :   将大集合（通常是连续的）中的值映射到小集合（通常是有限的）。典型的策略有：Rounding（舍入）和截断（truncation）。香农（Shannon）提出 可变速率量化（variable-rate quantization），并随后衍生出 霍夫曼编码（Huffman Coding）。</p>
 <p>香农引入如下概念：</p>
@@ -602,27 +603,27 @@
 <li><p>解依赖于输入数据在 reasonable topology。</p></li>
 </ol>
 <p>使用有限多比特表示实数会产生 <strong>舍入误差</strong>。<strong>截断误差</strong> 因迭代算法只能执行有限次而产生。</p>
-<div class="section" id="id6">
-<h3>NN 量化<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
+<section id="id6">
+<h3>NN 量化<a class="headerlink" href="#id6" title="永久链接至标题">#</a></h3>
 <p>NN 量化的特殊之处：</p>
 <ol class="simple">
 <li><p>NN 的推理和训练都是计算密集型（intensity）。</p></li>
 <li><p>因 NN 的重度参数化，有足够的机会降低 bit 表示而不影响精度。</p></li>
 <li><p>NN 对 aggressive 量化和 extreme discretization 非常鲁棒。</p></li>
 </ol>
-</div>
-</div>
-<div class="section" id="id7">
-<h2>量化基本概念<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h2>
-</div>
-</div>
+</section>
+</section>
+<section id="id7">
+<h2>量化基本概念<a class="headerlink" href="#id7" title="永久链接至标题">#</a></h2>
+</section>
+</section>
 
 
               </div>
               
               
               <!-- Previous / next buttons -->
-<div class='prev-next-area'> 
+<div class='prev-next-area'>
     <a class='left-prev' id="prev-link" href="index.html" title="上一页 页">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
@@ -645,7 +646,8 @@
       </div>
     </div>
   
-  <script src="../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
 <footer class="footer mt-5 mt-md-0">
   <div class="container">
     
@@ -657,7 +659,7 @@
     
     <div class="footer-item">
       <p class="last-updated">
-最后更新于 2022-03-25, 00:49:29.<br>
+最后更新于 2022-03-26, 01:34:45.<br>
 </p>
     </div>
     

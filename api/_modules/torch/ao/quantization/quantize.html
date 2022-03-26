@@ -7,8 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>torch.ao.quantization.quantize &#8212; Pytorch Book 0.0.1 文档</title>
     
-  <link href="../../../../_static/css/theme.css" rel="stylesheet">
-  <link href="../../../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
 
     
   <link rel="stylesheet"
@@ -18,10 +19,6 @@
   <link rel="preload" as="font" type="font/woff2" crossorigin
     href="../../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
-    
-      
-
-    
     <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/css/style.css" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/togglebutton.css" />
@@ -30,7 +27,8 @@
     <link rel="stylesheet" type="text/css" href="../../../../_static/tabs.css" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/default.css" />
     
-  <link rel="preload" as="script" href="../../../../_static/js/index.be7d3bbb2ef33a8344ce.js">
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
 
     <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
     <script src="../../../../_static/jquery.js"></script>
@@ -53,7 +51,7 @@
     <link rel="stylesheet" href="../../../../_static/css/custom.css"/>
 
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
     
     <div class="container-fluid" id="banner"></div>
 
@@ -109,10 +107,8 @@
       <div class="navbar-end-item">
         <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
         <li class="nav-item">
-          <a class="nav-link" href="https://github.com/xinetzone/pytorch-book" rel="noopener" target="_blank" title="GitHub">
-            <span><i class="fab fa-github-square"></i></span>
-            <label class="sr-only">GitHub</label>
-          </a>
+          <a class="nav-link" href="https://github.com/xinetzone/pytorch-book" rel="noopener" target="_blank" title="GitHub"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
         </li>
       </ul>
       </div>
@@ -128,7 +124,8 @@
           
             
             <!-- Only show if we have sidebars configured, else just a small margin  -->
-            <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="../../../../search.html" method="get">
+            <div class="col-12 col-md-3 bd-sidebar">
+              <div class="sidebar-start-items"><form class="bd-search d-flex align-items-center" action="../../../../search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
@@ -136,6 +133,9 @@
     
   </div>
 </nav>
+              </div>
+              <div class="sidebar-end-items">
+              </div>
             </div>
             
           
@@ -371,7 +371,7 @@
         <span class="n">module</span><span class="o">.</span><span class="n">_modules</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">add_quant_dequant</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">module</span>
 
-<span class="k">def</span> <span class="nf">prepare</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">allow_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<div class="viewcode-block" id="prepare"><a class="viewcode-back" href="../../../../pytorch/ao/quantization/generated/torch.ao.quantization.quantize.prepare.html#torch.ao.quantization.quantize.prepare">[文档]</a><span class="k">def</span> <span class="nf">prepare</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">allow_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
             <span class="n">observer_non_leaf_module_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
             <span class="n">prepare_custom_config_dict</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Prepares a copy of the model for quantization calibration or quantization-aware training.</span>
@@ -425,7 +425,7 @@
     <span class="n">add_observer_</span><span class="p">(</span>
         <span class="n">model</span><span class="p">,</span> <span class="n">qconfig_propagation_list</span><span class="p">,</span> <span class="n">observer_non_leaf_module_list</span><span class="p">,</span>
         <span class="n">custom_module_class_mapping</span><span class="o">=</span><span class="n">custom_module_class_mapping</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">model</span>
+    <span class="k">return</span> <span class="n">model</span></div>
 
 <span class="k">def</span> <span class="nf">_remove_activation_post_process</span><span class="p">(</span><span class="n">module</span><span class="p">):</span>
     <span class="c1"># TODO: maybe we should change activation_post_process to _activation_post_process</span>
@@ -577,7 +577,7 @@
     <span class="n">convert</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">mapping</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">model</span></div>
 
-<span class="k">def</span> <span class="nf">prepare_qat</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">mapping</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="prepare_qat"><a class="viewcode-back" href="../../../../pytorch/ao/quantization/generated/torch.ao.quantization.quantize.prepare_qat.html#torch.ao.quantization.quantize.prepare_qat">[文档]</a><span class="k">def</span> <span class="nf">prepare_qat</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">mapping</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Prepares a copy of the model for quantization calibration or</span>
 <span class="sd">    quantization-aware training and converts it to quantized version.</span>
@@ -603,7 +603,7 @@
     <span class="n">propagate_qconfig_</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">qconfig_dict</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
     <span class="n">convert</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">mapping</span><span class="o">=</span><span class="n">mapping</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">remove_qconfig</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="n">prepare</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">observer_non_leaf_module_list</span><span class="o">=</span><span class="nb">set</span><span class="p">(</span><span class="n">mapping</span><span class="o">.</span><span class="n">values</span><span class="p">()),</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">model</span>
+    <span class="k">return</span> <span class="n">model</span></div>
 
 <span class="k">def</span> <span class="nf">quantize_qat</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">run_fn</span><span class="p">,</span> <span class="n">run_args</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Do quantization aware training and output a quantized model</span>
@@ -627,7 +627,7 @@
     <span class="n">convert</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">model</span>
 
-<span class="k">def</span> <span class="nf">convert</span><span class="p">(</span>
+<div class="viewcode-block" id="convert"><a class="viewcode-back" href="../../../../pytorch/ao/quantization/generated/torch.ao.quantization.quantize.convert.html#torch.ao.quantization.quantize.convert">[文档]</a><span class="k">def</span> <span class="nf">convert</span><span class="p">(</span>
         <span class="n">module</span><span class="p">,</span> <span class="n">mapping</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">remove_qconfig</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="n">convert_custom_config_dict</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Converts submodules in input module to a different module according to `mapping`</span>
@@ -664,7 +664,7 @@
         <span class="n">convert_custom_config_dict</span><span class="o">=</span><span class="n">convert_custom_config_dict</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">remove_qconfig</span><span class="p">:</span>
         <span class="n">_remove_qconfig</span><span class="p">(</span><span class="n">module</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">module</span>
+    <span class="k">return</span> <span class="n">module</span></div>
 
 <span class="k">def</span> <span class="nf">_convert</span><span class="p">(</span>
         <span class="n">module</span><span class="p">,</span> <span class="n">mapping</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
@@ -777,7 +777,8 @@
       </div>
     </div>
   
-  <script src="../../../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
 <footer class="footer mt-5 mt-md-0">
   <div class="container">
     
@@ -789,7 +790,7 @@
     
     <div class="footer-item">
       <p class="last-updated">
-最后更新于 2022-03-25, 00:49:17.<br>
+最后更新于 2022-03-26, 01:34:32.<br>
 </p>
     </div>
     

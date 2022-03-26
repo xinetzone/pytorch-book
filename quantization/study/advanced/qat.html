@@ -4,11 +4,13 @@
 <html lang="zh_CN">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>QAT &#8212; Pytorch Book 0.0.1 文档</title>
     
-  <link href="../../../_static/css/theme.css" rel="stylesheet">
-  <link href="../../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
 
     
   <link rel="stylesheet"
@@ -18,10 +20,6 @@
   <link rel="preload" as="font" type="font/woff2" crossorigin
     href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
-    
-      
-
-    
     <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/css/style.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
@@ -30,7 +28,8 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/tabs.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/default.css" />
     
-  <link rel="preload" as="script" href="../../../_static/js/index.be7d3bbb2ef33a8344ce.js">
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
 
     <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
     <script src="../../../_static/jquery.js"></script>
@@ -54,7 +53,7 @@
     <link rel="stylesheet" href="../../../_static/css/custom.css"/>
 
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
     
     <div class="container-fluid" id="banner"></div>
 
@@ -134,10 +133,8 @@
       <div class="navbar-end-item">
         <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
         <li class="nav-item">
-          <a class="nav-link" href="https://github.com/xinetzone/pytorch-book" rel="noopener" target="_blank" title="GitHub">
-            <span><i class="fab fa-github-square"></i></span>
-            <label class="sr-only">GitHub</label>
-          </a>
+          <a class="nav-link" href="https://github.com/xinetzone/pytorch-book" rel="noopener" target="_blank" title="GitHub"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
         </li>
       </ul>
       </div>
@@ -153,7 +150,8 @@
           
             
             <!-- Only show if we have sidebars configured, else just a small margin  -->
-            <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+            <div class="col-12 col-md-3 bd-sidebar">
+              <div class="sidebar-start-items"><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
@@ -470,6 +468,9 @@
 
   </div>
 </nav>
+              </div>
+              <div class="sidebar-end-items">
+              </div>
             </div>
             
           
@@ -509,8 +510,8 @@
               
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="qat">
-<h1>QAT<a class="headerlink" href="#qat" title="永久链接至标题">¶</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="qat">
+<h1>QAT<a class="headerlink" href="#qat" title="永久链接至标题">#</a></h1>
 <p>载入库：</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -618,8 +619,7 @@
 
 <span class="k">def</span> <span class="nf">create_qat_model</span><span class="p">(</span><span class="n">num_classes</span><span class="p">,</span>
                      <span class="n">model_path</span><span class="p">,</span>
-                     <span class="n">quantize</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                     <span class="n">backend</span><span class="o">=</span><span class="s1">&#39;fbgemm&#39;</span><span class="p">):</span>
+                     <span class="n">quantize</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="n">qat_model</span> <span class="o">=</span> <span class="n">create_model</span><span class="p">(</span><span class="n">quantize</span><span class="o">=</span><span class="n">quantize</span><span class="p">,</span>
                              <span class="n">num_classes</span><span class="o">=</span><span class="n">num_classes</span><span class="p">)</span>
     <span class="n">qat_model</span> <span class="o">=</span> <span class="n">load_model</span><span class="p">(</span><span class="n">qat_model</span><span class="p">,</span> <span class="n">model_path</span><span class="p">)</span>
@@ -688,7 +688,11 @@ Files already downloaded and verified
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../../_images/qat_9_0.svg" src="../../../_images/qat_9_0.svg" /></div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>loss 0.169, train acc 0.946, test acc 0.912
+57.0 examples/sec on cuda:0
+</pre></div>
+</div>
+<img alt="../../../_images/qat_9_1.svg" src="../../../_images/qat_9_1.svg" /></div>
 </div>
 <p>冻结前几次训练的量化器以及观测器：</p>
 <div class="cell docutils container">
@@ -751,14 +755,14 @@ Files already downloaded and verified
 </div>
 </div>
 </div>
-</div>
+</section>
 
 
               </div>
               
               
               <!-- Previous / next buttons -->
-<div class='prev-next-area'> 
+<div class='prev-next-area'>
     <a class='left-prev' id="prev-link" href="run.html" title="上一页 页">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
@@ -781,7 +785,8 @@ Files already downloaded and verified
       </div>
     </div>
   
-  <script src="../../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
 <footer class="footer mt-5 mt-md-0">
   <div class="container">
     
@@ -793,7 +798,7 @@ Files already downloaded and verified
     
     <div class="footer-item">
       <p class="last-updated">
-最后更新于 2022-03-25, 00:49:29.<br>
+最后更新于 2022-03-26, 01:34:45.<br>
 </p>
     </div>
     

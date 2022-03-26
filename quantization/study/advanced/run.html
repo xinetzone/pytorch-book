@@ -4,11 +4,13 @@
 <html lang="zh_CN">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>通用量化模型 &#8212; Pytorch Book 0.0.1 文档</title>
     
-  <link href="../../../_static/css/theme.css" rel="stylesheet">
-  <link href="../../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
 
     
   <link rel="stylesheet"
@@ -18,10 +20,6 @@
   <link rel="preload" as="font" type="font/woff2" crossorigin
     href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
-    
-      
-
-    
     <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/css/style.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
@@ -30,7 +28,8 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/tabs.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/default.css" />
     
-  <link rel="preload" as="script" href="../../../_static/js/index.be7d3bbb2ef33a8344ce.js">
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
 
     <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
     <script src="../../../_static/jquery.js"></script>
@@ -56,7 +55,7 @@
     <link rel="stylesheet" href="../../../_static/css/custom.css"/>
 
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
     
     <div class="container-fluid" id="banner"></div>
 
@@ -136,10 +135,8 @@
       <div class="navbar-end-item">
         <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
         <li class="nav-item">
-          <a class="nav-link" href="https://github.com/xinetzone/pytorch-book" rel="noopener" target="_blank" title="GitHub">
-            <span><i class="fab fa-github-square"></i></span>
-            <label class="sr-only">GitHub</label>
-          </a>
+          <a class="nav-link" href="https://github.com/xinetzone/pytorch-book" rel="noopener" target="_blank" title="GitHub"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
         </li>
       </ul>
       </div>
@@ -155,7 +152,8 @@
           
             
             <!-- Only show if we have sidebars configured, else just a small margin  -->
-            <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+            <div class="col-12 col-md-3 bd-sidebar">
+              <div class="sidebar-start-items"><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
@@ -472,6 +470,9 @@
 
   </div>
 </nav>
+              </div>
+              <div class="sidebar-end-items">
+              </div>
             </div>
             
           
@@ -482,7 +483,7 @@
               
               <div class="toc-item">
                 
-<div class="tocsection onthispage pt-5 pb-3">
+<div class="tocsection onthispage mt-5 pt-1 pb-3">
     <i class="fas fa-list"></i> On this page
 </div>
 
@@ -551,8 +552,8 @@
               
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="id1">
-<h1>通用量化模型<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>通用量化模型<a class="headerlink" href="#id1" title="永久链接至标题">#</a></h1>
 <p class="rubric">模型对比</p>
 <table class="colwidths-auto table">
 <thead>
@@ -645,8 +646,8 @@
 </div>
 </div>
 </div>
-<div class="section" id="id2">
-<h2>辅助函数<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<section id="id2">
+<h2>辅助函数<a class="headerlink" href="#id2" title="永久链接至标题">#</a></h2>
 <p>接下来，我们定义几个<a class="reference external" href="https://github.com/pytorch/examples/blob/master/imagenet/main.py">帮助函数</a>来帮助评估模型。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -663,9 +664,9 @@
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="id3">
-<h2>定义数据集和数据加载器<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+</section>
+<section id="id3">
+<h2>定义数据集和数据加载器<a class="headerlink" href="#id3" title="永久链接至标题">#</a></h2>
 <p>作为最后一个主要的设置步骤，我们为训练和测试集定义了数据加载器。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -713,9 +714,9 @@ Files already downloaded and verified
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="id4">
-<h2>微调浮点模型<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+</section>
+<section id="id4">
+<h2>微调浮点模型<a class="headerlink" href="#id4" title="永久链接至标题">#</a></h2>
 <p>配置浮点模型：</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -771,9 +772,9 @@ Files already downloaded and verified
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="id5">
-<h2>配置可量化模型<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+</section>
+<section id="id5">
+<h2>配置可量化模型<a class="headerlink" href="#id5" title="永久链接至标题">#</a></h2>
 <p>加载浮点模型：</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -897,9 +898,9 @@ Files already downloaded and verified
 </div>
 </div>
 <p>这将是我们进行比较的基准。接下来，让我们尝试不同的量化方法。</p>
-</div>
-<div class="section" id="id6">
-<h2>静态量化后训练<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h2>
+</section>
+<section id="id6">
+<h2>静态量化后训练<a class="headerlink" href="#id6" title="永久链接至标题">#</a></h2>
 <p>训练后的静态量化（Post Training Quantization，简称 PTQ）不仅包括将权重从 float 转换为int，就像在动态量化中一样，还包括执行额外的步骤，即首先通过网络输入一批数据，并计算不同激活的结果分布（具体来说，这是通过在记录数据的不同点插入观测者模块来实现的）。然后使用这些分布来确定如何在推断时量化不同的激活（一种简单的技术是将整个激活范围划分为 256 个级别，但我们也支持更复杂的方法）。重要的是，这个额外的步骤允许我们在运算之间传递量化的值，而不是在每个运算之间将这些值转换为浮点数（然后再转换为整数），从而显著提高了速度。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1101,9 +1102,9 @@ Files already downloaded and verified
 </div>
 </div>
 <p>仅仅改变这种量化配置方法，就可以将准确度提高到 <span class="math notranslate nohighlight">\(75.6\%\)</span> 以上！尽管如此，这还是比 <span class="math notranslate nohighlight">\(95.09\%\)</span> 的基线水平低了 <span class="math notranslate nohighlight">\(19\%\)</span>。让我们尝试量化感知训练。</p>
-</div>
-<div class="section" id="id7">
-<h2>量化感知训练<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h2>
+</section>
+<section id="id7">
+<h2>量化感知训练<a class="headerlink" href="#id7" title="永久链接至标题">#</a></h2>
 <p>量化感知训练（Quantization-aware training，QAT）是一种量化方法，通常可以获得最高的精度。使用 QAT，所有的权值和激活都在前向和后向训练过程中被“伪量化”：也就是说，浮点值被舍入以模拟 int8 值，但所有的计算仍然使用浮点数完成。因此，训练过程中的所有权重调整都是在“感知到”模型最终将被量化的情况下进行的；因此，在量化之后，这种方法通常比动态量化或训练后的静态量化产生更高的精度。</p>
 <p>实际执行 QAT 的总体工作流程与之前非常相似：</p>
 <ul class="simple">
@@ -1242,9 +1243,9 @@ QAT 模型：
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="id8">
-<h2>量化加速（待更，当前有问题）<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h2>
+</section>
+<section id="id8">
+<h2>量化加速（待更，当前有问题）<a class="headerlink" href="#id8" title="永久链接至标题">#</a></h2>
 <p>最后，确认上面提到的一些事情：量化模型实际上执行推断更快吗？</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1285,15 +1286,15 @@ Elapsed time: 219 ms
 </div>
 </div>
 <p>在本地运行，常规模型的速度为 15 毫秒，量化模型的速度仅为 20 毫秒，这说明了量化模型与浮点模型相比，典型的 2-4 倍的加速。</p>
-</div>
-</div>
+</section>
+</section>
 
 
               </div>
               
               
               <!-- Previous / next buttons -->
-<div class='prev-next-area'> 
+<div class='prev-next-area'>
     <a class='left-prev' id="prev-link" href="custom.html" title="上一页 页">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
@@ -1316,7 +1317,8 @@ Elapsed time: 219 ms
       </div>
     </div>
   
-  <script src="../../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
 <footer class="footer mt-5 mt-md-0">
   <div class="container">
     
@@ -1328,7 +1330,7 @@ Elapsed time: 219 ms
     
     <div class="footer-item">
       <p class="last-updated">
-最后更新于 2022-03-25, 00:49:29.<br>
+最后更新于 2022-03-26, 01:34:45.<br>
 </p>
     </div>
     

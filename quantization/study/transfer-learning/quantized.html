@@ -4,11 +4,13 @@
 <html lang="zh_CN">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>量化计算机视觉分类 &#8212; Pytorch Book 0.0.1 文档</title>
     
-  <link href="../../../_static/css/theme.css" rel="stylesheet">
-  <link href="../../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
 
     
   <link rel="stylesheet"
@@ -18,10 +20,6 @@
   <link rel="preload" as="font" type="font/woff2" crossorigin
     href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
-    
-      
-
-    
     <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/css/style.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
@@ -30,7 +28,8 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/tabs.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/default.css" />
     
-  <link rel="preload" as="script" href="../../../_static/js/index.be7d3bbb2ef33a8344ce.js">
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
 
     <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
     <script src="../../../_static/jquery.js"></script>
@@ -54,7 +53,7 @@
     <link rel="stylesheet" href="../../../_static/css/custom.css"/>
 
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
     
     <div class="container-fluid" id="banner"></div>
 
@@ -134,10 +133,8 @@
       <div class="navbar-end-item">
         <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
         <li class="nav-item">
-          <a class="nav-link" href="https://github.com/xinetzone/pytorch-book" rel="noopener" target="_blank" title="GitHub">
-            <span><i class="fab fa-github-square"></i></span>
-            <label class="sr-only">GitHub</label>
-          </a>
+          <a class="nav-link" href="https://github.com/xinetzone/pytorch-book" rel="noopener" target="_blank" title="GitHub"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
         </li>
       </ul>
       </div>
@@ -153,7 +150,8 @@
           
             
             <!-- Only show if we have sidebars configured, else just a small margin  -->
-            <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+            <div class="col-12 col-md-3 bd-sidebar">
+              <div class="sidebar-start-items"><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
@@ -470,6 +468,9 @@
 
   </div>
 </nav>
+              </div>
+              <div class="sidebar-end-items">
+              </div>
             </div>
             
           
@@ -480,7 +481,7 @@
               
               <div class="toc-item">
                 
-<div class="tocsection onthispage pt-5 pb-3">
+<div class="tocsection onthispage mt-5 pt-1 pb-3">
     <i class="fas fa-list"></i> On this page
 </div>
 
@@ -529,15 +530,15 @@
               
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="id1">
-<h1>量化计算机视觉分类<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>量化计算机视觉分类<a class="headerlink" href="#id1" title="永久链接至标题">#</a></h1>
 <p><span class="guilabel">来源</span>：<a class="reference external" href="https://pytorch.org/tutorials/intermediate/quantized_transfer_learning_tutorial.html">quantized_transfer_learning</a></p>
 <div class="admonition- admonition">
 <p class="admonition-title">任务</p>
 <p>使用量化模型提取特征。</p>
 </div>
-<div class="section" id="id2">
-<h2>准备<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<section id="id2">
+<h2>准备<a class="headerlink" href="#id2" title="永久链接至标题">#</a></h2>
 <p>在进入迁移学习之前，让我们回顾一下“先决条件”，例如安装和数据加载/可视化。</p>
 <p>详细内容见：<a class="reference internal" href="basic.html"><span class="doc">图像分类的迁移学习</span></a>。</p>
 <div class="cell docutils container">
@@ -565,9 +566,9 @@
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="id3">
-<h2>1 基于量化特征提取器训练自定义分类器<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+</section>
+<section id="id3">
+<h2>1 基于量化特征提取器训练自定义分类器<a class="headerlink" href="#id3" title="永久链接至标题">#</a></h2>
 <p>在本节中，将使用“冻结”的量化特征提取器，并在此基础上训练自定义分类器头部。与浮点模型不同，您不需要为量化模型设置 <code class="docutils literal notranslate"><span class="pre">requires_grad=False</span></code>，因为它没有可训练的参数。请参阅 <a class="reference external" href="https://pytorch.org/docs/stable/quantization.html">文档</a> 了解更多细节。</p>
 <p>加载预训练模型：在这个练习中，使用 <a class="reference external" href="https://pytorch.org/hub/pytorch_vision_resnet/">ResNet-18</a>。</p>
 <div class="cell docutils container">
@@ -681,9 +682,9 @@
 <div class="cell_output docutils container">
 <img alt="../../../_images/quantized_11_0.svg" src="../../../_images/quantized_11_0.svg" /></div>
 </div>
-</div>
-<div class="section" id="id4">
-<h2>2 微调量化模型<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+</section>
+<section id="id4">
+<h2>2 微调量化模型<a class="headerlink" href="#id4" title="永久链接至标题">#</a></h2>
 <p>在这一部分中，对用于迁移学习的特征提取器进行了微调，并对特征提取器进行量化。注意，在第 1 部分和第 2 部分中，特征提取器都是量化的。不同之处在于，在第 1 部分中，使用了预训练的量化模型。在这一部分中，我们在对感兴趣的数据集进行微调后，创建了量化的特征提取器，因此这是一种利用迁移学习获得更好准确性的方法，同时具有量化的好处。请注意，在我们的具体示例中，训练集非常小（120 张图片），因此对整个模型进行微调的好处并不明显。然而，这里显示的过程将提高迁移学习的准确性于更大的数据集。</p>
 <p>预训练的特征提取器必须是可量化的。要确保它是可量化的，请执行以下步骤：</p>
 <ol class="simple">
@@ -779,15 +780,15 @@
 <div class="cell_output docutils container">
 <img alt="../../../_images/quantized_20_0.svg" src="../../../_images/quantized_20_0.svg" /></div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
               </div>
               
               
               <!-- Previous / next buttons -->
-<div class='prev-next-area'> 
+<div class='prev-next-area'>
     <a class='left-prev' id="prev-link" href="basic.html" title="上一页 页">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
@@ -810,7 +811,8 @@
       </div>
     </div>
   
-  <script src="../../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
 <footer class="footer mt-5 mt-md-0">
   <div class="container">
     
@@ -822,7 +824,7 @@
     
     <div class="footer-item">
       <p class="last-updated">
-最后更新于 2022-03-25, 00:49:29.<br>
+最后更新于 2022-03-26, 01:34:45.<br>
 </p>
     </div>
     

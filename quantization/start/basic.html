@@ -4,11 +4,13 @@
 <html lang="zh_CN">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>基础 &#8212; Pytorch Book 0.0.1 文档</title>
     
-  <link href="../../_static/css/theme.css" rel="stylesheet">
-  <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
 
     
   <link rel="stylesheet"
@@ -18,10 +20,6 @@
   <link rel="preload" as="font" type="font/woff2" crossorigin
     href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
-    
-      
-
-    
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/style.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
@@ -30,7 +28,8 @@
     <link rel="stylesheet" type="text/css" href="../../_static/tabs.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/default.css" />
     
-  <link rel="preload" as="script" href="../../_static/js/index.be7d3bbb2ef33a8344ce.js">
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
 
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
@@ -56,7 +55,7 @@
     <link rel="stylesheet" href="../../_static/css/custom.css"/>
 
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
     
     <div class="container-fluid" id="banner"></div>
 
@@ -136,10 +135,8 @@
       <div class="navbar-end-item">
         <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
         <li class="nav-item">
-          <a class="nav-link" href="https://github.com/xinetzone/pytorch-book" rel="noopener" target="_blank" title="GitHub">
-            <span><i class="fab fa-github-square"></i></span>
-            <label class="sr-only">GitHub</label>
-          </a>
+          <a class="nav-link" href="https://github.com/xinetzone/pytorch-book" rel="noopener" target="_blank" title="GitHub"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
         </li>
       </ul>
       </div>
@@ -155,7 +152,8 @@
           
             
             <!-- Only show if we have sidebars configured, else just a small margin  -->
-            <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+            <div class="col-12 col-md-3 bd-sidebar">
+              <div class="sidebar-start-items"><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
@@ -472,6 +470,9 @@
 
   </div>
 </nav>
+              </div>
+              <div class="sidebar-end-items">
+              </div>
             </div>
             
           
@@ -482,7 +483,7 @@
               
               <div class="toc-item">
                 
-<div class="tocsection onthispage pt-5 pb-3">
+<div class="tocsection onthispage mt-5 pt-1 pb-3">
     <i class="fas fa-list"></i> On this page
 </div>
 
@@ -599,8 +600,8 @@
               
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="id1">
-<h1>基础<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>基础<a class="headerlink" href="#id1" title="永久链接至标题">#</a></h1>
 <p>参考：<a class="reference external" href="https://pytorch.org/blog/quantization-in-practice/">Practical Quantization in PyTorch</a></p>
 <p><span class="guilabel">NN 量化目标</span>：运行更快、内存需求更低。</p>
 <ul class="simple">
@@ -608,20 +609,20 @@
 <li><p>过度参数化的 DNN 有更多的 <strong>自由度</strong>，这使它们成为信息压缩的良好候选对象 <span id="id2">[<a class="reference internal" href="../../refs.html#id3" title="Amir Gholami, Sehoon Kim, Zhen Dong, Zhewei Yao, Michael W. Mahoney, and Kurt Keutzer. A survey of quantization methods for efficient neural network inference. 2021. arXiv:2103.13630.">Gholami, Kim, Dong, Yao, Mahoney, and Keutzer, 2021</a>]</span>。</p></li>
 </ul>
 <p>当量化模型时，通常会发生两件事——模型变得更小，运行效率更高。硬件供应商明确地允许更快地处理 8 位数据（而不是 32 位数据），从而获得更高的 <strong>吞吐量</strong> （throughput）。更小的模型具有更低的内存占用和功耗 <span id="id3">[<a class="reference internal" href="../../refs.html#id4" title="Raghuraman Krishnamoorthi. Quantizing deep convolutional networks for efficient inference: a whitepaper. 2018. arXiv:1806.08342.">Krishnamoorthi, 2018</a>]</span>，这对于边缘部署至关重要。</p>
-<div class="section" id="id4">
-<h2>映射函数<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<section id="id4">
+<h2>映射函数<a class="headerlink" href="#id4" title="永久链接至标题">#</a></h2>
 <p>映射函数：将值从浮点数映射到整数空间的函数。常用的映射函数是由 <span class="math notranslate nohighlight">\(Q(r) = round(r/S + Z)\)</span> 给出的线性变换，其中为 <span class="math notranslate nohighlight">\(r\)</span> 为输入，<span class="math notranslate nohighlight">\(S, Z\)</span> 为量化参数（quantization parameters）。为了重新转换为浮点空间，反函数由 <span class="math notranslate nohighlight">\(\overline{r} = (Q(r) - Z) \cdot S\)</span> 给出（被称为 <strong>反量化</strong>，即 dequantization）。</p>
 <div class="admonition note">
 <p class="admonition-title">备注</p>
 <p><span class="math notranslate nohighlight">\(\overline{r} \neq r\)</span>，它们之间的差异构成了量化误差。</p>
 </div>
-</div>
-<div class="section" id="id5">
-<h2>量化参数<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+</section>
+<section id="id5">
+<h2>量化参数<a class="headerlink" href="#id5" title="永久链接至标题">#</a></h2>
 <p>映射函数由缩放因子 <span class="math notranslate nohighlight">\(S\)</span> 和零点 <span class="math notranslate nohighlight">\(Z\)</span> 所参数化。<span class="math notranslate nohighlight">\(S\)</span> 仅仅是输入范围与输出范围的比值 <span class="math notranslate nohighlight">\(S = \frac {\beta - \alpha}{\beta_q - \alpha_q}\)</span>。这里 <span class="math notranslate nohighlight">\([\alpha, \beta]\)</span> 是输入的裁剪（clipping）范围，即允许输入的边界。<span class="math notranslate nohighlight">\([\alpha_q, \beta_q]\)</span> 是它被映射到的量化输出空间的范围。对于 8 位量化，输出范围 <span class="math notranslate nohighlight">\(\beta_q - \alpha_q \leq 2^8 -1\)</span>。<span class="math notranslate nohighlight">\(Z = -(\frac {\alpha}{S} - \alpha_q)\)</span> 作为偏置，以确保输入空间中的 <span class="math notranslate nohighlight">\(0\)</span> 完全映射到量化空间中的 <span class="math notranslate nohighlight">\(0\)</span>。</p>
-</div>
-<div class="section" id="id6">
-<h2>校准<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h2>
+</section>
+<section id="id6">
+<h2>校准<a class="headerlink" href="#id6" title="永久链接至标题">#</a></h2>
 <p>选择输入裁剪范围的过程称为 <strong>校准</strong> （calibration）。最简单的方法（也是 PyTorch 中的默认方法）是记录正在运行的最小值和最大值，并将它们赋值给 <span class="math notranslate nohighlight">\(\alpha\)</span> 和 <span class="math notranslate nohighlight">\(\beta\)</span>。<a class="reference external" href="https://docs.nvidia.com/deeplearning/tensorrt/pytorch-quantization-toolkit/docs/calib.html">TensorRT</a> 也使用熵最小化（KL 散度），均方误差最小化，或输入范围的百分位数。</p>
 <p>在 PyTorch 中，<a class="reference external" href="https://xinetzone.github.io/pytorch-book/api/pytorch/ao/quantization/generated/torch.ao.quantization.observer.ObserverBase.html#torch.ao.quantization.observer.ObserverBase" title="(在 Pytorch Book)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Observer</span></code></a> 模块收集关于输入值的统计信息并计算 qparams <span class="math notranslate nohighlight">\(S,Z\)</span>。不同的校准方案会产生不同的量化输出，最好通过经验验证哪种方案最适合您的应用程序和体系结构。</p>
 <div class="cell docutils container">
@@ -678,9 +679,9 @@ HistogramObserver (tensor([0.0124]), tensor([72], dtype=torch.int32))
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="id7">
-<h2>仿射和对称量化方案<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h2>
+</section>
+<section id="id7">
+<h2>仿射和对称量化方案<a class="headerlink" href="#id7" title="永久链接至标题">#</a></h2>
 <p>仿射（affine）或非对称量化（asymmetric quantization）方案分配输入范围的最小和最大观测值。仿射方案通常提供更小的剪切范围，并且对于量化非负激活非常有用（如果你的输入张量永远都不是负的，你就不需要输入范围包含负值）。计算范围为 <span class="math notranslate nohighlight">\(\alpha=\min(r), \beta = \max(r)\)</span>。当用于权值张量 <span id="id8">[<a class="reference internal" href="../../refs.html#id5" title="Hao Wu, Patrick Judd, Xiaojie Zhang, Mikhail Isaev, and Paulius Micikevicius. Integer quantization for deep learning inference: principles and empirical evaluation. 2020. arXiv:2004.09602.">Wu, Judd, Zhang, Isaev, and Micikevicius, 2020</a>]</span> 时，仿射量化会导致更昂贵的计算推理。</p>
 <p>对称量化（Symmetric quantization）方案将输入范围集中在 <span class="math notranslate nohighlight">\(0\)</span> 附近，消除了计算零点偏置的需要。计算范围为 <span class="math notranslate nohighlight">\(-\alpha=\beta=\max(|\max(r)|,|\min(r)|)\)</span>。</p>
 <p>对于倾斜的信号（如非负激活），这可能会导致糟糕的量化分辨率（quantization resolution），因为剪辑范围包括从未在输入中出现的值（参见下面的 pyplot）。</p>
@@ -743,9 +744,9 @@ Qscheme: torch.per_tensor_symmetric | (tensor([0.0170]), tensor([128]))
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="id9">
-<h2>逐张量和逐通道量化方案<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h2>
+</section>
+<section id="id9">
+<h2>逐张量和逐通道量化方案<a class="headerlink" href="#id9" title="永久链接至标题">#</a></h2>
 <p>量化参数可以作为整体计算层的整个权值张量，也可以单独计算每个通道的权值张量。在每张量中，对层中的所有通道应用相同的剪切范围：</p>
 <p><img alt="" src="../../_images/tensor-quantization.png" /></p>
 <p>对于权值量化，逐通道（Per-Channel）对称量化提供了更好的精度；逐张量（Per-Tensor）量化的性能很差，这可能是由于不同通道之间的转换权值与批量范数折叠（batchnorm folding） <span id="id10">[<a class="reference internal" href="../../refs.html#id5" title="Hao Wu, Patrick Judd, Xiaojie Zhang, Mikhail Isaev, and Paulius Micikevicius. Integer quantization for deep learning inference: principles and empirical evaluation. 2020. arXiv:2004.09602.">Wu, Judd, Zhang, Isaev, and Micikevicius, 2020</a>]</span> 差异很大。</p>
@@ -781,9 +782,9 @@ Qscheme: torch.per_tensor_symmetric | (tensor([0.0170]), tensor([128]))
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="id11">
-<h2>后端引擎<a class="headerlink" href="#id11" title="永久链接至标题">¶</a></h2>
+</section>
+<section id="id11">
+<h2>后端引擎<a class="headerlink" href="#id11" title="永久链接至标题">#</a></h2>
 <p>目前，量化算子通过 <a class="reference external" href="https://github.com/pytorch/FBGEMM">FBGEMM 后端</a> 在 x86 机器上运行，或者在 ARM 机器上使用 <a class="reference external" href="https://github.com/pytorch/QNNPACK">QNNPACK</a> 原语。服务器 GPU 的后端支持（通过 TensorRT 和 cuDNN）即将推出。了解更多关于将量化扩展到自定义后端：<a class="reference external" href="https://github.com/pytorch/rfcs/blob/master/RFC-0019-Extending-PyTorch-Quantization-to-Custom-Backends.md">RFC-0019</a>。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -795,9 +796,9 @@ Qscheme: torch.per_tensor_symmetric | (tensor([0.0170]), tensor([128]))
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="qconfig">
-<h2><code class="docutils literal notranslate"><span class="pre">QConfig</span></code><a class="headerlink" href="#qconfig" title="永久链接至标题">¶</a></h2>
+</section>
+<section id="qconfig">
+<h2><code class="docutils literal notranslate"><span class="pre">QConfig</span></code><a class="headerlink" href="#qconfig" title="永久链接至标题">#</a></h2>
 <p><a class="reference external" href="https://xinetzone.github.io/pytorch-book/api/pytorch/ao/quantization/generated/torch.ao.quantization.qconfig.QConfig.html#torch.ao.quantization.qconfig.QConfig" title="(在 Pytorch Book)"><code class="xref py py-class docutils literal notranslate"><span class="pre">QConfig</span></code></a> NamedTuple 存储用于量化激活和权重的 Observer 和量化方案。</p>
 <p>一定要传递 <code class="docutils literal notranslate"><span class="pre">Observer</span></code> 类（而不是实例），或者可以返回 <code class="docutils literal notranslate"><span class="pre">Observer</span></code> 实例的可调用对象。使用 <code class="xref py py-func docutils literal notranslate"><span class="pre">with_args()</span></code> 覆盖默认参数。</p>
 <div class="cell docutils container">
@@ -819,9 +820,9 @@ Qscheme: torch.per_tensor_symmetric | (tensor([0.0170]), tensor([128]))
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="pytorch">
-<h2>在 PyTorch 中<a class="headerlink" href="#pytorch" title="永久链接至标题">¶</a></h2>
+</section>
+<section id="pytorch">
+<h2>在 PyTorch 中<a class="headerlink" href="#pytorch" title="永久链接至标题">#</a></h2>
 <p>PyTorch 允许您使用几种不同的方式来量化您的模型：</p>
 <ul class="simple">
 <li><p>Eager 模式 v/s FX Graph 模式：如果你更喜欢灵活但手动的，或受限的自动过程</p></li>
@@ -831,8 +832,8 @@ Qscheme: torch.per_tensor_symmetric | (tensor([0.0170]), tensor([128]))
 <p>FX Graph Mode 自动融合符合条件的模块，插入 Quant/DeQuant stub，校准模型并返回量化模块——所有这些都是在两个方法调用中进行的——但仅适用于 <a class="reference external" href="https://pytorch.org/docs/stable/fx.html#torch.fx.symbolic_trace">可符号跟踪</a> 的网络。</p>
 <p>在 DNN 中，量化的合适候选对象是 FP32 权值（层参数）和激活（层输出）。量化权值可以减少模型的大小。量化激活通常会导致更快的推理。</p>
 <p>例如，50 层 ResNet 网络有近 2600 万个权值参数，在正向传程中计算近 1600 万个激活。</p>
-<div class="section" id="post-training-dynamic-weight-only-quantization">
-<h3>Post-Training Dynamic/Weight-only Quantization<a class="headerlink" href="#post-training-dynamic-weight-only-quantization" title="永久链接至标题">¶</a></h3>
+<section id="post-training-dynamic-weight-only-quantization">
+<h3>Post-Training Dynamic/Weight-only Quantization<a class="headerlink" href="#post-training-dynamic-weight-only-quantization" title="永久链接至标题">#</a></h3>
 <p>这里模型的权值是预量化的；在推理期间，激活是动态量化的。这是所有方法中最简单的一种，它在 <a class="reference external" href="https://xinetzone.github.io/pytorch-book/api/pytorch/ao/quantization/generated/torch.ao.quantization.quantize.quantize_dynamic.html#torch.ao.quantization.quantize.quantize_dynamic" title="(在 Pytorch Book)"><code class="xref py py-func docutils literal notranslate"><span class="pre">quantize_dynamic()</span></code></a> 中有一行 API 调用。目前只支持线性和循环（LSTM、GRU、RNN）层进行动态量化。</p>
 <ul class="simple">
 <li><p>可以导致更高的精度，因为每个输入的裁剪范围是精确校准的</p></li>
@@ -903,9 +904,9 @@ Qscheme: torch.per_tensor_symmetric | (tensor([0.0170]), tensor([128]))
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="post-training-static-quantization-ptq">
-<h3>Post-Training Static Quantization (PTQ)<a class="headerlink" href="#post-training-static-quantization-ptq" title="永久链接至标题">¶</a></h3>
+</section>
+<section id="post-training-static-quantization-ptq">
+<h3>Post-Training Static Quantization (PTQ)<a class="headerlink" href="#post-training-static-quantization-ptq" title="永久链接至标题">#</a></h3>
 <p>PTQ 也预量化模型权重，但不是动态校准激活，而是使用验证数据对剪切范围进行预校准和固定（“静态”）。在推理过程中，激活在运算之间保持量化精度。大约 100 个小批次的代表性数据就足以校准观测者。为了方便起见，下面的例子在校准中使用了随机数据——在应用程序中使用随机数据将导致错误的 <code class="docutils literal notranslate"><span class="pre">qparams</span></code>。</p>
 <p><img alt="" src="../../_images/ptq-flowchart.svg" /></p>
 <p><a class="reference external" href="https://pytorch.org/tutorials/recipes/fuse.html">模块融合</a> 将多个顺序模块（如：<code class="docutils literal notranslate"><span class="pre">[Conv2d,</span> <span class="pre">BatchNorm,</span> <span class="pre">ReLU]</span></code>）组合成一个。融合模块意味着编译器只需要运行一个内核而不是多个；这可以通过减少量化误差来提高速度和准确性。</p>
@@ -943,8 +944,8 @@ Qscheme: torch.per_tensor_symmetric | (tensor([0.0170]), tensor([128]))
 </div>
 </div>
 </div>
-<div class="section" id="id12">
-<h4>急切的模式<a class="headerlink" href="#id12" title="永久链接至标题">¶</a></h4>
+<section id="id12">
+<h4>急切的模式<a class="headerlink" href="#id12" title="永久链接至标题">#</a></h4>
 <p><strong>融合</strong>：就地融合用所述融合模块替换所述序列中的第一个模块，其余用相同模块替换。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1086,9 +1087,9 @@ Qscheme: torch.per_tensor_symmetric | (tensor([0.0170]), tensor([128]))
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="fx-graph">
-<h4>FX GRAPH 模式<a class="headerlink" href="#fx-graph" title="永久链接至标题">¶</a></h4>
+</section>
+<section id="fx-graph">
+<h4>FX GRAPH 模式<a class="headerlink" href="#fx-graph" title="永久链接至标题">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">torch.ao.quantization.qconfig</span> <span class="kn">import</span> <span class="n">get_default_qconfig</span>
@@ -1134,10 +1135,10 @@ Qscheme: torch.per_tensor_symmetric | (tensor([0.0170]), tensor([128]))
 </div>
 </div>
 </div>
-</div>
-</div>
-<div class="section" id="quantization-aware-training-qat">
-<h3>Quantization-aware Training (QAT)<a class="headerlink" href="#quantization-aware-training-qat" title="永久链接至标题">¶</a></h3>
+</section>
+</section>
+<section id="quantization-aware-training-qat">
+<h3>Quantization-aware Training (QAT)<a class="headerlink" href="#quantization-aware-training-qat" title="永久链接至标题">#</a></h3>
 <p><img alt="" src="../../_images/qat-flowchart.svg" /></p>
 <p>PTQ 方法对于大型模型非常好，但在较小的模型中准确性会受到影响。当然，这是由于将 FP32 的模型调整到 INT8 域时的数值精度损失。</p>
 <p>QAT 通过在训练损失中包含量化误差来解决这个问题，因此训练一个 INT8-first 模型。</p>
@@ -1270,10 +1271,10 @@ Qscheme: torch.per_tensor_symmetric | (tensor([0.0170]), tensor([128]))
 </div>
 </div>
 </div>
-</div>
-</div>
-<div class="section" id="id14">
-<h2>敏感性分析<a class="headerlink" href="#id14" title="永久链接至标题">¶</a></h2>
+</section>
+</section>
+<section id="id14">
+<h2>敏感性分析<a class="headerlink" href="#id14" title="永久链接至标题">#</a></h2>
 <p>并不是所有层对量化的响应都是一样的，有些层对精度下降比其他层更敏感。确定最优的层组合以最小化精度下降是非常耗时的，因此 <span id="id15">[<a class="reference internal" href="../../refs.html#id5" title="Hao Wu, Patrick Judd, Xiaojie Zhang, Mikhail Isaev, and Paulius Micikevicius. Integer quantization for deep learning inference: principles and empirical evaluation. 2020. arXiv:2004.09602.">Wu, Judd, Zhang, Isaev, and Micikevicius, 2020</a>]</span> 建议进行一次一次的灵敏度分析，以确定哪些层最敏感，并在这些层上保持 FP32 的精度。在他们的实验中，跳过 2 个 conv 层（在 MobileNet v1 的 28 个 conv 层中）使他们接近 FP32 的精度。使用 FX Graph 模式，可以创建自定义 <code class="docutils literal notranslate"><span class="pre">qconfigs</span></code> 来轻松做到这一点。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># ONE-AT-A-TIME SENSITIVITY ANALYSIS </span>
 
@@ -1311,9 +1312,9 @@ Qscheme: torch.per_tensor_symmetric | (tensor([0.0170]), tensor([128]))
     <span class="nb">print</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">compute_error</span><span class="p">(</span><span class="n">act_compare_dict</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s1">&#39;float&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">act_compare_dict</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s1">&#39;quantized&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">dequantize</span><span class="p">()))</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="id16">
-<h2>对您工作流程的建议<a class="headerlink" href="#id16" title="永久链接至标题">¶</a></h2>
+</section>
+<section id="id16">
+<h2>对您工作流程的建议<a class="headerlink" href="#id16" title="永久链接至标题">#</a></h2>
 <p><img alt="" src="../../_images/quantization-flowchart2.png" /></p>
 <p>要点：</p>
 <ul class="simple">
@@ -1326,15 +1327,15 @@ Qscheme: torch.per_tensor_symmetric | (tensor([0.0170]), tensor([128]))
 <li><p>使用 QAT 对原始训练调度的大约 <span class="math notranslate nohighlight">\(10\%\)</span> 进行微调，退火学习率（annealing learning rate）调度从初始训练学习率的 <span class="math notranslate nohighlight">\(1\%\)</span> 开始。</p></li>
 <li><p>如果上面的工作流程不适合你，我们想知道更多。发布一个包含你的代码细节的帖子（模型架构，准确性指标，尝试过的技术）。请抄送 <a class="reference external" href="https://discuss.pytorch.org/u/suraj.pt/">&#64;suraj.pt</a>。</p></li>
 </ul>
-</div>
-</div>
+</section>
+</section>
 
 
               </div>
               
               
               <!-- Previous / next buttons -->
-<div class='prev-next-area'> 
+<div class='prev-next-area'>
     <a class='left-prev' id="prev-link" href="index.html" title="上一页 页">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
@@ -1357,7 +1358,8 @@ Qscheme: torch.per_tensor_symmetric | (tensor([0.0170]), tensor([128]))
       </div>
     </div>
   
-  <script src="../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
 <footer class="footer mt-5 mt-md-0">
   <div class="container">
     
@@ -1369,7 +1371,7 @@ Qscheme: torch.per_tensor_symmetric | (tensor([0.0170]), tensor([128]))
     
     <div class="footer-item">
       <p class="last-updated">
-最后更新于 2022-03-25, 00:49:29.<br>
+最后更新于 2022-03-26, 01:34:45.<br>
 </p>
     </div>
     

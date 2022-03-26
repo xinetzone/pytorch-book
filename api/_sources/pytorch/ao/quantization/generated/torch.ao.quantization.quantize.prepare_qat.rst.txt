@@ -1,0 +1,6 @@
+﻿torch.ao.quantization.quantize.prepare\_qat
+===========================================
+
+.. currentmodule:: torch.ao.quantization.quantize
+
+.. autofunction:: prepare_qat

@@ -4,11 +4,13 @@
 <html lang="zh_CN">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>自动微分 &#8212; Pytorch Book 0.0.1 文档</title>
     
-  <link href="../../_static/css/theme.css" rel="stylesheet">
-  <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
 
     
   <link rel="stylesheet"
@@ -18,10 +20,6 @@
   <link rel="preload" as="font" type="font/woff2" crossorigin
     href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
-    
-      
-
-    
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/style.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
@@ -30,7 +28,8 @@
     <link rel="stylesheet" type="text/css" href="../../_static/tabs.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/default.css" />
     
-  <link rel="preload" as="script" href="../../_static/js/index.be7d3bbb2ef33a8344ce.js">
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
 
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
@@ -56,7 +55,7 @@
     <link rel="stylesheet" href="../../_static/css/custom.css"/>
 
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
     
     <div class="container-fluid" id="banner"></div>
 
@@ -136,10 +135,8 @@
       <div class="navbar-end-item">
         <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
         <li class="nav-item">
-          <a class="nav-link" href="https://github.com/xinetzone/pytorch-book" rel="noopener" target="_blank" title="GitHub">
-            <span><i class="fab fa-github-square"></i></span>
-            <label class="sr-only">GitHub</label>
-          </a>
+          <a class="nav-link" href="https://github.com/xinetzone/pytorch-book" rel="noopener" target="_blank" title="GitHub"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
         </li>
       </ul>
       </div>
@@ -155,7 +152,8 @@
           
             
             <!-- Only show if we have sidebars configured, else just a small margin  -->
-            <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+            <div class="col-12 col-md-3 bd-sidebar">
+              <div class="sidebar-start-items"><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
@@ -209,6 +207,9 @@
 
   </div>
 </nav>
+              </div>
+              <div class="sidebar-end-items">
+              </div>
             </div>
             
           
@@ -219,7 +220,7 @@
               
               <div class="toc-item">
                 
-<div class="tocsection onthispage pt-5 pb-3">
+<div class="tocsection onthispage mt-5 pt-1 pb-3">
     <i class="fas fa-list"></i> On this page
 </div>
 
@@ -285,8 +286,8 @@
 </div>
 </div>
 </div>
-<div class="tex2jax_ignore mathjax_ignore section" id="id1">
-<h1>自动微分<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>自动微分<a class="headerlink" href="#id1" title="永久链接至标题">#</a></h1>
 <p><span class="guilabel">参考</span>：<a class="reference external" href="https://pytorch.org/tutorials/beginner/basics/autogradqs_tutorial.html">autogradqs</a></p>
 <p>在训练神经网络时，最常用的算法是 <strong>反向传播</strong> （back propagation）。在该算法中，参数（模型权值）根据损失函数相对于给定参数的 <strong>梯度</strong> （gradient）进行调整。</p>
 <p>为了计算这些梯度，PyTorch 内置了名为 <a class="reference external" href="https://pytorch.org/docs/stable/autograd.html#module-torch.autograd" title="(在 PyTorch v1.11.0)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">torch.autograd</span></code></a> 的微分引擎。它对任何计算图，支持自动计算梯度。</p>
@@ -305,12 +306,12 @@
 </div>
 </div>
 </div>
-<div class="section" id="id2">
-<h2>张量、函数和计算图<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<section id="id2">
+<h2>张量、函数和计算图<a class="headerlink" href="#id2" title="永久链接至标题">#</a></h2>
 <p>上面的代码定义了如下计算图：</p>
-<div class="figure align-default">
+<figure class="align-default">
 <img alt="../../_images/comp-graph.png" src="../../_images/comp-graph.png" />
-</div>
+</figure>
 <p>在这个网络中，<code class="docutils literal notranslate"><span class="pre">w</span></code> 和 <code class="docutils literal notranslate"><span class="pre">b</span></code> 是需要优化的参数。因此，需要能够计算相对于这些变量的损失函数的梯度。为了做到这一点，设置这些张量的 <code class="docutils literal notranslate"><span class="pre">requires_grad</span></code> 属性。</p>
 <div class="alert-info admonition note">
 <p class="admonition-title">备注</p>
@@ -331,9 +332,9 @@ Gradient function for loss = &lt;BinaryCrossEntropyWithLogitsBackward0 object at
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="id3">
-<h2>计算梯度<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+</section>
+<section id="id3">
+<h2>计算梯度<a class="headerlink" href="#id3" title="永久链接至标题">#</a></h2>
 <p>为了优化神经网络中参数的权值，需要计算损失函数对参数的导数，即在 <code class="docutils literal notranslate"><span class="pre">x</span></code> 和 <code class="docutils literal notranslate"><span class="pre">y</span></code> 的某些固定值下，需要计算 <span class="math notranslate nohighlight">\(\frac{\partial loss}{\partial b}\)</span> 和 <span class="math notranslate nohighlight">\(\frac{\partial loss}{\partial w}\)</span>。为了计算这些导数，调用 <code class="xref py py-func docutils literal notranslate"><span class="pre">loss.backward()</span></code>，然后从 <code class="docutils literal notranslate"><span class="pre">w.grad</span></code> 和 <code class="docutils literal notranslate"><span class="pre">b.grad</span></code> 检索值：</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -361,9 +362,9 @@ tensor([0.2963, 0.2867, 0.2677])
 <li><p>由于性能原因，只能在给定的图上使用一次 <code class="docutils literal notranslate"><span class="pre">backward</span></code> 梯度计算。如果需要对同一个图进行多次 <code class="docutils literal notranslate"><span class="pre">backward</span></code> 调用，则需要将 <code class="docutils literal notranslate"><span class="pre">retain_graph=True</span></code> 传递给 <code class="docutils literal notranslate"><span class="pre">backward</span></code> 调用。</p></li>
 </ul>
 </div>
-</div>
-<div class="section" id="id4">
-<h2>禁用梯度追踪<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+</section>
+<section id="id4">
+<h2>禁用梯度追踪<a class="headerlink" href="#id4" title="永久链接至标题">#</a></h2>
 <p>默认情况下，所有 <code class="docutils literal notranslate"><span class="pre">requires_grad=True</span></code> 的张量都会跟踪它们的计算历史，并支持梯度计算。但是，在某些情况下，不需要这样做，例如，训练模型后，只是想把它应用到一些输入数据上，即只想通过网络进行正向计算。可以通过使用 <code class="xref py py-func docutils literal notranslate"><span class="pre">torch.no_grad()</span></code> 块包围计算代码来停止跟踪计算：</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -403,9 +404,9 @@ False
 <li><p>将神经网络中的一些参数标记为 <strong>冻结参数</strong> （frozen parameters）。这是对<a class="reference external" href="https://pytorch.org/tutorials/beginner/finetuning_torchvision_models_tutorial.html">预训练的网络进行微调</a>的非常常见的场景。</p></li>
 <li><p>在只进行正向传播的情况下 <strong>加快计算速度</strong>，因为在不跟踪梯度的张量上的计算将更加有效。</p></li>
 </ul>
-</div>
-<div class="section" id="id5">
-<h2>更多关于计算图的内容<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+</section>
+<section id="id5">
+<h2>更多关于计算图的内容<a class="headerlink" href="#id5" title="永久链接至标题">#</a></h2>
 <p>从概念上讲，<a class="reference external" href="https://pytorch.org/docs/stable/autograd.html#module-torch.autograd" title="(在 PyTorch v1.11.0)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">torch.autograd</span></code></a> 在由 <a class="reference external" href="https://pytorch.org/docs/stable/autograd.html#torch.autograd.Function" title="(在 PyTorch v1.11.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">torch.autograd.Function</span></code></a> 对象组成的有向无环图（DAG）中保存数据（张量）和所有执行的运算（以及产生的新张量）的记录。在这个 DAG 中，叶是输入张量，根是输出张量。通过从根到叶跟踪这个图，可以使用链式法则自动计算梯度。</p>
 <p>在forward 传播时，<code class="docutils literal notranslate"><span class="pre">autograd</span></code> 会同时做两件事：</p>
 <ul class="simple">
@@ -417,9 +418,9 @@ False
 <p class="admonition-title">备注</p>
 <p>在 PyTorch 中，DAG 是动态的。在每次 <code class="docutils literal notranslate"><span class="pre">.backward()</span></code> 调用之后，<code class="docutils literal notranslate"><span class="pre">autograd</span></code> 开始填充新的图。这正是允许你在模型中使用控制流语句的原因；如果需要，您可以在每次迭代中更改形状、大小和运算。</p>
 </div>
-</div>
-<div class="section" id="id6">
-<h2>选读：张量梯度和雅可比积<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h2>
+</section>
+<section id="id6">
+<h2>选读：张量梯度和雅可比积<a class="headerlink" href="#id6" title="永久链接至标题">#</a></h2>
 <p>在很多情况下，损失函数是标量的，需要计算关于一些参数的梯度。然而，也有输出函数是任意张量的情况。在这种情况下，PyTorch 允许你计算所谓的雅可比乘积（Jacobian product），而不是实际的梯度。</p>
 <p>对于向量函数 <span class="math notranslate nohighlight">\(\vec{y}=f(\vec{x})\)</span>，其中 <span class="math notranslate nohighlight">\(\vec{x}=\langle x_1,\dots,x_n\rangle\)</span> 和 <span class="math notranslate nohighlight">\(\vec{y}=\langle y_1,\dots,y_m\rangle\)</span>，<span class="math notranslate nohighlight">\(\vec{y}\)</span> 对 <span class="math notranslate nohighlight">\(\vec{x}\)</span> 的梯度雅可比矩阵：</p>
 <div class="math notranslate nohighlight">
@@ -455,15 +456,15 @@ False
 <p class="admonition-title">备注</p>
 <p>以前调用的是不带参数的 <code class="xref py py-func docutils literal notranslate"><span class="pre">backward()</span></code> 函数。这本质上相当于调用 <code class="docutils literal notranslate"><span class="pre">backward(torch.tensor(1.0))</span></code>，对于标量值函数（如神经网络训练期间的 loss），这是一种计算梯度的有用方法。</p>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
               </div>
               
               
               <!-- Previous / next buttons -->
-<div class='prev-next-area'> 
+<div class='prev-next-area'>
     <a class='left-prev' id="prev-link" href="quickstart.html" title="上一页 页">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
@@ -486,7 +487,8 @@ False
       </div>
     </div>
   
-  <script src="../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
 <footer class="footer mt-5 mt-md-0">
   <div class="container">
     
@@ -498,7 +500,7 @@ False
     
     <div class="footer-item">
       <p class="last-updated">
-最后更新于 2022-03-25, 00:49:29.<br>
+最后更新于 2022-03-26, 01:34:45.<br>
 </p>
     </div>
     
