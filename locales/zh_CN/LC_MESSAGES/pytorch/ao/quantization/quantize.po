@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Pytorch Book \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-18 20:17+0800\n"
+"POT-Creation-Date: 2022-03-28 19:21+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,13 +22,59 @@ msgstr ""
 msgid "torch.ao.quantization.quantize"
 msgstr ""
 
-#: ../../../api/pytorch/ao/quantization/quantize.rst:11:<autosummary>:1
+#: ../../../api/pytorch/ao/quantization/quantize.rst:20:<autosummary>:1
+msgid ":py:obj:`prepare <torch.ao.quantization.quantize.prepare>`"
+msgstr ""
+
+#: ../../../api/pytorch/ao/quantization/quantize.rst:20:<autosummary>:1
+msgid ""
+"Prepares a copy of the model for quantization calibration or "
+"quantization-aware training."
+msgstr ""
+
+#: ../../../api/pytorch/ao/quantization/quantize.rst:20:<autosummary>:1
+msgid ":py:obj:`convert <torch.ao.quantization.quantize.convert>`"
+msgstr ""
+
+#: ../../../api/pytorch/ao/quantization/quantize.rst:20:<autosummary>:1
+msgid ""
+"Converts submodules in input module to a different module according to "
+"`mapping` by calling `from_float` method on the target module class."
+msgstr ""
+
+#: ../../../api/pytorch/ao/quantization/quantize.rst:20:<autosummary>:1
+msgid ":py:obj:`quantize <torch.ao.quantization.quantize.quantize>`"
+msgstr ""
+
+#: ../../../api/pytorch/ao/quantization/quantize.rst:20:<autosummary>:1
+msgid "Quantize the input float model with post training static quantization."
+msgstr ""
+
+#: ../../../api/pytorch/ao/quantization/quantize.rst:20:<autosummary>:1
+msgid ":py:obj:`prepare_qat <torch.ao.quantization.quantize.prepare_qat>`"
+msgstr ""
+
+#: ../../../api/pytorch/ao/quantization/quantize.rst:20:<autosummary>:1
+msgid ""
+"Prepares a copy of the model for quantization calibration or "
+"quantization-aware training and converts it to quantized version."
+msgstr ""
+
+#: ../../../api/pytorch/ao/quantization/quantize.rst:20:<autosummary>:1
+msgid ":py:obj:`quantize_qat <torch.ao.quantization.quantize.quantize_qat>`"
+msgstr ""
+
+#: ../../../api/pytorch/ao/quantization/quantize.rst:20:<autosummary>:1
+msgid "Do quantization aware training and output a quantized model"
+msgstr ""
+
+#: ../../../api/pytorch/ao/quantization/quantize.rst:20:<autosummary>:1
 msgid ""
 ":py:obj:`quantize_dynamic "
 "<torch.ao.quantization.quantize.quantize_dynamic>`"
 msgstr ""
 
-#: ../../../api/pytorch/ao/quantization/quantize.rst:11:<autosummary>:1
+#: ../../../api/pytorch/ao/quantization/quantize.rst:20:<autosummary>:1
 msgid "Converts a float model to dynamic (i.e."
 msgstr "将浮点模型转换为动态模型（即"
 

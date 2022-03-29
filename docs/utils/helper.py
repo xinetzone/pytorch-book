@@ -3,8 +3,6 @@ import os
 from pathlib import Path
 import torch
 
-from mobile_net import MobileNetV2
-
 
 class AverageMeter:
     """Computes and stores the average and current value"""
