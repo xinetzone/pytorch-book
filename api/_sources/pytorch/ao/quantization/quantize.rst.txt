@@ -8,7 +8,13 @@ torch.ao.quantization.quantize
     :nosignatures:
     :template: classtemplate.rst
     
-    quantize_dynamic
-    prepare_qat
     prepare
     convert
+    quantize
+    prepare_qat
+    quantize_qat
+    prepare_dynamic
+    convert_dynamic
+    quantize_dynamic
+
+    

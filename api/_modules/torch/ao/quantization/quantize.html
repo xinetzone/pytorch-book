@@ -464,7 +464,7 @@
 
     <span class="n">_remove_activation_post_process</span><span class="p">(</span><span class="n">module</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">quantize</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">run_fn</span><span class="p">,</span> <span class="n">run_args</span><span class="p">,</span> <span class="n">mapping</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="quantize"><a class="viewcode-back" href="../../../../pytorch/ao/quantization/generated/torch.ao.quantization.quantize.quantize.html#torch.ao.quantization.quantize.quantize">[文档]</a><span class="k">def</span> <span class="nf">quantize</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">run_fn</span><span class="p">,</span> <span class="n">run_args</span><span class="p">,</span> <span class="n">mapping</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Quantize the input float model with post training static quantization.</span>
 
 <span class="sd">    First it will prepare the model for calibration, then it calls</span>
@@ -490,7 +490,7 @@
     <span class="n">prepare</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">run_fn</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="o">*</span><span class="n">run_args</span><span class="p">)</span>
     <span class="n">convert</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">mapping</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">model</span>
+    <span class="k">return</span> <span class="n">model</span></div>
 
 <div class="viewcode-block" id="quantize_dynamic"><a class="viewcode-back" href="../../../../pytorch/ao/quantization/generated/torch.ao.quantization.quantize.quantize_dynamic.html#torch.ao.quantization.quantize.quantize_dynamic">[文档]</a><span class="k">def</span> <span class="nf">quantize_dynamic</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">qconfig_spec</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">qint8</span><span class="p">,</span>
                      <span class="n">mapping</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
@@ -605,7 +605,7 @@
     <span class="n">prepare</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">observer_non_leaf_module_list</span><span class="o">=</span><span class="nb">set</span><span class="p">(</span><span class="n">mapping</span><span class="o">.</span><span class="n">values</span><span class="p">()),</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">model</span></div>
 
-<span class="k">def</span> <span class="nf">quantize_qat</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">run_fn</span><span class="p">,</span> <span class="n">run_args</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="quantize_qat"><a class="viewcode-back" href="../../../../pytorch/ao/quantization/generated/torch.ao.quantization.quantize.quantize_qat.html#torch.ao.quantization.quantize.quantize_qat">[文档]</a><span class="k">def</span> <span class="nf">quantize_qat</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">run_fn</span><span class="p">,</span> <span class="n">run_args</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Do quantization aware training and output a quantized model</span>
 
 <span class="sd">    Args:</span>
@@ -625,7 +625,7 @@
     <span class="n">prepare_qat</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">run_fn</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="o">*</span><span class="n">run_args</span><span class="p">)</span>
     <span class="n">convert</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">model</span>
+    <span class="k">return</span> <span class="n">model</span></div>
 
 <div class="viewcode-block" id="convert"><a class="viewcode-back" href="../../../../pytorch/ao/quantization/generated/torch.ao.quantization.quantize.convert.html#torch.ao.quantization.quantize.convert">[文档]</a><span class="k">def</span> <span class="nf">convert</span><span class="p">(</span>
         <span class="n">module</span><span class="p">,</span> <span class="n">mapping</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">remove_qconfig</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -790,13 +790,13 @@
     
     <div class="footer-item">
       <p class="last-updated">
-最后更新于 2022-03-26, 01:34:32.<br>
+最后更新于 2022-03-29, 08:48:05.<br>
 </p>
     </div>
     
     <div class="footer-item">
       <p class="sphinx-version">
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.4.0.<br>
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0.<br>
 </p>
     </div>
     

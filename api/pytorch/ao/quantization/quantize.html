@@ -47,7 +47,7 @@
     <link rel="shortcut icon" href="../../../_static/favicon.jpg"/>
     <link rel="index" title="索引" href="../../../genindex.html" />
     <link rel="search" title="搜索" href="../../../search.html" />
-    <link rel="next" title="torch.ao.quantization.quantize.quantize_dynamic" href="generated/torch.ao.quantization.quantize.quantize_dynamic.html" />
+    <link rel="next" title="torch.ao.quantization.quantize.prepare" href="generated/torch.ao.quantization.quantize.prepare.html" />
     <link rel="prev" title="torch.ao.quantization.qconfig.get_default_qat_qconfig" href="generated/torch.ao.quantization.qconfig.get_default_qat_qconfig.html" />
     <link rel="stylesheet" href="../../../_static/css/default.css"/>
     <link rel="stylesheet" href="../../../_static/css/custom.css"/>
@@ -362,8 +362,18 @@
       </label>
       <ul>
        <li class="toctree-l4">
-        <a class="reference internal" href="generated/torch.ao.quantization.quantize.quantize_dynamic.html">
-         torch.ao.quantization.quantize.quantize_dynamic
+        <a class="reference internal" href="generated/torch.ao.quantization.quantize.prepare.html">
+         torch.ao.quantization.quantize.prepare
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="generated/torch.ao.quantization.quantize.convert.html">
+         torch.ao.quantization.quantize.convert
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="generated/torch.ao.quantization.quantize.quantize.html">
+         torch.ao.quantization.quantize.quantize
         </a>
        </li>
        <li class="toctree-l4">
@@ -372,13 +382,13 @@
         </a>
        </li>
        <li class="toctree-l4">
-        <a class="reference internal" href="generated/torch.ao.quantization.quantize.prepare.html">
-         torch.ao.quantization.quantize.prepare
+        <a class="reference internal" href="generated/torch.ao.quantization.quantize.quantize_qat.html">
+         torch.ao.quantization.quantize.quantize_qat
         </a>
        </li>
        <li class="toctree-l4">
-        <a class="reference internal" href="generated/torch.ao.quantization.quantize.convert.html">
-         torch.ao.quantization.quantize.convert
+        <a class="reference internal" href="generated/torch.ao.quantization.quantize.quantize_dynamic.html">
+         torch.ao.quantization.quantize.quantize_dynamic
         </a>
        </li>
       </ul>
@@ -550,23 +560,29 @@
                 
   <section id="torch-ao-quantization-quantize">
 <h1>torch.ao.quantization.quantize<a class="headerlink" href="#torch-ao-quantization-quantize" title="永久链接至标题">#</a></h1>
-<table class="longtable table autosummary">
+<table class="autosummary longtable table autosummary">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/torch.ao.quantization.quantize.quantize_dynamic.html#torch.ao.quantization.quantize.quantize_dynamic" title="torch.ao.quantization.quantize.quantize_dynamic"><code class="xref py py-obj docutils literal notranslate"><span class="pre">quantize_dynamic</span></code></a></p></td>
-<td><p>将浮点模型转换为动态模型（即</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/torch.ao.quantization.quantize.prepare_qat.html#torch.ao.quantization.quantize.prepare_qat" title="torch.ao.quantization.quantize.prepare_qat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">prepare_qat</span></code></a></p></td>
-<td><p>Prepares a copy of the model for quantization calibration or quantization-aware training and converts it to quantized version.</p></td>
-</tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="generated/torch.ao.quantization.quantize.prepare.html#torch.ao.quantization.quantize.prepare" title="torch.ao.quantization.quantize.prepare"><code class="xref py py-obj docutils literal notranslate"><span class="pre">prepare</span></code></a></p></td>
 <td><p>Prepares a copy of the model for quantization calibration or quantization-aware training.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="generated/torch.ao.quantization.quantize.convert.html#torch.ao.quantization.quantize.convert" title="torch.ao.quantization.quantize.convert"><code class="xref py py-obj docutils literal notranslate"><span class="pre">convert</span></code></a></p></td>
 <td><p>Converts submodules in input module to a different module according to <cite>mapping</cite> by calling <cite>from_float</cite> method on the target module class.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/torch.ao.quantization.quantize.quantize.html#torch.ao.quantization.quantize.quantize" title="torch.ao.quantization.quantize.quantize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">quantize</span></code></a></p></td>
+<td><p>Quantize the input float model with post training static quantization.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/torch.ao.quantization.quantize.prepare_qat.html#torch.ao.quantization.quantize.prepare_qat" title="torch.ao.quantization.quantize.prepare_qat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">prepare_qat</span></code></a></p></td>
+<td><p>Prepares a copy of the model for quantization calibration or quantization-aware training and converts it to quantized version.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/torch.ao.quantization.quantize.quantize_qat.html#torch.ao.quantization.quantize.quantize_qat" title="torch.ao.quantization.quantize.quantize_qat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">quantize_qat</span></code></a></p></td>
+<td><p>Do quantization aware training and output a quantized model</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/torch.ao.quantization.quantize.quantize_dynamic.html#torch.ao.quantization.quantize.quantize_dynamic" title="torch.ao.quantization.quantize.quantize_dynamic"><code class="xref py py-obj docutils literal notranslate"><span class="pre">quantize_dynamic</span></code></a></p></td>
+<td><p>将浮点模型转换为动态模型（即</p></td>
 </tr>
 </tbody>
 </table>
@@ -585,10 +601,10 @@
             <p class="prev-next-title">torch.ao.quantization.qconfig.get_default_qat_qconfig</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="generated/torch.ao.quantization.quantize.quantize_dynamic.html" title="下一页 页">
+    <a class='right-next' id="next-link" href="generated/torch.ao.quantization.quantize.prepare.html" title="下一页 页">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">下一页</p>
-        <p class="prev-next-title">torch.ao.quantization.quantize.quantize_dynamic</p>
+        <p class="prev-next-title">torch.ao.quantization.quantize.prepare</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
@@ -613,13 +629,13 @@
     
     <div class="footer-item">
       <p class="last-updated">
-最后更新于 2022-03-26, 01:34:32.<br>
+最后更新于 2022-03-29, 08:48:05.<br>
 </p>
     </div>
     
     <div class="footer-item">
       <p class="sphinx-version">
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.4.0.<br>
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0.<br>
 </p>
     </div>
     

@@ -164,7 +164,7 @@
    ],
    "source": [
     "print('训练、测试批次分别为：',\n",
-    "      len(train_iter), len(test_iter))\n"
+    "      len(train_iter), len(test_iter))"
    ]
   },
   {
